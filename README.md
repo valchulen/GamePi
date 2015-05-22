@@ -6,6 +6,7 @@ Proyecto final 2015 de Eden Torres, Guido Lipina y Valentín Paz Marcolla
 Desarrollar un emulador de la consola NES en C++
 
 ###Librerias a usar
+Serán agregregadas al directorio */lib* en el branch master, se documentará la dependencia cuando sea efectiva agregando una *D* luego de su nombre en este archivo
 * [Qt](http://doc.qt.io/qt-4.8/) -> versión 4.8
 * [WiringPi](http://wiringpi.com/)
 
