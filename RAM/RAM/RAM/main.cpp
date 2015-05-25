@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "Types.h"
-#include "RAM.cpp"
+#include "RAM.h"
 
 using namespace std;
 RAM r;
