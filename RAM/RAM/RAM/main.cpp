@@ -20,10 +20,16 @@ int main(int argc, const char * argv[]) {
     while (s != "quit") {
         memoryAdr adr;
         if (s == "read") {
-            cout<<"Ingrese high"<<endl;
-            cin>>adr.adrHigh;
-            cout<<"Ingrese low"<<endl;
-            cin>>adr.adrLow;
+            char h1, h2, l1, l2;
+            cout<<"Ingrese high en hex"<<endl;
+            cin>>h1;
+            cin>>h2;
+            cout<<"Ingrese low en hex"<<endl;
+            cin>>l1;
+            cin>>l2;
+            char h[2] = { h1, h2 }, l[2] = { l1, l2 };
+            adr.adrHigh = toU8(h);
+            adr.adrLow = toU8(l);
             cout<<"Valor en $"<<hex(adr.adrHigh)<<hex(adr.adrLow)<<" = "<<hex(r.read(adr))<<endl;
         } else if (s == "write"){
             cout<<"Ingrese high"<<endl;
@@ -33,7 +39,7 @@ int main(int argc, const char * argv[]) {
             cout<<"Ingrese el valor"<<endl;
             u8 val;
             cin>>val;
-            r.write(adr, val);
+            cout<< (r.write(adr, val) ? "Se pudo escribir" : "No se pudo escribir") <<endl;
         } else {
             cout<<"Valor ingresado no interpretable"<<endl;
         }

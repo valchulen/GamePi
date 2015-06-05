@@ -56,8 +56,11 @@ class RAM {
     
 public:
     u8 read (memoryAdr adr);
-    void write (memoryAdr adr, u8 val);
+    bool write (memoryAdr adr, u8 val); // devuelve true si se pudo escribir
     //RAM(); //Hay que agregar Format como argumento cuando exista
+    
+private:
+    realMemory toRealAdr (memoryAdr adr);
 };
 
 #endif /* defined(__RAM__RAM__) */

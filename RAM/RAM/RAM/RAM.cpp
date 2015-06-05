@@ -13,9 +13,16 @@ using namespace std;
 
 
 u8 RAM::read(memoryAdr adr){
-    return 0;
+    return *this->toRealAdr(adr);
 }
 
-void RAM::write(memoryAdr adr, u8 val){
-    
+bool RAM::write(memoryAdr adr, u8 val){
+    if (adr.adrHigh < 0x80)
+        *this->toRealAdr(adr) = val;
+    else return false;
+    return true;
+}
+
+realMemory RAM::toRealAdr(memoryAdr adr){
+    return &this->R_2007;
 }

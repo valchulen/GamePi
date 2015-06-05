@@ -15,7 +15,11 @@ typedef unsigned char u8;
 typedef struct {
     u8 adrHigh = 0, adrLow = 0;
 } memoryAdr;
+typedef u8 * realMemory;
 
+char h (u8 val);
 std::string hex (u8 val);
+u8 toU8(const char * str);
+
 
 #endif

@@ -11,58 +11,29 @@
 
 using namespace std;
 
-string hex (u8 val){
-    string nibbles[2];
-    for (int i = 1; i < 3; i++) {
-        char v = '0';
-        switch (val<<(i*4) & 0x00FF) { // revisar que esté bien la operación
-            case 0x1:
-                v = '1';
-                break;
-            case 0x2:
-                v = '2';
-                break;
-            case 0x3:
-                v = '3';
-                break;
-            case 0x4:
-                v = '4';
-                break;
-            case 0x5:
-                v = '5';
-                break;
-            case 0x6:
-                v = '6';
-                break;
-            case 0x7:
-                v = '7';
-                break;
-            case 0x8:
-                v = '8';
-                break;
-            case 0x9:
-                v = '9';
-                break;
-            case 0xA:
-                v = 'A';
-                break;
-            case 0xB:
-                v = 'B';
-                break;
-            case 0xC:
-                v = 'C';
-                break;
-            case 0xD:
-                v = 'D';
-                break;
-            case 0xE:
-                v = 'E';
-                break;
-            case 0xF:
-                v = 'F';
-                break;
-        }
-        nibbles[i-1] = v;
+inline char h (u8 e){
+    if (0 <= e && e <= 9)
+        return ('0' + e);
+    else //if (0xA <= e && e <= 0xF)
+        return ('A' + e - 10);
+}
+
+string hex (u8 val) {
+    u8 k1 = (val & 0xF0) >> 4, k2 = val & 0x0F;
+    return { h(k1), h(k2) };
+}
+
+u8 toU8(const char * str){
+    u8 val = 0;
+    for (int i = 0; i < 2; i++) {
+        u8 v = 0;
+        const char c = str[i];
+        if ( ('0' <= c) && (c <= '9') ) {
+            v = c - '0';
+        } else if( ('A' <= c) && (c <= 'F') ) {
+            v = 0x0A + (c - 'A');
+        } else cout<<"La letra "<<c<<" será interpretada como un 0"<<endl;
+        val |= v << (4*(1-i));
     }
-    return nibbles[0] + nibbles[1];
+    return val;
 }
