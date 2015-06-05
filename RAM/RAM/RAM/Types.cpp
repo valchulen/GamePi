@@ -23,6 +23,10 @@ string hex (u8 val) {
     return { h(k1), h(k2) };
 }
 
+inline int memToInt(memoryAdr adr) {
+    return (adr.adrHigh << 8) | adr.adrLow;
+}
+
 u8 toU8(const char * str){
     u8 val = 0;
     for (int i = 0; i < 2; i++) {

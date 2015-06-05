@@ -13,8 +13,14 @@
 #include <iostream>
 
 class RAM {
-    u8 RAM_D[0x800];
-    //Zona de REGS-V
+#define RAM_D_SIZE 0x800
+#define RAM_D_START 0x000
+#define RAM_D_MASK 0x7FF
+    u8 RAM_D[RAM_D_SIZE];
+#define RAM_D_END 0x1FFF
+    
+#define REGS_V_START 0x2000
+#define REGS_V_MASK 0x007
     u8 R_2000 = 0x00;
     u8 R_2001 = 0x00;
     u8 R_2002 = 0x00;
@@ -23,8 +29,9 @@ class RAM {
     u8 R_2005 = 0x00;
     u8 R_2006 = 0x00;
     u8 R_2007 = 0x00;
-    //Fin de zona de REGS-V
-    //Zona de REGS-A
+#define REGS_V_END 0x3FFF
+    
+#define REGS_A_START 0x4000
     u8 A_4000 = 0x00;
     u8 A_4001 = 0x00;
     u8 A_4002 = 0x00;
@@ -49,15 +56,29 @@ class RAM {
     u8 A_4015 = 0x00;
     u8 A_4016 = 0x00;
     u8 A_4017 = 0x00;
-    //Fin de zona de REGS-A
-    u8 UNK[0x3FE9];
-    u8 PRG1[0x4000];
-    u8 PRG2[0x4000];
+#define REGS_A_END 0x4017
+
+#define UNK_SIZE 0x3FE9
+#define UNK_START 0x4018
+    u8 UNK[UNK_SIZE]; //NUCLEA EXPA Y SRAM
+#define UNK_END 0x7FFF
+    
+#define PRG1_SIZE 0x4000
+#define PRG1_START 0x8000
+    u8 PRG1[PRG1_SIZE];
+#define PRG1_END 0xBFFF
+    
+#define PRG2_SIZE 0x4000
+#define PRG2_START 0xC000
+#define PRG2_TO_PRG2_MASK 0x7FFF
+    u8 PRG2[PRG2_SIZE];
+#define PRG2_END 0xFFFF
     
 public:
+    bool PRG2_mirror = false;
     u8 read (memoryAdr adr);
     bool write (memoryAdr adr, u8 val); // devuelve true si se pudo escribir
-    //RAM(); //Hay que agregar Format como argumento cuando exista
+    RAM(); //Hay que agregar Format como argumento cuando exista
     
 private:
     realMemory toRealAdr (memoryAdr adr);
