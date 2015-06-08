@@ -23,7 +23,7 @@ string hex (u8 val) {
     return { h(k1), h(k2) };
 }
 
-inline int memToInt(memoryAdr adr) {
+int memToInt(memoryAdr adr) {
     return (adr.adrHigh << 8) | adr.adrLow;
 }
 

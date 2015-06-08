@@ -15,9 +15,9 @@ RAM r;
 
 int main(int argc, const char * argv[]) {
     string s = "";
-    cout<<"Ingrese read, write o quit"<<endl;
-    cin>>s;
     while (s != "quit") {
+        cout<<"Ingrese read, write o quit"<<endl;
+        cin>>s;
         memoryAdr adr;
         if (s == "read") {
             
@@ -58,8 +58,6 @@ int main(int argc, const char * argv[]) {
             cout<< (r.write(adr, val) ? "Se pudo escribir" : "No se pudo escribir") <<endl;
             
         } else cout<<"Valor ingresado no interpretable"<<endl;
-        cout<<"Ingrese read, write o quit"<<endl;
-        cin>>s;
     }
     return 0;
 }

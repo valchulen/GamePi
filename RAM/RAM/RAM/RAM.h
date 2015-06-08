@@ -32,6 +32,7 @@ class RAM {
 #define REGS_V_END 0x3FFF
     
 #define REGS_A_START 0x4000
+#define REGS_A_MASK 0x17
     u8 A_4000 = 0x00;
     u8 A_4001 = 0x00;
     u8 A_4002 = 0x00;
