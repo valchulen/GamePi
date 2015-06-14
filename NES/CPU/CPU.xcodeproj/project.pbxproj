@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6076A2A51B2B203C00D1161B /* NES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6076A2A31B2B203C00D1161B /* NES.cpp */; };
 		60E227F71B261B540077DD42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60E227F61B261B540077DD42 /* main.cpp */; };
 		60E228071B261C190077DD42 /* RAM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60E228031B261C190077DD42 /* RAM.cpp */; };
 		60E228081B261C190077DD42 /* Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60E228051B261C190077DD42 /* Types.cpp */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6076A2A31B2B203C00D1161B /* NES.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NES.cpp; sourceTree = "<group>"; };
+		6076A2A41B2B203C00D1161B /* NES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NES.h; sourceTree = "<group>"; };
 		60E227F31B261B540077DD42 /* CPU */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E227F61B261B540077DD42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		60E228031B261C190077DD42 /* RAM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RAM.cpp; sourceTree = "<group>"; };
@@ -68,6 +71,8 @@
 				60E228051B261C190077DD42 /* Types.cpp */,
 				60E228061B261C190077DD42 /* Types.h */,
 				60E227F61B261B540077DD42 /* main.cpp */,
+				6076A2A31B2B203C00D1161B /* NES.cpp */,
+				6076A2A41B2B203C00D1161B /* NES.h */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			files = (
 				60E228081B261C190077DD42 /* Types.cpp in Sources */,
 				60E228071B261C190077DD42 /* RAM.cpp in Sources */,
+				6076A2A51B2B203C00D1161B /* NES.cpp in Sources */,
 				60E227F71B261B540077DD42 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +253,7 @@
 				60E227FC1B261B540077DD42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
