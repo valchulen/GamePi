@@ -8,6 +8,29 @@
 
 #include "NES.h"
 #include "Types.h"
+using namespace std;
+
+void NES::exec(u8 intru) {
+    
+}
+void NES::nmi(){
+    
+}
+void NES::irq(){
+    
+}
+void NES::reset(){
+    this->PC = intToMem(0x8000-1);
+    this->A=0x00;
+    this->X=0x00;
+    this->Y=0x00;
+    this->X=0xFF;
+    this->flags = FLAG_RESET;
+}
+
+string NES::estado(){
+    return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow);
+}
 
 inline memoryAdr NES::realSP() { //hay que reducirlo
     memoryAdr adr;
@@ -17,7 +40,6 @@ inline memoryAdr NES::realSP() { //hay que reducirlo
 }
 
 void NES::setFlags(u8 flagsToSet, u8 res, bool carry){
-    
 }
 
 inline bool NES::cFlag() {
@@ -46,4 +68,10 @@ inline bool NES::oFlag() {
 
 inline bool NES::nFlag() {
     return (this->flags & N_FLAG);
+}
+NES::NES(RAM* ram){
+    reset();
+    this->ram = ram;
+}
+NES::~NES() {
 }

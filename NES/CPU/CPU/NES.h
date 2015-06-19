@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "RAM.h"
 #include "Types.h"
+using namespace std;
 
 class NES {
 #define C_FLAG 0x01
@@ -21,14 +22,19 @@ class NES {
 #define B_FLAG 0x10
 #define O_FLAG 0x40
 #define N_FLAG 0x80
+#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
     RAM* ram;
-    u8 flags = 0x00;
-    u8 A = 0x00, X = 0x00, Y = 0x00, SP;
+    u8 flags = FLAG_RESET;
+    u8 A = 0x00, X = 0x00, Y = 0x00, SP=0xFF;
     memoryAdr PC;
     //futuro: PPU* ppu;
     
 public:
     void exec (u8);
+    void nmi();
+    void irq();
+    void reset();
+    string estado();
     NES(RAM*);
     ~NES();
     
