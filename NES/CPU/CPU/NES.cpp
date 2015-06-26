@@ -19,6 +19,7 @@ void NES::nmi(){
 }
 
 void NES::irq(){
+    ahifnoandsoinan
     
 }
 
