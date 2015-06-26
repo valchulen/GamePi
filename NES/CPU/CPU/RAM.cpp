@@ -151,6 +151,10 @@ RAM::RAM (){
     for (int i = 0; i < RAM_D_SIZE; i++) {
         RAM_D[i] = 0x00;
     }
+    RAM_D[0x08] = 0xF7;
+    RAM_D[0x09] = 0xEF;
+    RAM_D[0x0A] = 0xDF;
+    RAM_D[0x0F] = 0xBF;
     //seteo UNK en 0x00 primero
     for (int i = 0; i < UNK_SIZE; i++) {
         UNK[i] = 0x00;

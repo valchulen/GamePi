@@ -17,6 +17,7 @@ typedef struct {
 } memoryAdr;
 typedef u8 * realMemory;
 
+
 char h (u8);
 std::string hex (u8);
 u8 toU8(const char *);

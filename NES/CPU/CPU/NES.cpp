@@ -13,12 +13,15 @@ using namespace std;
 void NES::exec(u8 intru) {
     
 }
+
 void NES::nmi(){
     
 }
+
 void NES::irq(){
     
 }
+
 void NES::reset(){
     this->PC = intToMem(0x8000-1);
     this->A=0x00;
@@ -29,7 +32,7 @@ void NES::reset(){
 }
 
 string NES::estado(){
-    return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow);
+    return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
 }
 
 inline memoryAdr NES::realSP() { //hay que reducirlo
@@ -39,7 +42,8 @@ inline memoryAdr NES::realSP() { //hay que reducirlo
     return adr;
 }
 
-void NES::setFlags(u8 flagsToSet, u8 res, bool carry){
+inline void NES::setFlags(u8 flags){
+    this->flags |= flags;
 }
 
 inline bool NES::cFlag() {

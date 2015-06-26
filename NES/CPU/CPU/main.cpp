@@ -15,6 +15,12 @@ NES nes(&r);
 
 
 int main(int argc, const char * argv[]) {
+    while (true) {
+        int a;
+        cin>>a;
+        memoryAdr val = intToMem(a);
+    }
+    
     string ins="";
     while(ins!="exit"){
         cout<<"Ingrese instru, interrupt, exit"<<endl;

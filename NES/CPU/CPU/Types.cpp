@@ -13,8 +13,8 @@ using namespace std;
 
 memoryAdr intToMem (int m){ //hay que verificar que funcione
     memoryAdr mem;
-    mem.adrHigh = (m & 0xFF)>>8;
-    mem.adrLow =((m>>16) & 0xFF00)>>8;
+    mem.adrHigh = (m & 0xFF00) >> 8;
+    mem.adrLow = m & 0xFF;
     return mem;
 }
 
