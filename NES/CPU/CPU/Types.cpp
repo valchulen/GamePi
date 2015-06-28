@@ -11,7 +11,7 @@
 
 using namespace std;
 
-memoryAdr intToMem (int m){ //hay que verificar que funcione
+memoryAdr intToMem (int m){ //funciona posta!!!
     memoryAdr mem;
     mem.adrHigh = (m & 0xFF00) >> 8;
     mem.adrLow = m & 0xFF;
