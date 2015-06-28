@@ -19,19 +19,30 @@ void NES::nmi(){
 }
 
 void NES::irq(){
-    ahifnoandsoinan
+    
     
 }
-
 void NES::reset(){
     this->PC = intToMem(0x8000-1);
     this->A=0x00;
     this->X=0x00;
     this->Y=0x00;
-    this->X=0xFF;
+    this->SP=0xFF;
     this->flags = FLAG_RESET;
 }
-
+void NES::init(){
+    
+}
+u8 NES::popStack(){
+    ++SP;
+    SP &= 0xff;
+    return ram->read(intToMem(0x100 + SP));
+}
+void NES::pushStack(u8 val){
+    ram->write(intToMem((0x100 + (SP & 0xff))), val);
+    SP--;
+    SP &= 0xff;
+}
 string NES::estado(){
     return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
 }

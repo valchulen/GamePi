@@ -34,6 +34,9 @@ public:
     void nmi();
     void irq();
     void reset();
+    void init();
+    u8 popStack();
+    void pushStack(u8);
     string estado();
     NES(RAM*);
     ~NES();
