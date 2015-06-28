@@ -15,23 +15,38 @@ void NES::exec(u8 intru) {
 }
 
 void NES::nmi(){
+    pushStack(PC.adrHigh);
+    pushStack(PC.adrLow);
+    pushStack(flags);
+    //disble interrupt flag
+    
+    u8 v1=0x33;
+    u8 v2=0x44;
+    ram->write(intToMem(0x2001),v1);
+    ram->write(intToMem(0x2000), v2);
+    this->PC = intToMem((ram->read(intToMem(0x2001)) << 8) | ram->read(intToMem(0x2000)));//para debug
+    
+    //this->PC = intToMem((ram->read(intToMem(0xFFFB)) << 8) | ram->read(intToMem(0xFFFA)));
     
 }
 
 void NES::irq(){
-    
-    
+    pushStack(PC.adrHigh);
+    pushStack(PC.adrLow);
+    pushStack(flags);
+    this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
 void NES::reset(){
-    this->PC = intToMem(0x8000-1);
+    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
+}
+void NES::init(){
+    //Borar memoria
     this->A=0x00;
     this->X=0x00;
     this->Y=0x00;
     this->SP=0xFF;
     this->flags = FLAG_RESET;
-}
-void NES::init(){
-    
+    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
 u8 NES::popStack(){
     ++SP;
@@ -44,7 +59,7 @@ void NES::pushStack(u8 val){
     SP &= 0xff;
 }
 string NES::estado(){
-    return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
+    return "A: "+hex(this->A)+ " X: "+hex(this->X)+ " Y: "+hex(this->Y)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
 }
 
 inline memoryAdr NES::realSP() { //hay que reducirlo

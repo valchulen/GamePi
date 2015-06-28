@@ -20,23 +20,22 @@ int main(int argc, const char * argv[]) {
         cin>>a;
         memoryAdr val = intToMem(a);
     }*/
-    
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, interrupt, push, exit"<<endl;
+        cout<<"Ingrese instru, int, push, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
             nes.exec(0x20);
         }
-        else if (ins=="interrupt"){
-            int cual=0;
+        else if (ins=="int"){
+            string cual="";
             cout<<"Ingrese que interrupt"<<endl;
             cin>>cual;
-            if (cual==0)
+            if (cual=="nmi")
                 nes.nmi();
-            else if (cual==1)
+            else if (cual=="irq")
                 nes.irq();
-            else if (cual==2)
+            else if (cual=="reset")
                 nes.reset();
         }
         else if(ins=="push"){
