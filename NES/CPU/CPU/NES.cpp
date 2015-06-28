@@ -67,9 +67,11 @@ void NES::pushStack(u8 val){
     SP &= 0xff;
 }
 string NES::estado(){
-    return "A: "+hex(this->A)+ " X: "+hex(this->X)+ " Y: "+hex(this->Y)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
+    return "A: "+hex(this->A)+ " X: "+hex(this->X)+ " Y: "+hex(this->Y)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Flags: "+ eflags(flags);
 }
-
+string NES::eflags(u8 flag){
+    return "\n Negative flag: "+hex(flag>>7&0x01)+" \n Overflow Flag: "+ hex(flag>>6&0x01) +" \n Break Flag: "+ hex(flag>>4&0x01) +" \n Decimal Flag: "+ hex(flag>>3&0x01) +" \n Interrupt Flag: "+ hex(flag>>2&0x01) +" \n Zero Flag: "+ hex(flag>>1&0x01) +"\n Carry Flag: "+ hex(flag&0x01) +"\n";
+}
 inline memoryAdr NES::realSP() { //hay que reducirlo
     memoryAdr adr;
     adr.adrHigh = 0x01;

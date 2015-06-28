@@ -39,6 +39,7 @@ public:
     u8 popStack();
     void pushStack(u8);
     string estado();
+    string eflags(u8);
     NES(RAM*);
     ~NES();
     
