@@ -18,7 +18,7 @@ void NES::nmi(){
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
     pushStack(flags);
-    //disble interrupt flag
+    //disble interrupt flag ?
     
     u8 v1=0x33;
     u8 v2=0x44;
@@ -33,6 +33,8 @@ void NES::nmi(){
 void NES::irq(){
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
+    //b flag en 0
+    //disble interrupt flag ?
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
@@ -40,13 +42,13 @@ void NES::reset(){
     this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
 void NES::init(){
-    //Borar memoria
+    /*//Borar memoria
     this->A=0x00;
     this->X=0x00;
     this->Y=0x00;
     this->SP=0xFF;
     this->flags = FLAG_RESET;
-    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
+    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));*/
 }
 u8 NES::popStack(){
     ++SP;
@@ -101,7 +103,6 @@ inline bool NES::nFlag() {
     return (this->flags & N_FLAG);
 }
 NES::NES(RAM* ram){
-    reset();
     this->ram = ram;
 }
 NES::~NES() {

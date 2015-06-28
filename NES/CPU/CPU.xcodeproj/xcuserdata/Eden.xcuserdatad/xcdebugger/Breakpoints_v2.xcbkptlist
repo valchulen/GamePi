@@ -24,11 +24,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CPU/NES.cpp"
-            timestampString = "457198278.019654"
+            timestampString = "457199930.510034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "NES::nFlag()"
             landmarkType = "5">
          </BreakpointContent>
@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CPU/NES.cpp"
-            timestampString = "457198278.019654"
+            timestampString = "457199930.510034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "NES::NES(RAM* ram)"
             landmarkType = "5">
          </BreakpointContent>
@@ -76,6 +76,22 @@
             startingLineNumber = "15"
             endingLineNumber = "15"
             landmarkName = "RAM::read(memoryAdr adr)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CPU/NES.cpp"
+            timestampString = "457200527.569275"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "NES::reset()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
