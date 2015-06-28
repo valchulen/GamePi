@@ -33,6 +33,7 @@ public:
     void exec (u8);
     void nmi();
     void irq();
+    void brk();
     void reset();
     void init();
     u8 popStack();

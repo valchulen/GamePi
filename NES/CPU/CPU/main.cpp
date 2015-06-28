@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
         }
         else if (ins=="int"){
             string cual="";
-            cout<<"Ingrese que interrupt: nmi, irq, reset"<<endl;
+            cout<<"Ingrese que interrupt: nmi, irq, brk, reset"<<endl;
             cin>>cual;
             if (cual=="nmi")
                 nes.nmi();
@@ -37,6 +37,8 @@ int main(int argc, const char * argv[]) {
                 nes.irq();
             else if (cual=="reset")
                 nes.reset();
+            else if(cual=="brk")
+                nes.brk();
             else
                 cout<<"Error"<<endl;
         }

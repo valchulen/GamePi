@@ -27,7 +27,6 @@ void NES::nmi(){
     this->PC = intToMem((ram->read(intToMem(0x2001)) << 8) | ram->read(intToMem(0x2000)));//para debug
     
     //this->PC = intToMem((ram->read(intToMem(0xFFFB)) << 8) | ram->read(intToMem(0xFFFA)));
-    
 }
 
 void NES::irq(){
@@ -38,7 +37,14 @@ void NES::irq(){
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
+void NES::brk(){
+    //b flag en 1
+    //disble interrupt flag ?
+    irq();
+}
 void NES::reset(){
+    //PC.adrLow=ram->read(intToMem(0xFFFC));
+    //PC.adrHigh=ram->read(intToMem(0xFFFD));
     this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
 void NES::init(){
