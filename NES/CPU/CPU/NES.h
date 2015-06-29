@@ -23,20 +23,149 @@ class NES {
 #define O_FLAG 0x40
 #define N_FLAG 0x80
 #define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
-    RAM* ram;
-    u8 flags = FLAG_RESET;
-    u8 A = 0x00, X = 0x00, Y = 0x00, SP=0xFF;
+    //Registros
+    u8 A = 0x00;
+    u8 X = 0x00;
+    u8 Y = 0x00;
+    u8 SP = 0xFF;
     memoryAdr PC;
+    u8 flags = FLAG_RESET;
+    
+    RAM* ram;
+    
+    int instr_longitud[256] = { //incluyendo opcode
+        //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+        2,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 0
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 1
+        3,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 2
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 3
+        2,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 4
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 5
+        1,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 6
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 7
+        2,2,2,2,2,2,2,2,1,2,1,2,3,3,3,3,// 8
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 9
+        2,2,2,2,2,2,2,2,1,2,1,2,3,3,3,3,// A
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// B
+        2,2,2,2,2,2,2,2,1,2,1,2,3,3,3,3,// C
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// D
+        2,2,2,2,2,2,2,2,1,2,1,2,3,3,3,3,// E
+        2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// F
+    };
+    int cycleCount[256] = { //ciclos de ins incluyendo opcode
+        //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+        7,6,1,8,3,3,5,5,3,2,2,2,4,4,6,6,// 0
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// 1
+        6,6,1,8,3,3,5,5,4,2,2,2,4,4,6,6,// 2
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// 3
+        6,6,1,8,3,3,5,5,3,2,2,2,3,4,6,6,// 4
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// 5
+        6,6,1,8,3,3,5,5,4,2,2,2,5,4,6,6,// 6
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// 7
+        2,6,2,6,3,3,3,3,2,2,2,2,4,4,4,4,// 8
+        2,6,1,6,4,4,4,4,2,5,2,3,3,5,3,5,// 9
+        2,6,2,6,3,3,3,3,2,2,2,2,4,4,4,4,// A
+        2,5,1,5,4,4,4,4,2,4,2,4,4,4,4,4,// B
+        2,6,2,8,3,3,5,5,2,2,2,2,4,4,6,6,// C
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// D
+        2,6,2,8,3,3,5,5,2,2,2,2,4,4,6,6,// E
+        2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// F
+    };
+    
     //futuro: PPU* ppu;
     
 public:
-    void exec (u8);
-    void nmi();
-    void irq();
-    void reset();
-    string estado();
     NES(RAM*);
     ~NES();
+    
+    //Interrupts
+    void nmi();
+    void irq();
+    void brk();
+    void reset();
+    void init();
+    
+    //Stack
+    u8 popStack();
+    void pushStack(u8);
+    
+    //Tipos de direccionamiento
+    memoryAdr abs();
+    memoryAdr absX();
+    memoryAdr absY();
+    memoryAdr accu();
+    memoryAdr imm();
+    memoryAdr imp();
+    memoryAdr ind();
+    memoryAdr indX();
+    memoryAdr indY();
+    memoryAdr rel();
+    memoryAdr zp();
+    memoryAdr zpX();
+    memoryAdr zpY();
+    
+    //Instrucciones
+    void exec (u8);
+    void adc(memoryAdr);
+    void And(memoryAdr);
+    void asl(memoryAdr);
+    void bcc(memoryAdr);
+    void bcs(memoryAdr);
+    void beq(memoryAdr);
+    void bit(memoryAdr);
+    void bmi(memoryAdr);
+    void bne(memoryAdr);
+    void bpl(memoryAdr);
+    void brk(memoryAdr);
+    void bvc(memoryAdr);
+    void bvs(memoryAdr);
+    void clc(memoryAdr);
+    void cld(memoryAdr);
+    void cli(memoryAdr);
+    void clv(memoryAdr);
+    void cmp(memoryAdr);
+    void cpx(memoryAdr);
+    void cpy(memoryAdr);
+    void dec(memoryAdr);
+    void dex(memoryAdr);
+    void dey(memoryAdr);
+    void eor(memoryAdr);
+    void inc(memoryAdr);
+    void inx(memoryAdr);
+    void iny(memoryAdr);
+    void jmp(memoryAdr);
+    void jsr(memoryAdr);
+    void lda(memoryAdr);
+    void ldx(memoryAdr);
+    void ldy(memoryAdr);
+    void lsr(memoryAdr);
+    void nop(memoryAdr);
+    void ora(memoryAdr);
+    void pha(memoryAdr);
+    void php(memoryAdr);
+    void pla(memoryAdr);
+    void plp(memoryAdr);
+    void rol(memoryAdr);
+    void ror(memoryAdr);
+    void rti(memoryAdr);
+    void rts(memoryAdr);
+    void sbc(memoryAdr);
+    void sec(memoryAdr);
+    void sed(memoryAdr);
+    void sei(memoryAdr);
+    void sta(memoryAdr);
+    void stx(memoryAdr);
+    void sty(memoryAdr);
+    void tax(memoryAdr);
+    void tay(memoryAdr);
+    void tsx(memoryAdr);
+    void txa(memoryAdr);
+    void txs(memoryAdr);
+    void tya(memoryAdr);
+    
+    //Debug
+    string estado();
+    string eflags(u8);
     
 private:
     void setFlags(u8, u8);

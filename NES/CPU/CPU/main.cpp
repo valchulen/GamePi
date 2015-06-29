@@ -15,81 +15,33 @@ RAM r;
 NES nes(&r);
 
 int main(int argc, const char * argv[]) {
-    
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, interrupt o exit"<<endl;
+        cout<<"Ingrese instru, int, push, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
             nes.exec(0x20);
         }
-        else if (ins=="interrupt"){
-            int cual=0;
-            cout<<"Ingrese que interrupt"<<endl;
+        else if (ins=="int"){
+            string cual="";
+            cout<<"Ingrese que interrupt: nmi, irq, brk, reset"<<endl;
             cin>>cual;
-            if (cual==0){
+            if (cual=="nmi")
                 nes.nmi();
-            }
-            else if (cual==1){
+            else if (cual=="irq")
                 nes.irq();
-            }
-            else if (cual==2){
+            else if (cual=="reset")
                 nes.reset();
-            }
-        } /*else if (ins=="flags") {
-            u8 flags = 0x00, flagsToSet = 0x00;
-            char info = ' ';
-            while (info != 'E') {
-                cout<<"Ingrese flag a setear, o E para salir"<<endl;
-                cin>>info;
-                switch (info) {
-                    case 'C':
-                        cout<<"Ingrese 1 para setar el flag de carry"<<endl;
-                        flagsToSet |= C_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= C_FLAG;
-                        break;
-                    case 'Z':
-                        cout<<"Ingrese 1 para setar el flag de zero"<<endl;
-                        flagsToSet |= Z_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= Z_FLAG;
-                        break;
-                    case 'I':
-                        cout<<"Ingrese 1 para setar el flag de irq"<<endl;
-                        flagsToSet |= I_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= I_FLAG;
-                        break;
-                    case 'D':
-                        cout<<"Ingrese 1 para setar el flag de decimal"<<endl;
-                        flagsToSet |= D_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= D_FLAG;
-                        break;
-                    case 'B':
-                        cout<<"Ingrese 1 para setar el flag de break"<<endl;
-                        flagsToSet |= B_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= B_FLAG;
-                        break;
-                    case 'O':
-                        cout<<"Ingrese 1 para setar el flag de overflow"<<endl;
-                        flagsToSet |= O_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= O_FLAG;
-                        break;
-                    case 'N':
-                        cout<<"Ingrese 1 para setar el flag de negative"<<endl;
-                        flagsToSet |= N_FLAG;
-                        cin>>info;
-                        if (info == '1') flags |= N_FLAG;
-                        break;
-                }
-            }
-            nes.setFlags(flags, flagsToSet);
-            cout<<"Los flags ingresados son: 0x"<<hex(flagsToSet)<<" con el valor "<<hex(flags)<<endl;
-        }*/
+            else if(cual=="brk")
+                nes.brk();
+            else
+                cout<<"Error"<<endl;
+        }
+        else if(ins=="push"){
+            nes.pushStack(0xbc);
+            u8 val= nes.popStack();
+            cout<<"Valor popeado del stack: "<<hex(val)<<endl;
+        }
         cout<<nes.estado()<<endl;
     }
 }
