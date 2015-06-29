@@ -96,7 +96,7 @@ void NES::exec(u8 instru) {
             //asl(zpg(X));
             break;
         case 0x0e:
-            asl(abs());
+            //asl(abs());
             break;
         case 0x1e:
             asl(abs(X, dummy.ALWAYS));
@@ -241,85 +241,72 @@ void NES::exec(u8 instru) {
             eor(abs(Y, dummy.ONCARRY));
             break;
         case 0x41:
-        eor(indX());
-        break;
+            eor(indX());
+            break;
         case 0x51:
-        eor(indY(dummy.ONCARRY));
-        break;
+            eor(indY(dummy.ONCARRY));
+            break;
         // Flag set/clear
         case 0x18:
-        break;
+            break;
         case 0x38:
-        break;
+            break;
         case 0x58:
         //cli
-        break;
+            break;
         case 0x78:
         //sei
-        break;
+            break;
         case 0xb8:
-        break;
+            break;
         case 0xd8:
-        break;// decimal mode doesnt
+            break;
         case 0xf8:
-        break;// do anything on NES
+            break;
         // INC
         case 0xe6:
-        inc(zpg());
-        break;
+            inc(zpg());
+            break;
         case 0xf6:
-        inc(zpg(X));
-        break;
+            inc(zpg(X));
+            break;
         case 0xee:
-        inc(abs());
-        break;
+            inc(abs());
+            break;
         case 0xfe:
-        inc(abs(X, dummy.ALWAYS));
-        cycles += 7;
-        break;
+            inc(abs(X, dummy.ALWAYS));
+            break;
         // ISC (unofficial)
         case 0xe3:
-        isc(indX());
-        cycles += 8;
-        break;
+            isc(indX());
+            break;
         case 0xf3:
-        isc(indY(dummy.ALWAYS));
-        cycles += 8;
-        break;
+            isc(indY(dummy.ALWAYS));
+            break;
         case 0xe7:
-        isc(zpg());
-        cycles += 5;
-        break;
+        i   sc(zpg());
+            break;
         case 0xf7:
-        isc(zpg(X));
-        cycles += 6;
-        break;
+            isc(zpg(X));
+            break;
         case 0xfb:
-        isc(abs(Y, dummy.ALWAYS));
-        cycles += 7;
-        break;
+            isc(abs(Y, dummy.ALWAYS));
+            break;
         case 0xef:
-        isc(abs());
-        cycles += 6;
-        break;
+            isc(abs());
+            break;
         case 0xff:
-        isc(abs(X, dummy.ALWAYS));
-        cycles += 7;
-        break;
+            isc(abs(X, dummy.ALWAYS));
+            break;
         // JMP
         case 0x4c:
-        PC = abs();
-        cycles += 3;
-        break;
+            break;
         case 0x6c:
-        PC = ind();
-        cycles += 5;
-        break;
+            break;
         // JSR
         case 0x20:
-        jsr(abs());
-        cycles += 6;
-        break;
+            jsr(abs());
+            break;
         // KIL (unofficial)
         case 0x02:
         case 0x12:
@@ -333,138 +320,104 @@ void NES::exec(u8 instru) {
         case 0xb2:
         case 0xd2:
         case 0xf2:
-        System.err.println("KIL - CPU locked");
-        ram.apu.nes.runEmulation = false;
-        break;
         // LAS (unofficial)
         case 0xbb:
-        las(abs(Y, dummy.ONCARRY));
-        cycles += 4 + pb;
-        break;
+            las(abs(Y, dummy.ONCARRY));
+            break;
         // LAX (unofficial)
         case 0xa3:
         lax(indX());
-        cycles += 6;
         break;
         case 0xb3:
         lax(indY(dummy.ONCARRY));
-        cycles += 5 + pb;
         break;
         case 0xa7:
         lax(zpg());
-        cycles += 3;
         break;
         case 0xb7:
         lax(zpg(Y));
-        cycles += 4;
         break;
         case 0xab:
         lax(imm());
-        cycles += 2;
         break;
         case 0xaf:
         lax(abs());
-        cycles += 4;
         break;
         case 0xbf:
         lax(abs(Y, dummy.ONCARRY));
-        cycles += 4 + pb;
         break;
         // LDA
         case 0xa9:
         lda(imm());
-        cycles += 2;
         break;
         case 0xa5:
         lda(zpg());
-        cycles += 3;
         break;
         case 0xb5:
         lda(zpg(X));
-        cycles += 4;
         break;
         case 0xad:
         lda(abs());
-        cycles += 4;
         break;
         case 0xbd:
         lda(abs(X, dummy.ONCARRY));
-        cycles += 4 + pb;
         break;
         case 0xb9:
         lda(abs(Y, dummy.ONCARRY));
-        cycles += 4 + pb;
         break;
         case 0xa1:
         lda(indX());
-        cycles += 6;
         break;
         case 0xb1:
         lda(indY(dummy.ONCARRY));
-        cycles += 5 + pb;
         break;
         // LDX
         case 0xa2:
         ldx(imm());
-        cycles += 2;
         break;
         case 0xa6:
         ldx(zpg());
-        cycles += 3;
         break;
         case 0xb6:
         ldx(zpg(Y));
-        cycles += 4;
         break;
         case 0xae:
         ldx(abs());
-        cycles += 4;
         break;
         case 0xbe:
         ldx(abs(Y, dummy.ONCARRY));
-        cycles += 4 + pb;
         break;
         // LDY
         case 0xa0:
         ldy(imm());
-        cycles += 2;
         break;
         case 0xa4:
         ldy(zpg());
-        cycles += 3;
         break;
         case 0xb4:
         ldy(zpg(X));
-        cycles += 4;
         break;
         case 0xac:
         ldy(abs());
-        cycles += 4;
         break;
         case 0xbc:
         ldy(abs(X, dummy.ONCARRY));
-        cycles += 4 + pb;
         break;
         // LSR
         case 0x4a:
         lsrA();
-        cycles += 2;
         break;
         case 0x46:
         lsr(zpg());
-        cycles += 5;
         break;
         case 0x56:
         lsr(zpg(X));
-        cycles += 6;
         break;
         case 0x4e:
         lsr(abs());
-        cycles += 6;
         break;
         case 0x5e:
         lsr(abs(X, dummy.ALWAYS));
-        cycles += 7;
         break;
         // NOP
         case 0x1a:
@@ -860,16 +813,16 @@ void NES::exec(u8 instru) {
         break;
         case 0x28:
         //plp
-        break;
+            break;
         // STX
         case 0x86:
-        stx(zpg());
-        break;
+            stx(zpg());
+            break;
         case 0x96:
-        stx(zpg(Y));
-        break;
-            case 0x8E:
-        stx(abs());
+            stx(zpg(Y));
+            break;
+        case 0x8E:
+            stx(abs());
             break;
         // STY
         case 0x84:
