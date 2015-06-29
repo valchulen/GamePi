@@ -24,11 +24,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CPU/NES.cpp"
-            timestampString = "457231672.318916"
+            timestampString = "457235309.080871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "857"
-            endingLineNumber = "857">
+            startingLineNumber = "890"
+            endingLineNumber = "890"
+            landmarkName = "NES::oFlag()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -38,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CPU/NES.cpp"
-            timestampString = "457231672.318916"
+            timestampString = "457235309.080871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "858"
-            endingLineNumber = "858"
+            startingLineNumber = "891"
+            endingLineNumber = "891"
             landmarkName = "NES::nFlag()"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,11 +86,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CPU/NES.cpp"
-            timestampString = "457231672.318916"
+            timestampString = "457235309.080871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "790"
-            endingLineNumber = "790"
+            startingLineNumber = "833"
+            endingLineNumber = "833"
             landmarkName = "NES::brk()"
             landmarkType = "5">
          </BreakpointContent>

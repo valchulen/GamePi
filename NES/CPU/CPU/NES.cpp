@@ -10,6 +10,12 @@
 #include "Types.h"
 using namespace std;
 
+NES::NES(RAM* ram){
+    this->ram = ram;
+}
+NES::~NES() {
+}
+
 void NES::exec(u8 instru) {
     
     switch (instru) {
@@ -93,6 +99,7 @@ void NES::exec(u8 instru) {
         case 0x2c:
             //bit(abs());
             break;
+        
         // Branches: every branch uses rel. addressing
         case 0x10:
             //branch(!negativeFlag);
@@ -745,6 +752,19 @@ void NES::exec(u8 instru) {
         break;
     }
 }
+
+//---Intrucciones---
+void NES::adc(memoryAdr adr){
+    
+}
+void NES::And(memoryAdr adr){
+    
+}
+void NES::asl(memoryAdr adr){
+    
+}
+
+//---Tipos de direccionamiento---
 memoryAdr NES::abs(){
     return PC;
 }
@@ -785,6 +805,7 @@ memoryAdr NES::zpY(){
     return PC;
 }
 
+//---Interrupciones---
 void NES::nmi(){
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
@@ -799,7 +820,6 @@ void NES::nmi(){
     
     //this->PC = intToMem((ram->read(intToMem(0xFFFB)) << 8) | ram->read(intToMem(0xFFFA)));
 }
-
 void NES::irq(){
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
@@ -814,19 +834,19 @@ void NES::brk(){
     irq();
 }
 void NES::reset(){
-    //PC.adrLow=ram->read(intToMem(0xFFFC));
-    //PC.adrHigh=ram->read(intToMem(0xFFFD));
     this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
 void NES::init(){
-    /*//Borar memoria
+    //Borar memoria
     this->A=0x00;
     this->X=0x00;
     this->Y=0x00;
     this->SP=0xFF;
     this->flags = FLAG_RESET;
-    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));*/
+    this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
+
+//---Stack---
 u8 NES::popStack(){
     ++SP;
     SP &= 0xff;
@@ -837,52 +857,44 @@ void NES::pushStack(u8 val){
     SP--;
     SP &= 0xff;
 }
+
+//---Debug---
 string NES::estado(){
     return "A: "+hex(this->A)+ " X: "+hex(this->X)+ " Y: "+hex(this->Y)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Flags: "+ eflags(flags);
 }
 string NES::eflags(u8 flag){
     return "\n Negative flag: "+hex(flag>>7&0x01)+" \n Overflow Flag: "+ hex(flag>>6&0x01) +" \n Break Flag: "+ hex(flag>>4&0x01) +" \n Decimal Flag: "+ hex(flag>>3&0x01) +" \n Interrupt Flag: "+ hex(flag>>2&0x01) +" \n Zero Flag: "+ hex(flag>>1&0x01) +"\n Carry Flag: "+ hex(flag&0x01) +"\n";
 }
-inline memoryAdr NES::realSP() { //hay que reducirlo
+
+//---Flags---
+inline void NES::setFlags(u8 flags){
+    this->flags |= flags;
+}
+inline bool NES::cFlag() {
+    return (this->flags & C_FLAG);
+}
+inline bool NES::zFlag() {
+    return (this->flags & Z_FLAG);
+}
+inline bool NES::iFlag() {
+    return (this->flags & I_FLAG);
+}
+inline bool NES::dFlag() {
+    return (this->flags & D_FLAG);
+}
+inline bool NES::bFlag() {
+    return (this->flags & B_FLAG);
+}
+inline bool NES::oFlag() {
+    return (this->flags & O_FLAG);
+}
+inline bool NES::nFlag() {
+    return (this->flags & N_FLAG);
+}
+
+inline memoryAdr NES::realSP() { //hay que reducirlo -- creo que no hace falta
     memoryAdr adr;
     adr.adrHigh = 0x01;
     adr.adrLow = this->SP & 0xFF;
     return adr;
-}
-
-inline void NES::setFlags(u8 flags){
-    this->flags |= flags;
-}
-
-inline bool NES::cFlag() {
-    return (this->flags & C_FLAG);
-}
-
-inline bool NES::zFlag() {
-    return (this->flags & Z_FLAG);
-}
-
-inline bool NES::iFlag() {
-    return (this->flags & I_FLAG);
-}
-
-inline bool NES::dFlag() {
-    return (this->flags & D_FLAG);
-}
-
-inline bool NES::bFlag() {
-    return (this->flags & B_FLAG);
-}
-
-inline bool NES::oFlag() {
-    return (this->flags & O_FLAG);
-}
-
-inline bool NES::nFlag() {
-    return (this->flags & N_FLAG);
-}
-NES::NES(RAM* ram){
-    this->ram = ram;
-}
-NES::~NES() {
 }
