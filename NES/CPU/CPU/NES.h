@@ -40,6 +40,19 @@ public:
     void pushStack(u8);
     string estado();
     string eflags(u8);
+    void abs();
+    void absX();
+    void absY();
+    void accu();
+    void imm();
+    void imp();
+    void ind();
+    void indX();
+    void indY();
+    void rel();
+    void zp();
+    void zpX();
+    void zpY();
     NES(RAM*);
     ~NES();
     

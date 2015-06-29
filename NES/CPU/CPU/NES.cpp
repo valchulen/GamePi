@@ -14,83 +14,61 @@ void NES::exec(u8 instru) {
     
     switch (instru) {
         // ADC
-        case 0x69:
-            //adc(imm());
+        case 0x61:
+            //adc(indX());
             break;
         case 0x65:
             //adc(zpg());
             break;
-        case 0x75:
-            //adc(zpg(X));
+        case 0x69:
+            //adc(imm());
             break;
-        case 0x6d:
+        case 0x6D:
             //adc(abs());
-            break;
-        case 0x7d:
-            //adc(abs(X, dummy.ONCARRY));
-            break;
-        case 0x79:
-            //adc(abs(Y, dummy.ONCARRY));
-            break;
-        case 0x61:
-            //adc(indX());
             break;
         case 0x71:
             //adc(indY());
             break;
-        // AHX (unofficial)
-        case 0x93:
-            //ahx(indY(dummy.ALWAYS));
+        case 0x75:
+            //adc(zpg(X));
             break;
-        case 0x9f:
-            //ahx(abs(Y, dummy.ALWAYS));
+        case 0x79:
+            //adc(abs(Y, dummy.ONCARRY));
             break;
-        // ALR (unofficial)
-        case 0x4b:
-            //alr(imm());
-            break;
-        // ANC (unofficial)
-        case 0x0b:
-            //anc(imm());
-            break;
-        case 0x2b:
-            //anc(imm());
+        case 0x7D:
+            //adc(abs(X, dummy.ONCARRY));
             break;
         // AND
-        case 0x29:
-            //and(imm());
+        case 0x21:
+            //And(indX());
             break;
         case 0x25:
-            //and(zpg());
+            //And(zpg());
             break;
-        case 0x35:
-            //and(zpg(X));
+        case 0x29:
+            //And(imm());
             break;
         case 0x2D:
-            //and(abs());
-            break;
-        case 0x3D:
-            //and(abs(X, dummy.ONCARRY));
-            break;
-        case 0x39:
-            //and(abs(Y, dummy.ONCARRY));
-            break;
-        case 0x21:
-            //and(indX());
+            //And(abs());
             break;
         case 0x31:
-            //and(indY(dummy.ONCARRY));
+            //And(indY(dummy.ONCARRY));
             break;
-        // ARR (unofficial)
-        case 0x6b:
-            //arr(imm());
+        case 0x35:
+            //And(zpg(X));
+            break;
+        case 0x39:
+            //And(abs(Y, dummy.ONCARRY));
+            break;
+        case 0x3D:
+            //And(abs(X, dummy.ONCARRY));
             break;
         // ASL
-        case 0x0A:
-            //aslA();
-            break;
         case 0x06:
             //asl(zpg());
+            break;
+        case 0x0A:
+            //aslA();
             break;
         case 0x16:
             //asl(zpg(X));
@@ -743,8 +721,44 @@ void NES::exec(u8 instru) {
             //illegal opcode
         break;
     }
+}
+void NES::abs(){
     
-
+}
+void NES::absX(){
+    
+}
+void NES::absY(){
+    
+}
+void NES::accu(){
+    
+}
+void NES::imm(){
+    
+}
+void NES::imp(){
+    
+}
+void NES::ind(){
+    
+}
+void NES::indX(){
+    
+}
+void NES::indY(){
+    
+}
+void NES::rel(){
+    
+}
+void NES::zp(){
+    
+}
+void NES::zpX(){
+    
+}
+void NES::zpY(){
     
 }
 
