@@ -89,7 +89,7 @@ public:
     u8 popStack();
     void pushStack(u8);
     
-    //Tipos de direccionamiento
+    //Tipos de direccionamiento, si devuelve null es accumulator
     memoryAdr abs();
     memoryAdr absX();
     memoryAdr absY();
@@ -170,7 +170,7 @@ public:
 private:
     void setFlags(u8, u8);
     inline memoryAdr realSP ();
-    inline bool cFlag();
+    inline bool cFlag(); //prendido true
     inline bool zFlag();
     inline bool iFlag();
     inline bool dFlag();

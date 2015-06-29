@@ -24,7 +24,7 @@ void NES::exec(u8 instru) {
             //adc(indX());
             break;
         case 0x65:
-            //adc(zpg());
+            //adc(zp());
             break;
         case 0x69:
             //adc(imm());
@@ -36,57 +36,59 @@ void NES::exec(u8 instru) {
             //adc(indY());
             break;
         case 0x75:
-            //adc(zpg(X));
+            //adc(zpX());
             break;
         case 0x79:
-            //adc(abs(Y, dummy.ONCARRY));
+            //adc(absY());
             break;
         case 0x7D:
-            //adc(abs(X, dummy.ONCARRY));
+            //adc(absX());
             break;
         
         //---AND---
         case 0x21:
-            //And(indX());
+            //And(imm());
             break;
         case 0x25:
-            //And(zpg());
+            //And(zp());
             break;
         case 0x29:
-            //And(imm());
+            //And(zpX());
             break;
         case 0x2D:
             //And(abs());
             break;
         case 0x31:
-            //And(indY(dummy.ONCARRY));
+            //And(abX());
             break;
         case 0x35:
-            //And(zpg(X));
+            //And(absY());
             break;
         case 0x39:
-            //And(abs(Y, dummy.ONCARRY));
+            //And(indX());
             break;
         case 0x3D:
-            //And(abs(X, dummy.ONCARRY));
+            //And(indY());
             break;
         
         //---ASL---
         case 0x06:
-            //asl(zpg());
+            //asl(acc());
             break;
         case 0x0A:
-            //aslA();
+            //aslA(zp());
             break;
+        case 0x0E:
+        //asl(zpX());
+        break;
         case 0x16:
-            //asl(zpg(X));
-            break;
-        case 0x0e:
             //asl(abs());
             break;
         case 0x1e:
-            //asl(abs(X, dummy.ALWAYS));
+            //asl(absX());
             break;
+        
+        
         // AXS (unofficial)
         case 0xcb:
             //axs(imm());
@@ -94,489 +96,337 @@ void NES::exec(u8 instru) {
         
         //---BIT---
         case 0x24:
-            //bit(zpg());
+            bit(zp());
             break;
         case 0x2c:
-            //bit(abs());
+            bit(abs());
             break;
         
         // Branches: every branch uses rel. addressing
         case 0x10:
-            //branch(!negativeFlag);
+            bpl(rel());
             break;
         case 0x30:
-            //branch(negativeFlag);
+            bmi(rel());
             break;
         case 0x50:
-            //branch(!overflowFlag);
+            bvc(rel());
             break;
         case 0x70:
-            //branch(overflowFlag);
+            bvs(rel());
             break;
         case 0x90:
-            //branch(!carryFlag);
+            bcc(rel());
             break;
         case 0xB0:
-            //branch(carryFlag);
+            bcs(rel());
             break;
         case 0xD0:
-            //branch(!zeroFlag);
+            bne(rel());
             break;
         case 0xF0:
-            //branch(zeroFlag);
+            beq(rel());
             break;
         
         //---BRK---
         case 0x00:
-            //breakinterrupt();
+            brk();
             break;
         
         //---CMP---
-        case 0xc9:
-            //cmp(A, imm());
-            break;
+        case 0xc1:
+        cmp(imm());
+        break;
         case 0xc5:
-            //cmp(A, zpg());
-            break;
-        case 0xd5:
-            //cmp(A, zpg(X));
+        //cmp(zp());
+        break;
+        case 0xc9:
+            //cmp(zpX());
             break;
         case 0xcd:
-            //cmp(A, abs());
-            break;
-        case 0xdd:
-            //cmp(A, abs(X, dummy.ONCARRY));
+        //cmp(abs());
+        break;
+        case 0xd1:
+        //cmp(absX());
+        break;
+        case 0xd5:
+            //cmp(absY());
             break;
         case 0xd9:
-            //cmp(A, abs(Y, dummy.ONCARRY));
+        //cmp(indX());
+        break;
+        case 0xdd:
+            //cmp(indY());
             break;
-        case 0xc1:
-            //cmp(A, indX());
-            break;
-        case 0xd1:
-            //cmp(A, indY(dummy.ONCARRY));
-            break;
+
+
         
         //---CPX---
         case 0xe0:
-            //cmp(X, imm());
+            cpx(imm());
             break;
         case 0xe4:
-            //cmp(X, zpg());
+            //cpx(zp());
             break;
         case 0xec:
-            //cmp(X, abs());
+            //cpx(abs());
             break;
         
         //---CPY---
         case 0xc0:
-            //cmp(Y, imm());
+            //cpy(imm());
             break;
         case 0xc4:
-            //cmp(Y, zpg());
+            //cpy(zp());
             break;
         case 0xcc:
-            //cmp(Y, abs());
+            //cpy(abs());
             break;
         
         //---DEC---
         case 0xc6:
-            //dec(zpg());
+            //dec(zp());
             break;
         case 0xd6:
-            //dec(zpg(X));
+            //dec(zpgX());
             break;
         case 0xce:
             //dec(abs());
             break;
         case 0xde:
-            //dec(abs(X, dummy.ALWAYS));
+            //dec(absX());
             break;
-        // DCP (unofficial)
-        case 0xc3:
-            //dcp(A, indX());
-            break;
-        case 0xd3:
-            //dcp(A, indY(dummy.ALWAYS));
-            break;
-        case 0xc7:
-            //dcp(A, zpg());
-            break;
-        case 0xd7:
-            //dcp(A, zpg(X));
-            break;
-        case 0xdb:
-            //dcp(A, abs(Y, dummy.ALWAYS));
-            break;
-        case 0xcf:
-            //dcp(A, abs());
-            break;
-        case 0xdf:
-            //dcp(A, abs(X, dummy.ALWAYS));
-            break;
+        //DEX
+        case 0xca:
+        //dex();
+        break;
+        //DEY
+        case 0x88:
+        //dey();
+        break;
         
         //---EOR---
-        case 0x49:
-            //eor(imm());
-            break;
+        case 0x41:
+        eor(imm());
+        break;
         case 0x45:
-            //eor(zpg());
-            break;
-        case 0x55:
-            //eor(zpg(X));
+        eor(zp());
+        break;
+        case 0x49:
+            eor(zpX());
             break;
         case 0x4d:
-            //eor(abs());
-            break;
-        case 0x5d:
-            //eor(abs(X, dummy.ONCARRY));
+            eor(abs());
+        break;
+        case 0x51:
+            eor(absX());
+        break;
+        case 0x55:
+            eor(absY());
             break;
         case 0x59:
-            //eor(abs(Y, dummy.ONCARRY));
+            eor(indX());
+        break;
+        case 0x5d:
+            eor(indY());
             break;
-        case 0x41:
-            //eor(indX());
-            break;
-        case 0x51:
-            //eor(indY(dummy.ONCARRY));
-            break;
-        // Flag set/clear
-        case 0x18:
-            break;
-        case 0x38:
-            break;
-        case 0x58:
-        //cli
-            break;
-        case 0x78:
-        //sei
-            break;
-        case 0xb8:
-            break;
-        case 0xd8:
-            break;
-        case 0xf8:
             break;
         
         //---INC---
         case 0xe6:
-            //inc(zpg());
-            break;
-        case 0xf6:
-            //inc(zpg(X));
+            inc(zp());
             break;
         case 0xee:
-            //inc(abs());
+            inc(zpX());
+            break;
+        case 0xf6:
+            inc(abs());
             break;
         case 0xfe:
-            //inc(abs(X, dummy.ALWAYS));
+        inc(absX());
             break;
-        // ISC (unofficial)
-        case 0xe3:
-            //isc(indX());
-            break;
-        case 0xf3:
-            //isc(indY(dummy.ALWAYS));
-            break;
-        case 0xe7:
-           //sc(zpg());
-            break;
-        case 0xf7:
-            //isc(zpg(X));
-            break;
-        case 0xfb:
-            //isc(abs(Y, dummy.ALWAYS));
-            break;
-        case 0xef:
-            //isc(abs());
-            break;
-        case 0xff:
-            //isc(abs(X, dummy.ALWAYS));
-            break;
+        
+        //INX
+        case 0xe8:
+        //inx();
+        break;
+        //INY
+        case 0xc8:
+        //iny();
+        break;
+        
         //---JMP---
         case 0x4c:
+        jmp(abs());
             break;
         case 0x6c:
+        jmp(ind());
             break;
         
         //---JSR---
         case 0x20:
-            //jsr(abs());
-            break;
-        // KIL (unofficial)
-        case 0x02:
-        case 0x12:
-        case 0x22:
-        case 0x32:
-        case 0x42:
-        case 0x52:
-        case 0x62:
-        case 0x72:
-        case 0x92:
-        case 0xb2:
-        case 0xd2:
-        case 0xf2:
-        // LAS (unofficial)
-        case 0xbb:
-            //las(abs(Y, dummy.ONCARRY));
-            break;
-        // LAX (unofficial)
-        case 0xa3:
-            //lax(indX());
-            break;
-        case 0xb3:
-            //lax(indY(dummy.ONCARRY));
-            break;
-        case 0xa7:
-            //lax(zpg());
-            break;
-        case 0xb7:
-            //lax(zpg(Y));
-            break;
-        case 0xab:
-            //lax(imm());
-            break;
-        case 0xaf:
-            //lax(abs());
-            break;
-        case 0xbf:
-            //lax(abs(Y, dummy.ONCARRY));
+            jsr(abs());
             break;
         
         //---LDA---
-        case 0xa9:
-            //lda(imm());
+        case 0xa1:
+            lda(imm());
             break;
         case 0xa5:
-            //lda(zpg());
+            lda(zp());
             break;
-        case 0xb5:
-            //lda(zpg(X));
+        case 0xa9:
+            lda(zpX());
             break;
         case 0xad:
-            //lda(abs());
-            break;
-        case 0xbd:
-            //lda(abs(X, dummy.ONCARRY));
-            break;
-        case 0xb9:
-            //lda(abs(Y, dummy.ONCARRY));
-            break;
-        case 0xa1:
-            //lda(indX());
+            lda(abs());
             break;
         case 0xb1:
-            //lda(indY(dummy.ONCARRY));
+            lda(absX());
+            break;
+        case 0xb5:
+            lda(absY());
+            break;
+        case 0xb9:
+            lda(indX());
+            break;
+        case 0xbd:
+            lda(indY());
             break;
         
         //---LDX---
         case 0xa2:
-            //ldx(imm());
+            ldx(imm());
             break;
         case 0xa6:
-            //ldx(zpg());
-            break;
-        case 0xb6:
-            //ldx(zpg(Y));
+            ldx(zp());
             break;
         case 0xae:
-            //ldx(abs());
+            ldx(zpY());
+            break;
+        case 0xb6:
+            ldx(abs());
             break;
         case 0xbe:
-            //ldx(abs(Y, dummy.ONCARRY));
+            ldx(absY());
             break;
         
         //---LDY---
         case 0xa0:
-            //ldy(imm());
+            ldy(imm());
             break;
         case 0xa4:
-            //ldy(zpg());
-            break;
-        case 0xb4:
-            //ldy(zpg(X));
+            ldy(zp());
             break;
         case 0xac:
-            //ldy(abs());
+            ldy(zpX());
+            break;
+        case 0xb4:
+            ldy(abs());
             break;
         case 0xbc:
-            //ldy(abs(X, dummy.ONCARRY));
+            ldy(absX());
             break;
         
         //---LSR---
-        case 0x4a:
-            //lsrA();
-            break;
         case 0x46:
-            //lsr(zpg());
+            lsr(accu());
             break;
-        case 0x56:
-            //lsr(zpg(X));
+        case 0x4a:
+            lsr(zp());
             break;
         case 0x4e:
-            //lsr(abs());
+            lsr(zpX());
+            break;
+        case 0x56:
+            lsr(abs());
             break;
         case 0x5e:
-            //lsr(abs(X, dummy.ALWAYS));
+            lsr(absX());
             break;
         
-        //---NOP---
-        case 0x1a:
-        case 0x3a:
-        case 0x5a:
-        case 0x7a:
-        case 0xda:
-        case 0xEA:
-        case 0xfa:
-            break;
-        case 0x80:
-        case 0x82:
-        case 0xc2:
-        case 0xe2:
-        case 0x89:
-            break;
-        case 0x04:
-        case 0x44:
-        case 0x64:
-            //zpg();
-            break;
-        case 0x14:
-        case 0x34:
-        case 0x54:
-        case 0x74:
-        case 0xd4:
-        case 0xf4:
-            //zpg(X);
-            break;
-        case 0x0C:
-            //abs();
-            break;
-        case 0x1c:
-        case 0x3c:
-        case 0x5c:
-        case 0x7c:
-        case 0xdc:
-        case 0xfc:
-            //abs(X, dummy.ONCARRY);
-            break;
+        //NOP
+        case 0xea:
+        //nop();
+        break;
         
         //---ORA---
-        case 0x09:
-            //ora(imm());
+        case 0x01:
+            ora(imm());
             break;
         case 0x05:
-            //ora(zpg());
+            ora(zp());
             break;
-        case 0x15:
-            //ora(zpg(X));
+        case 0x09:
+            ora(zpX());
             break;
         case 0x0d:
-            //ora(abs());
-            break;
-        case 0x1d:
-            //ora(abs(X, dummy.ONCARRY));
-            break;
-        case 0x19:
-            //ora(abs(Y, dummy.ONCARRY));
-            break;
-        case 0x01:
-            //ora(indX());
+            ora(abs());
             break;
         case 0x11:
-            //ora(indY(dummy.ONCARRY));
+            ora(absX());
             break;
-        // Register instrs.
-        case 0xAA:
+        case 0x15:
+            ora(absY());
             break;
-        case 0x8a:
+        case 0x19:
+            ora(indX());
             break;
-        case 0xca:
-            break;
-        case 0xe8:
-            break;
-        case 0x98:
-            break;
-        case 0x88:
-            break;
-        case 0xc8:
-            break;
-        // RLA (unofficial)
-        case 0x23:
-            //rla(indX());
-            break;
-        case 0x33:
-            //rla(indY(dummy.ALWAYS));
-            break;
-        case 0x27:
-            //rla(zpg());
-            break;
-        case 0x37:
-            //rla(zpg(X));
-            break;
-        case 0x3b:
-            //rla(abs(Y, dummy.ALWAYS));
-            break;
-        case 0x2f:
-            //rla(abs());
-            break;
-        case 0x3f:
-            //rla(abs(X, dummy.ALWAYS));
+        case 0x1d:
+            ora(indY());
             break;
         
+        //PHA
+        case 0x48:
+        //pha();
+        break;
+        
+        //PHP
+        case 0x08:
+        //php();
+        break;
+        
+        //PLA
+        case 0x68:
+        //pla();
+        break;
+        
+        //PLP
+        case 0x28:
+        //plp();
+        
         //---ROL---
-        case 0x2a:
-            //rolA();
-            break;
         case 0x26:
-            //rol(zpg());
+            rol(accu());
             break;
-        case 0x36:
-            //rol(zpg(X));
+        case 0x2a:
+            rol(zp());
             break;
         case 0x2e:
-            //rol(abs());
+            rol(zpX());
+            break;
+        case 0x36:
+            rol(abs());
             break;
         case 0x3e:
-            //rol(abs(X, dummy.ALWAYS));
+            rol(absX());
             break;
         
         //---ROR---
-        case 0x6a:
-            //rorA();
-            break;
         case 0x66:
-            //ror(zpg());
+            ror(accu());
             break;
-        case 0x76:
-            //ror(zpg(X));
+        case 0x6a:
+            ror(zp());
             break;
         case 0x6e:
-            //ror(abs());
+            ror(zpX());
+            break;
+        case 0x76:
+            ror(abs());
             break;
         case 0x7e:
-            //ror(abs(X, dummy.ALWAYS));
-            break;
-        // RRA (unofficial)
-        case 0x63:
-            //rra(indX());
-            break;
-        case 0x73:
-            //rra(indY(dummy.ALWAYS));
-            break;
-        case 0x67:
-            //rra(zpg());
-            break;
-        case 0x77:
-            //rra(zpg(X));
-            break;
-        case 0x7b:
-            //rra(abs(Y, dummy.ALWAYS));
-            break;
-        case 0x6f:
-            //rra(abs());
-            break;
-        case 0x7f:
-            //rra(abs(X, dummy.ALWAYS));
+            ror(absX());
             break;
         
         //---RTI---
@@ -588,165 +438,123 @@ void NES::exec(u8 instru) {
         case 0x60:
             //rts();
             break;
-        // SAX (unofficial)
-        case 0x83:
-            //sax(indX());
-            break;
-        case 0x87:
-            //sax(zpg());
-            break;
-        case 0x97:
-            //sax(zpg(Y));
-            break;
-        case 0x8f:
-            //sax(abs());
-            break;
+        
         //---SBC---
         case 0xE1:
-            //sbc(indX());
+            sbc(imm());
             break;
-        case 0xF1:
-            //sbc(indY(dummy.ONCARRY));
+        case 0xe5:
+            sbc(zp());
             break;
-        case 0xE5:
-            //sbc(zpg());
+        case 0xe9:
+            sbc(zpX());
             break;
-        case 0xF5:
-            //sbc(zpg(X));
+        case 0xed:
+            sbc(abs());
             break;
-        case 0xE9:
-            //sbc(imm());
+        case 0xf1:
+            sbc(absX());
             break;
-        case 0xF9:
-            //sbc(abs(Y, dummy.ONCARRY));
+        case 0xf5:
+            sbc(absY());
             break;
-        case 0xeb:
-            //sbc(imm());
+        case 0xf9:
+            sbc(indX());
             break;
-        case 0xEd:
-            //sbc(abs());
+        case 0xfd:
+            sbc(indY());
             break;
-        case 0xFd:
-            //sbc(abs(X, dummy.ONCARRY));
-            break;
-        // SHX (unofficial)
-        case 0x9e:
-            //shx(abs(Y, dummy.ALWAYS));
-            break;
-        // SHY (unofficial)
-        case 0x9c:
-            //shy(abs(X, dummy.ALWAYS));
-            break;
-        // SLO (unofficial)
-        case 0x03:
-            //slo(indX());
-            break;
-        case 0x07:
-            //slo(zpg());
-            break;
-        case 0x0f:
-            //slo(abs());
-            break;
-        case 0x13:
-            //slo(indY(dummy.ALWAYS));
-            break;
-        case 0x17:
-            //slo(zpg(X));
-            break;
-        case 0x1b:
-            //slo(abs(Y, dummy.ALWAYS));
-            break;
-        case 0x1f:
-            //slo(abs(X, dummy.ALWAYS));
-            break;
-        // SRE (unofficial)
-        case 0x43:
-            //sre(indX());
-            break;
-        case 0x53:
-            //sre(indY(dummy.ALWAYS));
-            break;
-        case 0x47:
-            //sre(zpg());
-            break;
-        case 0x57:
-            //sre(zpg(X));
-            break;
-        case 0x5b:
-            //sre(abs(Y, dummy.ALWAYS));
-            break;
-        case 0x4f:
-            //sre(abs());
-            break;
-        case 0x5f:
-            //sre(abs(X, dummy.ALWAYS));
-            break;
+        
+        //SEC
+        case 0x38:
+        //sec();
+        break;
+        
+        //SED
+        case 0xf8:
+        //sed();
+        break;
+        
+        //SEI
+        case 0x78:
+        //sei();
+        break;
+        
         // STA
-        case 0x85:
-            //sta(zpg());
+        case 0x81:
+            sta(zp());
             break;
-        case 0x95:
-            //sta(zpg(X));
+        case 0x85:
+            sta(zpX());
             break;
         case 0x8d:
-            //sta(abs());
-            break;
-        case 0x9d:
-            //sta(abs(X, dummy.ALWAYS));
-            break;
-        case 0x99:
-            //sta(abs(Y, dummy.ALWAYS));
-            break;
-        case 0x81:
-            //sta(indX());
+            sta(abs());
             break;
         case 0x91:
-            //sta(indY(dummy.ALWAYS));
+            sta(absX());
             break;
-        // Stack instructions
-        case 0x9A:
+        case 0x95:
+            sta(absY());
             break;
-        case 0xBA:
+        case 0x99:
+            sta(indX());
             break;
-        case 0x48:
-            break;
-        case 0x68:
-            break;
-        case 0x08:
-            break;
-        case 0x28:
-        //plp
+        case 0x9d:
+            sta(indY());
             break;
         
         //---STX---
         case 0x86:
-            //stx(zpg());
+            stx(zp());
+            break;
+        case 0x8e:
+            stx(zpY());
             break;
         case 0x96:
-            //stx(zpg(Y));
-            break;
-        case 0x8E:
-            //stx(abs());
+            stx(abs());
             break;
         
         //---STY---
         case 0x84:
-            //sty(zpg());
-            break;
-        case 0x94:
-            //sty(zpg(X));
+            sty(zp());
             break;
         case 0x8c:
-            //sty(abs());
+            sty(zpX());
             break;
-        // TAS (unofficial)
-        case 0x9b:
-            //tas(abs(Y, dummy.ALWAYS));
+        case 0x94:
+            sty(abs());
             break;
-        // XAA (unofficial)
-        case 0x8b:
-            //xaa(imm());
-            break;
+        
+        //TAX
+        case 0xAA:
+        //tax();
+        break;
+        
+        //TAY
+        case 0xA8:
+        //tay();
+        break;
+        
+        //TSX
+        case 0xba:
+        //tsx();
+        break;
+        
+        //TXA
+        case 0x8a:
+        //txa(());
+        break;
+        
+        //TXS
+        case 0x9a:
+        //txs(());
+        break;
+        
+        //TYA
+        case 0x98:
+        //tya(());
+        break;
+        
         default:
             //illegal opcode
         break;
@@ -780,9 +588,6 @@ memoryAdr NES::accu(){
 memoryAdr NES::imm(){
     return PC;
 }
-memoryAdr NES::imp(){
-    return PC;
-}
 memoryAdr NES::ind(){
     return PC;
 }
@@ -807,10 +612,10 @@ memoryAdr NES::zpY(){
 
 //---Interrupciones---
 void NES::nmi(){
-    pushStack(PC.adrHigh);
+    setFlags(I_FLAG, I_FLAG);
+    pushStack(PC.adrHigh); // i en 1
     pushStack(PC.adrLow);
     pushStack(flags);
-    //disble interrupt flag ?
     
     u8 v1=0x33;
     u8 v2=0x44;
@@ -821,17 +626,18 @@ void NES::nmi(){
     //this->PC = intToMem((ram->read(intToMem(0xFFFB)) << 8) | ram->read(intToMem(0xFFFA)));
 }
 void NES::irq(){
+    setFlags(0x00 | I_FLAG, I_FLAG | B_FLAG); // b en 0, i en 1
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
-    //b flag en 0
-    //disble interrupt flag ?
+    pushStack(PC.adrHigh); //cuidado aca
+    pushStack(PC.adrLow); //idem arriba
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
 void NES::brk(){
-    //b flag en 1
-    //disble interrupt flag ?
-    irq();
+    setFlags(I_FLAG | B_FLAG, I_FLAG | B_FLAG);// be en 1, i en 1
+    pushStack(flags);
+    this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
 void NES::reset(){
     this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
