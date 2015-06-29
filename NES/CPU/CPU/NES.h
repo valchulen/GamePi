@@ -39,7 +39,7 @@ public:
     ~NES();
     
 private:
-    void setFlags(u8);
+    void setFlags(u8, u8);
     inline memoryAdr realSP ();
     inline bool cFlag();
     inline bool zFlag();

@@ -32,7 +32,7 @@ void NES::reset(){
 }
 
 string NES::estado(){
-    return "A: "+hex(this->A)+ " X: "+hex(this->A)+ " Y: "+hex(this->A)+ " Stack: 1"+hex(this->SP)+" PC: "+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: "+ hex(this->flags);
+    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->A)+ " Y: 0x"+hex(this->A)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: 0x"+ hex(this->flags);
 }
 
 inline memoryAdr NES::realSP() { //hay que reducirlo
@@ -42,8 +42,8 @@ inline memoryAdr NES::realSP() { //hay que reducirlo
     return adr;
 }
 
-inline void NES::setFlags(u8 flags){
-    this->flags |= flags;
+void NES::setFlags(u8 flags, u8 flagsToSet){ //verificar que funcione
+    this->flags = (flags & flagsToSet) | (flags & this->flags) | ( ~(flags | flagsToSet) & this->flags) ;
 }
 
 inline bool NES::cFlag() {
