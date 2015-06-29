@@ -35,11 +35,11 @@ public:
     void irq();
     void reset();
     string estado();
-    void setFlags(u8, u8);
     NES(RAM*);
     ~NES();
     
 private:
+    void setFlags(u8, u8);
     inline memoryAdr realSP ();
     inline bool cFlag();
     inline bool zFlag();

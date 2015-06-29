@@ -15,15 +15,10 @@ RAM r;
 NES nes(&r);
 
 int main(int argc, const char * argv[]) {
-    int i = 0xFFFC;
-    cout<<"pudo leer: 0x"<<hex(r.read(intToMem(i)))<<" en addr "<<i<<endl;
-     i = 0xFFFD;
-    
-    cout<<"pudo leer: 0x"<<hex(r.read(intToMem(i)))<<" en addr "<<i<<endl;
     
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, interrupt, flags o exit"<<endl;
+        cout<<"Ingrese instru, interrupt o exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
             nes.exec(0x20);
@@ -41,7 +36,7 @@ int main(int argc, const char * argv[]) {
             else if (cual==2){
                 nes.reset();
             }
-        }else if (ins=="flags") {
+        } /*else if (ins=="flags") {
             u8 flags = 0x00, flagsToSet = 0x00;
             char info = ' ';
             while (info != 'E') {
@@ -92,9 +87,9 @@ int main(int argc, const char * argv[]) {
                         break;
                 }
             }
+            nes.setFlags(flags, flagsToSet);
             cout<<"Los flags ingresados son: 0x"<<hex(flagsToSet)<<" con el valor "<<hex(flags)<<endl;
-//            nes.setFlags(flags, flagsToSet);
-        }
+        }*/
         cout<<nes.estado()<<endl;
     }
 }

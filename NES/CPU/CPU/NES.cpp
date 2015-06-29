@@ -42,7 +42,7 @@ inline memoryAdr NES::realSP() { //hay que reducirlo
     return adr;
 }
 
-inline void NES::setFlags(u8 flags, u8 flagsToSet){ //verificar que funcione
+void NES::setFlags(u8 flags, u8 flagsToSet){ //verificar que funcione
     this->flags = (flags & flagsToSet) | (flags & this->flags) | ( ~(flags | flagsToSet) & this->flags) ;
 }
 
