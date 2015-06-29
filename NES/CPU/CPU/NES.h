@@ -89,85 +89,32 @@ public:
     u8 popStack();
     void pushStack(u8);
     
-    //Tipos de direccionamiento, si devuelve null es accumulator
-    memoryAdr abs();
-    memoryAdr absX();
-    memoryAdr absY();
-    memoryAdr accu();
-    memoryAdr imm();
-    memoryAdr imp();
+    //Tipos de direccionamiento, si devuelve u8 es el valor a usar, si devuelve mem es para saltos
+    u8 abs();
+    u8 absX();
+    u8 absY();
+    u8 accu();
+    u8 imm();
+    u8 imp();
     memoryAdr ind();
-    memoryAdr indX();
-    memoryAdr indY();
+    u8 indX();
+    u8 indY();
     memoryAdr rel();
-    memoryAdr zp();
-    memoryAdr zpX();
-    memoryAdr zpY();
+    u8 zp();
+    u8 zpX();
+    u8 zpY();
     
-    //Instrucciones
     void exec (u8);
-    void adc(memoryAdr);
-    void And(memoryAdr);
-    void asl(memoryAdr);
-    void bcc(memoryAdr);
-    void bcs(memoryAdr);
-    void beq(memoryAdr);
-    void bit(memoryAdr);
-    void bmi(memoryAdr);
-    void bne(memoryAdr);
-    void bpl(memoryAdr);
-    void brk(memoryAdr);
-    void bvc(memoryAdr);
-    void bvs(memoryAdr);
-    void clc(memoryAdr);
-    void cld(memoryAdr);
-    void cli(memoryAdr);
-    void clv(memoryAdr);
-    void cmp(memoryAdr);
-    void cpx(memoryAdr);
-    void cpy(memoryAdr);
-    void dec(memoryAdr);
-    void dex(memoryAdr);
-    void dey(memoryAdr);
-    void eor(memoryAdr);
-    void inc(memoryAdr);
-    void inx(memoryAdr);
-    void iny(memoryAdr);
-    void jmp(memoryAdr);
-    void jsr(memoryAdr);
-    void lda(memoryAdr);
-    void ldx(memoryAdr);
-    void ldy(memoryAdr);
-    void lsr(memoryAdr);
-    void nop(memoryAdr);
-    void ora(memoryAdr);
-    void pha(memoryAdr);
-    void php(memoryAdr);
-    void pla(memoryAdr);
-    void plp(memoryAdr);
-    void rol(memoryAdr);
-    void ror(memoryAdr);
-    void rti(memoryAdr);
-    void rts(memoryAdr);
-    void sbc(memoryAdr);
-    void sec(memoryAdr);
-    void sed(memoryAdr);
-    void sei(memoryAdr);
-    void sta(memoryAdr);
-    void stx(memoryAdr);
-    void sty(memoryAdr);
-    void tax(memoryAdr);
-    void tay(memoryAdr);
-    void tsx(memoryAdr);
-    void txa(memoryAdr);
-    void txs(memoryAdr);
-    void tya(memoryAdr);
     
     //Debug
     string estado();
     string eflags(u8);
     
 private:
+    //Instrucciones
+    void adc(u8);
+    
+    //Flags y SP
     void setFlags(u8, u8);
     inline memoryAdr realSP ();
     inline bool cFlag(); //prendido true
