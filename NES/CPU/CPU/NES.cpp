@@ -13,7 +13,7 @@ using namespace std;
 void NES::exec(u8 instru) {
     
     switch (instru) {
-        // ADC
+        //---ADC---
         case 0x61:
             //adc(indX());
             break;
@@ -38,7 +38,8 @@ void NES::exec(u8 instru) {
         case 0x7D:
             //adc(abs(X, dummy.ONCARRY));
             break;
-        // AND
+        
+        //---AND---
         case 0x21:
             //And(indX());
             break;
@@ -63,7 +64,8 @@ void NES::exec(u8 instru) {
         case 0x3D:
             //And(abs(X, dummy.ONCARRY));
             break;
-        // ASL
+        
+        //---ASL---
         case 0x06:
             //asl(zpg());
             break;
@@ -83,7 +85,8 @@ void NES::exec(u8 instru) {
         case 0xcb:
             //axs(imm());
             break;
-        // BIT
+        
+        //---BIT---
         case 0x24:
             //bit(zpg());
             break;
@@ -115,11 +118,13 @@ void NES::exec(u8 instru) {
         case 0xF0:
             //branch(zeroFlag);
             break;
-        // BRK
+        
+        //---BRK---
         case 0x00:
             //breakinterrupt();
             break;
-        // CMP
+        
+        //---CMP---
         case 0xc9:
             //cmp(A, imm());
             break;
@@ -144,7 +149,8 @@ void NES::exec(u8 instru) {
         case 0xd1:
             //cmp(A, indY(dummy.ONCARRY));
             break;
-        // CPX
+        
+        //---CPX---
         case 0xe0:
             //cmp(X, imm());
             break;
@@ -154,7 +160,8 @@ void NES::exec(u8 instru) {
         case 0xec:
             //cmp(X, abs());
             break;
-        // CPY
+        
+        //---CPY---
         case 0xc0:
             //cmp(Y, imm());
             break;
@@ -164,7 +171,8 @@ void NES::exec(u8 instru) {
         case 0xcc:
             //cmp(Y, abs());
             break;
-        // DEC
+        
+        //---DEC---
         case 0xc6:
             //dec(zpg());
             break;
@@ -199,7 +207,8 @@ void NES::exec(u8 instru) {
         case 0xdf:
             //dcp(A, abs(X, dummy.ALWAYS));
             break;
-        // EOR
+        
+        //---EOR---
         case 0x49:
             //eor(imm());
             break;
@@ -241,7 +250,8 @@ void NES::exec(u8 instru) {
             break;
         case 0xf8:
             break;
-        // INC
+        
+        //---INC---
         case 0xe6:
             //inc(zpg());
             break;
@@ -276,12 +286,13 @@ void NES::exec(u8 instru) {
         case 0xff:
             //isc(abs(X, dummy.ALWAYS));
             break;
-        // JMP
+        //---JMP---
         case 0x4c:
             break;
         case 0x6c:
             break;
-        // JSR
+        
+        //---JSR---
         case 0x20:
             //jsr(abs());
             break;
@@ -324,7 +335,8 @@ void NES::exec(u8 instru) {
         case 0xbf:
             //lax(abs(Y, dummy.ONCARRY));
             break;
-        // LDA
+        
+        //---LDA---
         case 0xa9:
             //lda(imm());
             break;
@@ -349,7 +361,8 @@ void NES::exec(u8 instru) {
         case 0xb1:
             //lda(indY(dummy.ONCARRY));
             break;
-        // LDX
+        
+        //---LDX---
         case 0xa2:
             //ldx(imm());
             break;
@@ -365,7 +378,8 @@ void NES::exec(u8 instru) {
         case 0xbe:
             //ldx(abs(Y, dummy.ONCARRY));
             break;
-        // LDY
+        
+        //---LDY---
         case 0xa0:
             //ldy(imm());
             break;
@@ -381,7 +395,8 @@ void NES::exec(u8 instru) {
         case 0xbc:
             //ldy(abs(X, dummy.ONCARRY));
             break;
-        // LSR
+        
+        //---LSR---
         case 0x4a:
             //lsrA();
             break;
@@ -397,7 +412,8 @@ void NES::exec(u8 instru) {
         case 0x5e:
             //lsr(abs(X, dummy.ALWAYS));
             break;
-        // NOP
+        
+        //---NOP---
         case 0x1a:
         case 0x3a:
         case 0x5a:
@@ -436,7 +452,8 @@ void NES::exec(u8 instru) {
         case 0xfc:
             //abs(X, dummy.ONCARRY);
             break;
-        // ORA
+        
+        //---ORA---
         case 0x09:
             //ora(imm());
             break;
@@ -498,7 +515,8 @@ void NES::exec(u8 instru) {
         case 0x3f:
             //rla(abs(X, dummy.ALWAYS));
             break;
-        // ROL
+        
+        //---ROL---
         case 0x2a:
             //rolA();
             break;
@@ -514,7 +532,8 @@ void NES::exec(u8 instru) {
         case 0x3e:
             //rol(abs(X, dummy.ALWAYS));
             break;
-        // ROR
+        
+        //---ROR---
         case 0x6a:
             //rorA();
             break;
@@ -552,11 +571,13 @@ void NES::exec(u8 instru) {
         case 0x7f:
             //rra(abs(X, dummy.ALWAYS));
             break;
-        // RTI
+        
+        //---RTI---
         case 0x40:
             //rti();
             break;
-        // RTS
+        
+        //---RTS---
         case 0x60:
             //rts();
             break;
@@ -573,7 +594,7 @@ void NES::exec(u8 instru) {
         case 0x8f:
             //sax(abs());
             break;
-        // SBC
+        //---SBC---
         case 0xE1:
             //sbc(indX());
             break;
@@ -689,7 +710,8 @@ void NES::exec(u8 instru) {
         case 0x28:
         //plp
             break;
-        // STX
+        
+        //---STX---
         case 0x86:
             //stx(zpg());
             break;
@@ -699,7 +721,8 @@ void NES::exec(u8 instru) {
         case 0x8E:
             //stx(abs());
             break;
-        // STY
+        
+        //---STY---
         case 0x84:
             //sty(zpg());
             break;
@@ -722,44 +745,44 @@ void NES::exec(u8 instru) {
         break;
     }
 }
-void NES::abs(){
-    
+memoryAdr NES::abs(){
+    return PC;
 }
-void NES::absX(){
-    
+memoryAdr NES::absX(){
+    return PC;
 }
-void NES::absY(){
-    
+memoryAdr NES::absY(){
+    return PC;
 }
-void NES::accu(){
-    
+memoryAdr NES::accu(){
+    return PC;
 }
-void NES::imm(){
-    
+memoryAdr NES::imm(){
+    return PC;
 }
-void NES::imp(){
-    
+memoryAdr NES::imp(){
+    return PC;
 }
-void NES::ind(){
-    
+memoryAdr NES::ind(){
+    return PC;
 }
-void NES::indX(){
-    
+memoryAdr NES::indX(){
+    return PC;
 }
-void NES::indY(){
-    
+memoryAdr NES::indY(){
+    return PC;
 }
-void NES::rel(){
-    
+memoryAdr NES::rel(){
+    return PC;
 }
-void NES::zp(){
-    
+memoryAdr NES::zp(){
+    return PC;
 }
-void NES::zpX(){
-    
+memoryAdr NES::zpX(){
+    return PC;
 }
-void NES::zpY(){
-    
+memoryAdr NES::zpY(){
+    return PC;
 }
 
 void NES::nmi(){
