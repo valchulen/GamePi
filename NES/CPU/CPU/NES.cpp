@@ -67,7 +67,12 @@ void NES::adc(u8 val) {
 
 //---Tipos de direccionamiento---
 u8 NES::abs(){
-    return 0x00;
+    //u8 low = ram->read( this->PC ); //es en little endian
+    //u8 high = ram->read( inc(&this->PC) );
+    memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
+    _inc(&this->PC);
+    
+    return ram->read( mem );
 }
 
 u8 NES::absX(){
@@ -178,7 +183,7 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 string NES::estado(){
-    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: 0x"+ eflags(flags);
+    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){

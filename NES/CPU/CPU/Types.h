@@ -23,5 +23,7 @@ std::string hex (u8);
 u8 toU8(const char *);
 int memToInt(memoryAdr);
 memoryAdr intToMem (int);
+void _inc (memoryAdr*); // seria un ++ con memoryAdr
+memoryAdr inc (memoryAdr*); // idem el de arriba pero devuelve el valor
 
 #endif
