@@ -66,21 +66,26 @@ void NES::adc(u8 val) {
 }
 
 //---Tipos de direccionamiento---
-u8 NES::abs(){
+u8 NES::abs(){ //testeada
     //u8 low = ram->read( this->PC ); //es en little endian
     //u8 high = ram->read( inc(&this->PC) );
-    memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
+    const memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
     _inc(&this->PC);
     
     return ram->read( mem );
 }
 
-u8 NES::absX(){
-    return 0x00;
+u8 NES::absX(){ //testeada
+    const memoryAdr mem = intToMem((ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8))  + this->X); //la misma logica que con abs + x, no hago wraping porque intToMem interpreta 16 bits max
+    _inc(&this->PC);
+    return ram->read(mem);
 }
 
-u8 NES::absY(){
-    return 0x00;
+u8 NES::absY(){ //testeada, misma logica que  absX
+    const memoryAdr mem = intToMem((ram->read(this->PC) | (ram->read( inc(&this->PC) ) <<8) )  + this->Y);
+    _inc(&this->PC);
+    return ram->read(mem);
+
 }
 
 u8 NES::accu(){

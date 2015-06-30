@@ -91,9 +91,9 @@ public:
     
     //Tipos de direccionamiento, si devuelve u8 es el valor a usar, si devuelve mem es para saltos
     u8 abs();
-    u8 absX();
-    u8 absY();
-    u8 accu();
+    u8 absX(); //funcional
+    u8 absY(); //funcional
+    u8 accu(); //funcional
     u8 imm();
     u8 imp();
     memoryAdr ind();
