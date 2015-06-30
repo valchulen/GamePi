@@ -67,12 +67,7 @@ void NES::adc(u8 val) {
 
 //---Tipos de direccionamiento---
 u8 NES::abs(){
-    //u8 low = ram->read( this->PC ); //es en little endian
-    //u8 high = ram->read( inc(&this->PC) );
-    memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
-    _inc(&this->PC);
-    
-    return ram->read( mem );
+    return 0x00;
 }
 
 u8 NES::absX(){
@@ -107,16 +102,22 @@ memoryAdr NES::rel(){
     return intToMem(0x00);
 }
 
-u8 NES::zp(){
-    return 0x00;
+u8 NES::zp(){ //Esta testeado
+    const u8 val = ram->read( intToMem(this->PC.adrLow) ); //me quedo nada mas con adrLow, es como hacer un and
+    _inc(&this->PC);
+    return val;
 }
 
-u8 NES::zpX(){
-    return 0x00;
+u8 NES::zpX(){ //esta testeado
+    const u8 val = ram->read( intToMem( (this->PC.adrLow + X)  & 0xFF) ); //hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
+    _inc(&this->PC);
+    return val;
 }
 
-u8 NES::zpY(){
-    return 0x00;
+u8 NES::zpY(){ //esta testeado
+    const u8 val = ram->read( intToMem( (this->PC.adrLow + Y)  & 0xFF) ); //hago lo mismo que con zp, sumando y y wrapeando porque no puedo estar seguro de que la suma da lindo
+    _inc(&this->PC);
+    return val;
 }
 
 //---Interrupciones---
@@ -183,7 +184,7 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 string NES::estado(){
-    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+ eflags(flags);
+    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: 0x"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){

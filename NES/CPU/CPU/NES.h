@@ -100,9 +100,9 @@ public:
     u8 indX();
     u8 indY();
     memoryAdr rel();
-    u8 zp();
-    u8 zpX();
-    u8 zpY();
+    u8 zp(); //implementado
+    u8 zpX(); //implementado
+    u8 zpY(); //implementado
     
     void exec (u8);
     

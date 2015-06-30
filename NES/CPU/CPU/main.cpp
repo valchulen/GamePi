@@ -37,12 +37,20 @@ int main(int argc, const char * argv[]) {
                 cout<<"Error"<<endl;
         } else if (ins=="direc"){
             string cual="";
-            cout<<"Ingrese que modo de direc: abs, accu"<<endl;
+            cout<<"Ingrese que modo de direc: abs, zp, zpx, zpy, accu"<<endl;
             cin>>cual;
             cout<<nes.estado()<<endl;
             u8 val = 0;
             if (cual=="abs") {
                 val = nes.abs();
+            } else if (cual=="accu"){
+                val = nes.accu();
+            } else if (cual=="zp") {
+                val = nes.zp();
+            } else if (cual=="zpx") {
+                val = nes.zpX();
+            } else if (cual=="zpy") {
+                val = nes.zpY();
             }
             cout<<"Valor: 0x"<<hex(val)<<endl;
         } else if(ins=="push"){
