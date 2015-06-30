@@ -8,14 +8,23 @@
 
 #include "Types.h"
 #include <iostream>
-
 using namespace std;
 
-memoryAdr intToMem (int m){ //funciona posta!!!
+memoryAdr intToMem (int m){
     memoryAdr mem;
     mem.adrHigh = (m & 0xFF00) >> 8;
     mem.adrLow = m & 0xFF;
     return mem;
+}
+
+void _inc(memoryAdr* val){
+    if (val->adrLow == 0xFF) val->adrHigh++;
+    val->adrLow++;
+}
+
+memoryAdr inc(memoryAdr* val){
+    _inc(val);
+    return *val;
 }
 
 inline char h (u8 e){

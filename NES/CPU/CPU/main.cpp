@@ -17,12 +17,11 @@ NES nes(&r);
 int main(int argc, const char * argv[]) {
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, int, push, exit"<<endl;
+        cout<<"Ingrese instru, direc, int, push, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
             nes.exec(0x20);
-        }
-        else if (ins=="int"){
+        } else if (ins=="int"){
             string cual="";
             cout<<"Ingrese que interrupt: nmi, irq, brk, reset"<<endl;
             cin>>cual;
@@ -36,8 +35,17 @@ int main(int argc, const char * argv[]) {
                 nes.brk();
             else
                 cout<<"Error"<<endl;
-        }
-        else if(ins=="push"){
+        } else if (ins=="direc"){
+            string cual="";
+            cout<<"Ingrese que modo de direc: abs, accu"<<endl;
+            cin>>cual;
+            cout<<nes.estado()<<endl;
+            u8 val = 0;
+            if (cual=="abs") {
+                val = nes.abs();
+            }
+            cout<<"Valor: 0x"<<hex(val)<<endl;
+        } else if(ins=="push"){
             nes.pushStack(0xbc);
             u8 val= nes.popStack();
             cout<<"Valor popeado del stack: "<<hex(val)<<endl;
