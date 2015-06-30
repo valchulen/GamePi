@@ -90,7 +90,7 @@ public:
     void pushStack(u8);
     
     //Tipos de direccionamiento, si devuelve u8 es el valor a usar, si devuelve mem es para saltos
-    u8 abs();
+    u8 abs(); //implementado
     u8 absX();
     u8 absY();
     u8 accu();
