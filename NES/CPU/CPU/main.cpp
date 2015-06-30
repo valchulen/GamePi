@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
         cout<<"Ingrese instru, int, push, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
-            nes.exec(0x20);
+            nes.exec(0x69);
         }
         else if (ins=="int"){
             string cual="";
