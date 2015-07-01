@@ -57,15 +57,14 @@ void NES::exec(u8 instru) {
 
 //---Intrucciones---
 void NES::adc(u8 val) {
-    u8 n= ram->read(intToMem(val));
-    this->A=0x89;//borrar
-    n=0x10;//borrar
+    const u8 n = val;
+    this->A=0x15;//borrar
     if (!dFlag()){
-        unsigned temp=n+ this->A +(u8)cFlag();
+        const unsigned temp=n+ this->A +(u8)cFlag();
         this->A=temp & 0xFF;
     }
     else{
-        unsigned temp= BCDtou8(u8toBCD(n)+ u8toBCD(this->A)+(u8)cFlag());
+        const unsigned temp= BCDtou8(u8toBCD(n)+ u8toBCD(this->A)+(u8)cFlag());
         this->A=temp & 0xFF;
     }
 

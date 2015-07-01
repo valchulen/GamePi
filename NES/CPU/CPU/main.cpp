@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
         cout<<"Ingrese instru, direc, int, push, bcd, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
-            nes.exec(0x69);
+            nes.exec(0x7D);
         } else if (ins=="int"){
             string cual="";
             cout<<"Ingrese que interrupt: nmi, irq, brk, reset"<<endl;
