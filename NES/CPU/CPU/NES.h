@@ -89,7 +89,7 @@ public:
     u8 popStack();
     void pushStack(u8);
     
-    //Tipos de direccionamiento, si devuelve u8 es el valor a usar, si devuelve mem es para saltos
+    //Tipos de direccionamiento--> si devuelve u8 es el valor a usar, si devuelve mem es para saltos
     u8 abs(); //implementado
     u8 absX(); //implementado
     u8 absY(); //implementado
@@ -110,12 +110,11 @@ public:
     string estado();
     string eflags(u8);
     
-
-    
 private:
     //Instrucciones
     void adc(u8);
     void And(u8);
+    void asl(u8);
     
     //Flags y SP
     void setFlags(u8, u8);
