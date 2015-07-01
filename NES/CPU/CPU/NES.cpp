@@ -46,7 +46,33 @@ void NES::exec(u8 instru) {
         case 0x7D:
             adc(absX());
             break;
+            
         //-----AND-----
+        case 0x21:
+            And(indX());
+            break;
+        case 0x25:
+            And(zp());
+            break;
+        case 0x29:
+            And(imm());
+            break;
+        case 0x2D:
+            And(abs());
+            break;
+        case 0x31:
+            And(indY());
+            break;
+        case 0x35:
+            And(zpX());
+            break;
+        case 0x3D:
+            And(absX());
+            break;
+        case 0x39:
+            And(absY());
+            break;
+            
             
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -68,6 +94,10 @@ void NES::adc(u8 val) {
         this->A=temp & 0xFF;
     }
 
+}
+
+void NES::And(u8 val) {
+    
 }
 
 //---Tipos de direccionamiento---

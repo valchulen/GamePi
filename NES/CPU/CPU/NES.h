@@ -115,6 +115,7 @@ public:
 private:
     //Instrucciones
     void adc(u8);
+    void And(u8);
     
     //Flags y SP
     void setFlags(u8, u8);
