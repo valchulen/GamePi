@@ -17,7 +17,7 @@ NES nes(&r);
 int main(int argc, const char * argv[]) {
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, int, push, exit"<<endl;
+        cout<<"Ingrese instru, int, push,bcd,exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
             nes.exec(0x69);
@@ -41,6 +41,10 @@ int main(int argc, const char * argv[]) {
             nes.pushStack(0xbc);
             u8 val= nes.popStack();
             cout<<"Valor popeado del stack: "<<hex(val)<<endl;
+        }
+        else if (ins=="bcd"){
+            cout<<"BCD: "<<hex(nes.u8toBCD(0X13))<<endl;
+            cout<<"Hex: "<<hex(nes.BCDtou8(nes.u8toBCD(0X13)))<<endl;
         }
         cout<<nes.estado()<<endl;
     }
