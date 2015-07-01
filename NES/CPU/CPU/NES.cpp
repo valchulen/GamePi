@@ -129,8 +129,10 @@ u8 NES::accu(){
     return this->A;
 }
 
-u8 NES::imm(){
-    return 0x00;
+u8 NES::imm(){ //testeada
+    const u8 val = ram->read(this->PC);
+    _inc(&this->PC);
+    return val;
 }
 
 memoryAdr NES::ind(){
