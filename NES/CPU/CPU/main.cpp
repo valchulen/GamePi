@@ -43,8 +43,8 @@ int main(int argc, const char * argv[]) {
             cout<<"Valor popeado del stack: "<<hex(val)<<endl;
         }
         else if (ins=="bcd"){
-            cout<<"BCD: "<<hex(nes.u8toBCD(0X13))<<endl;
-            cout<<"Hex: "<<hex(nes.BCDtou8(nes.u8toBCD(0X13)))<<endl;
+            cout<<"BCD: "<<hex(u8toBCD(0X13))<<endl;
+            cout<<"Hex: "<<hex(BCDtou8(u8toBCD(0X13)))<<endl;
         }
         cout<<nes.estado()<<endl;
     }

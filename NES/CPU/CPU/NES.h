@@ -110,8 +110,7 @@ public:
     string estado();
     string eflags(u8);
     
-    u8 u8toBCD(u8);
-    u8 BCDtou8(u8);
+
     
 private:
     //Instrucciones

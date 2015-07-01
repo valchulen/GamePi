@@ -46,32 +46,20 @@ void NES::exec(u8 instru) {
         case 0x7D:
             adc(absX());
             break;
+        //-----AND-----
             
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
         break;
     }
 }
-u8 NES::u8toBCD(u8 num){
-    if ((num>>4)>9 || (num&0x0F)>9)
-        return 0xFF;
-    else
-        return (num>>4)*10 + (num&0x0F);
-}
-u8 NES::BCDtou8(u8 num){
-    if (num>99)
-        return 0xFF;
-    else{
-    u8 m = (num / 10) << 4;
-    return (m | (num % 10));
-    }
-}
+
 
 //---Intrucciones---
 void NES::adc(u8 val) {
     u8 n= ram->read(intToMem(val));
-    this->A=0x13;
-    n=0x13;
+    this->A=0x89;//borrar
+    n=0x10;//borrar
     if (!dFlag()){
         unsigned temp=n+ this->A +(u8)cFlag();
         this->A=temp & 0xFF;
@@ -80,8 +68,7 @@ void NES::adc(u8 val) {
         unsigned temp= BCDtou8(u8toBCD(n)+ u8toBCD(this->A)+(u8)cFlag());
         this->A=temp & 0xFF;
     }
-    
-    // si el bit decimal no esta prendido
+
 }
 
 //---Tipos de direccionamiento---

@@ -23,5 +23,7 @@ std::string hex (u8);
 u8 toU8(const char *);
 int memToInt(memoryAdr);
 memoryAdr intToMem (int);
+u8 u8toBCD(u8);
+u8 BCDtou8(u8);
 
 #endif
