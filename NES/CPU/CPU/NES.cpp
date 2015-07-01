@@ -73,6 +73,22 @@ void NES::exec(u8 instru) {
             And(absY());
             break;
             
+        //----ASL-----
+        case 0x0A:
+            asl(accu());
+            break;
+        case 0x06:
+            asl(zp());
+            break;
+        case 0x16:
+            asl(zpX());
+            break;
+        case 0x0E:
+            asl(abs());
+            break;
+        case 0x1E:
+            asl(absX());
+            break;
             
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
