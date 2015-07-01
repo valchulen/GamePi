@@ -97,7 +97,9 @@ void NES::adc(u8 val) {
 }
 
 void NES::And(u8 val) {
-    
+    this->A=0x09;//borrar
+    val=0xFF;
+    this->A&=val;
 }
 
 //---Tipos de direccionamiento---
