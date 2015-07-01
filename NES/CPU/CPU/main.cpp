@@ -17,10 +17,10 @@ NES nes(&r);
 int main(int argc, const char * argv[]) {
     string ins="";
     while(ins!="exit"){
-        cout<<"Ingrese instru, direc, int, push, exit"<<endl;
+        cout<<"Ingrese instru, direc, int, push, bcd, exit"<<endl;
         cin>>ins;
         if (ins=="instru"){
-            nes.exec(0x20);
+            nes.exec(0x69);
         } else if (ins=="int"){
             string cual="";
             cout<<"Ingrese que interrupt: nmi, irq, brk, reset"<<endl;
@@ -61,6 +61,9 @@ int main(int argc, const char * argv[]) {
             nes.pushStack(0xbc);
             u8 val= nes.popStack();
             cout<<"Valor popeado del stack: "<<hex(val)<<endl;
+        } else if (ins=="bcd"){
+            cout<<"BCD: "<<hex(u8toBCD(0X13))<<endl;
+            cout<<"Hex: "<<hex(BCDtou8(u8toBCD(0X13)))<<endl;
         }
         cout<<nes.estado()<<endl;
     }

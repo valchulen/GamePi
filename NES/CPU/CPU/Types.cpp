@@ -42,6 +42,18 @@ string hex (u8 val) {
 int memToInt(memoryAdr adr) {
     return (adr.adrHigh << 8) | adr.adrLow;
 }
+u8 u8toBCD(u8 num){ //pasa hexa BCD
+    if ((num>>4)>9 || (num&0x0F)>9)
+        return 0xFF; //Error
+    else
+        return (num>>4)*10 + (num&0x0F);
+}
+u8 BCDtou8(u8 num){ //BCD a hexa
+    if (num>99)
+        return 0xFF; //Error
+    else
+        return (((num / 10) << 4) | (num % 10));
+}
 
 u8 toU8(const char * str){
     u8 val = 0;

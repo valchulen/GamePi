@@ -22,7 +22,7 @@ class NES {
 #define B_FLAG 0x10
 #define O_FLAG 0x40
 #define N_FLAG 0x80
-#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
+#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG | D_FLAG
     //Registros
     u8 A = 0x00;
     u8 X = 0x00;
@@ -109,6 +109,8 @@ public:
     //Debug
     string estado();
     string eflags(u8);
+    
+
     
 private:
     //Instrucciones

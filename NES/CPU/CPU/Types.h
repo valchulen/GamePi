@@ -25,5 +25,7 @@ int memToInt(memoryAdr);
 memoryAdr intToMem (int);
 void _inc (memoryAdr*); // seria un ++ con memoryAdr
 memoryAdr inc (memoryAdr*); // idem el de arriba pero devuelve el valor
+u8 u8toBCD(u8);
+u8 BCDtou8(u8);
 
 #endif
