@@ -21,6 +21,7 @@ NES::~NES() {
 void NES::exec(u8 instru) {
     
     switch (instru) {
+            
         //-----ADC------
         case 0x61:
             adc(indX());
@@ -96,6 +97,11 @@ void NES::exec(u8 instru) {
             break;
         case 0x2C:
             bit(abs());
+            break;
+            
+        //----Break----
+        case 0x00:
+            brk();
             break;
             
         default:
@@ -220,13 +226,14 @@ void NES::irq(){
     setFlags(0x00 | I_FLAG, I_FLAG | B_FLAG); // b en 0, i en 1
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
-    pushStack(PC.adrHigh); //cuidado aca
-    pushStack(PC.adrLow); //idem arriba
+
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
-
 void NES::brk(){
+    PC=intToMem((memToInt(PC)+2)); //Sumo 2 a PC asi pushea la siguiente instruccion.
+    pushStack(PC.adrHigh); //cuidado aca
+    pushStack(PC.adrLow); //idem arriba
     setFlags(I_FLAG | B_FLAG, I_FLAG | B_FLAG);// be en 1, i en 1
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
