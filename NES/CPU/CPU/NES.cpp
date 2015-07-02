@@ -36,7 +36,7 @@ void NES::exec(u8 instru) {
             adc(abs());
             break;
         case 0x71:
-            adc(indY());
+            adc( ram->read( indY() ) );
             break;
         case 0x75:
             adc(zpX());
@@ -62,7 +62,7 @@ void NES::exec(u8 instru) {
             And(abs());
             break;
         case 0x31:
-            And(indY());
+            And( ram->read( indY() ) );
             break;
         case 0x35:
             And(zpX());
@@ -141,7 +141,7 @@ void NES::exec(u8 instru) {
             cmp( ram->read( indX() ) );
             break;
         case 0xD1:
-            cmp(indY());
+            cmp( ram->read( indY() ) );
             break;
             
         //-----CPX-----
@@ -208,7 +208,7 @@ void NES::exec(u8 instru) {
             ldA( ram->read( indX() ) );
             break;
         case 0xB1:
-            ldA(indY());
+            ldA( ram->read( indY() ));
             break;
             
         //-----LDX-----
@@ -372,14 +372,21 @@ memoryAdr NES::ind(){ //ARREGLAR DESPUES DE ENTREGAR
 
 memoryAdr NES::indX(){ //anda y testeado
     const u8 adr = ram->read( this->PC );
+    _inc(&this->PC);
     memoryAdr fetch = intToMem( (adr + this->X) & 0xFF ); // a esta direccion en zp busco el little endian
     const u8 LSB = ram->read( fetch );
     const u8 MSB = ram->read( inc(&fetch) ); //seria fetch++ en el primero
     return intToMem( (MSB<<8) | LSB);
 }
 
-u8 NES::indY(){
-    return 0x00;
+memoryAdr NES::indY(){ //anda y testeado
+    //busco en zp adr
+    const u8 adr = ram->read(this->PC);
+    _inc(&this->PC);
+    //busco val en adr en little endian
+    const u8 LSB = (ram->read( intToMem(adr) ) + this->Y) & 0xFF; //hago wrapping en el LSB de lo que devuelvo
+    const u8 MSB = ram->read( intToMem( (adr + 1) & 0xFF)); //hago wrapping por el nibble
+    return intToMem( (MSB<<8) | LSB);
 }
 
 memoryAdr NES::rel(){
