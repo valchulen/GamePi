@@ -99,10 +99,26 @@ void NES::exec(u8 instru) {
             bit(abs());
             break;
             
-        //----Break----
+        //-----BRK-----
         case 0x00:
             brk();
             break;
+            
+        //-----Clr F-----
+        case 0x18:
+            clrF(C_FLAG);
+            break;
+        case 0xD8:
+            clrF(D_FLAG);
+            break;
+        case 0x58:
+            clrF(I_FLAG);
+            break;
+        case 0xB8:
+            clrF(O_FLAG);
+            break;
+        
+            
             
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -135,6 +151,9 @@ void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
     //val & 0x80;   //Copia el 7mo bit al 7mo de flags
+}
+void NES::clrF(u8 val){
+    // setea en 0 el que te llega
 }
 
 

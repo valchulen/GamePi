@@ -20,7 +20,7 @@ class NES {
 #define I_FLAG 0x04
 #define D_FLAG 0x08
 #define B_FLAG 0x10
-#define O_FLAG 0x40
+#define O_FLAG 0x40 //podes ponerle V_FLAG inculto?
 #define N_FLAG 0x80
 #define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
     //Registros
@@ -116,6 +116,7 @@ private:
     void And(u8);
     void asl(u8);
     void bit(u8);
+    void clrF(u8);
     
     //Flags y SP
     void setFlags(u8, u8);
