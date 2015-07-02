@@ -245,6 +245,10 @@ void NES::exec(u8 instru) {
             ldY(absX());
             break;
             
+        //-----NOP-----
+        case 0xEA:
+            break;
+            
         
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
