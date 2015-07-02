@@ -115,6 +115,7 @@ private:
     void adc(u8);
     void And(u8);
     void asl(u8);
+    void bit(u8);
     
     //Flags y SP
     void setFlags(u8, u8);
