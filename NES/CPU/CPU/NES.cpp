@@ -501,6 +501,8 @@ void NES::rts(u8 val){
     PC=intToMem((memToInt(PC)+1));
 }
 void NES::sbc(u8 val){
+    this->A=0x020;
+    val=0x03;
     if (!dFlag()){
         const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
         this->A=temp & 0xFF;
