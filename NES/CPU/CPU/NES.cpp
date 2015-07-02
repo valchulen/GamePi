@@ -264,10 +264,21 @@ void NES::exec(u8 instru) {
             plA(imp());
             break;
             
-        //----PLP_____
+        //-----PLP-----
         case 0x28:
             plP(imp());
             break;
+            
+        //-----RTI-----
+        case 0x4D:
+            rti(imp());
+            break;
+            
+        //-----RTS-----
+        case 0x60:
+            rts(imp());
+            break;
+        
             
         
         default:
@@ -362,6 +373,11 @@ void NES::rti(u8 val){
     this->flags=popStack();
     this->PC.adrLow=popStack();
     this->PC.adrHigh=popStack();
+}
+void NES::rts(u8 val){
+    this->PC.adrLow=popStack();
+    this->PC.adrHigh=popStack();
+    PC=intToMem((memToInt(PC)+1));
 }
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada

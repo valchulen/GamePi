@@ -132,6 +132,7 @@ private:
     void plA(u8);
     void plP(u8);
     void rti(u8);
+    void rts(u8);
     
     
     //Flags y SP
