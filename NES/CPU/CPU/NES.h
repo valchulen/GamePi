@@ -133,6 +133,14 @@ private:
     void plP(u8);
     void rti(u8);
     void rts(u8);
+    void setF(u8);
+    void taX(u8);
+    void taY(u8);
+    void tsX(u8);
+    void txA(u8);
+    void txS(u8);
+    void tyA(u8);
+    
     
     
     //Flags y SP

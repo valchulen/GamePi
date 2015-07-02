@@ -278,6 +278,47 @@ void NES::exec(u8 instru) {
         case 0x60:
             rts(imp());
             break;
+            
+        //----SetF-----
+        case 0x38:
+            setF(C_FLAG);
+            break;
+        case 0xF8:
+            setF(D_FLAG);
+            break;
+        case 0x78:
+            setF(I_FLAG);
+            break;
+        
+        //-----TAX-----
+        case 0xAA:
+            taX(imp());
+            break;
+            
+        //-----TAY-----
+        case 0xA8:
+            taY(imp());
+            break;
+            
+        //-----TSX-----
+        case 0xBA:
+            tsX(imp());
+            break;
+            
+        //-----TXA-----
+        case 0x8A:
+            txA(imp());
+            break;
+            
+        //-----TXS-----
+        case 0x9A:
+            txS(imp());
+            break;
+            
+        //-----TYA-----
+        case 0x98:
+            tyA(imp());
+            break;
         
             
         
@@ -378,6 +419,27 @@ void NES::rts(u8 val){
     this->PC.adrLow=popStack();
     this->PC.adrHigh=popStack();
     PC=intToMem((memToInt(PC)+1));
+}
+void NES::setF(u8 val){
+    //setea flag que llega en 1
+}
+void NES::taX(u8 val){
+    this->X=this->A;
+}
+void NES::taY(u8 val){
+    this->Y=this->A;
+}
+void NES::tsX(u8 val){
+    this->X=this->SP;
+}
+void NES::txA(u8 val){
+    this->A=this->X;
+}
+void NES::txS(u8 val){
+    this->SP=this->X;
+}
+void NES::tyA(u8 val){
+    this->A=this->Y;
 }
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada
