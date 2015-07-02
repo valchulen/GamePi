@@ -104,7 +104,7 @@ void NES::exec(u8 instru) {
             brk();
             break;
             
-        //-----Clr F-----
+        //-----ClrF-----
         case 0x18:
             clrF(C_FLAG);
             break;
@@ -117,9 +117,55 @@ void NES::exec(u8 instru) {
         case 0xB8:
             clrF(O_FLAG);
             break;
+            
+        //----CMP-----
+        case 0xC9:
+            cmp(imm());
+            break;
+        case 0xC5:
+            cmp(zp());
+            break;
+        case 0xD5:
+            cmp(zpX());
+            break;
+        case 0xCD:
+            cmp(abs());
+            break;
+        case 0xDD:
+            cmp(absX());
+            break;
+        case 0xD9:
+            cmp(absY());
+            break;
+        case 0xC1:
+            cmp(indX());
+            break;
+        case 0xD1:
+            cmp(indY());
+            break;
+            
+        //-----CPX-----
+        case 0xE0:
+            cpX(imm());
+            break;
+        case 0xE4:
+            cpX(zp());
+            break;
+        case 0xEC:
+            cpX(abs());
+            break;
+            
+        //-----CPY-----
+        case 0xC0:
+            cpY(imm());
+            break;
+        case 0xC4:
+            cpY(zp());
+            break;
+        case 0xCC:
+            cpY(abs());
+            break;
         
-            
-            
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
         break;
@@ -155,7 +201,18 @@ void NES::bit(u8 val){
 void NES::clrF(u8 val){
     // setea en 0 el que te llega
 }
-
+void NES::cmp(u8 val){
+    int temp= this->A -val;
+    //setea N,Zy C
+}
+void NES::cpX(u8 val){
+    int temp= this->X -val;
+    //setea N,Zy C
+}
+void NES::cpY(u8 val){
+    int temp= this->Y -val;
+    //setea N,Zy C
+}
 
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada

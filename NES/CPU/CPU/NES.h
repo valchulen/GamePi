@@ -117,6 +117,9 @@ private:
     void asl(u8);
     void bit(u8);
     void clrF(u8);
+    void cmp(u8);
+    void cpX(u8);
+    void cpY(u8);
     
     //Flags y SP
     void setFlags(u8, u8);
