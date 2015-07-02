@@ -24,7 +24,7 @@ void NES::exec(u8 instru) {
             
         //-----ADC------
         case 0x61:
-            adc(indX());
+            adc( ram->read( indX() ) );
             break;
         case 0x65:
             adc(zp());
@@ -50,7 +50,7 @@ void NES::exec(u8 instru) {
             
         //-----AND-----
         case 0x21:
-            And(indX());
+            And( ram->read( indX() ));
             break;
         case 0x25:
             And(zp());
@@ -138,7 +138,7 @@ void NES::exec(u8 instru) {
             cmp(absY());
             break;
         case 0xC1:
-            cmp(indX());
+            cmp( ram->read( indX() ) );
             break;
         case 0xD1:
             cmp(indY());
@@ -205,7 +205,7 @@ void NES::exec(u8 instru) {
             ldA(absY());
             break;
         case 0xA1:
-            ldA(indX());
+            ldA( ram->read( indX() ) );
             break;
         case 0xB1:
             ldA(indY());
@@ -361,17 +361,21 @@ u8 NES::imp(){
     return 0x00;
 }
 
-memoryAdr NES::ind(){ //testeada
+memoryAdr NES::ind(){ //ARREGLAR DESPUES DE ENTREGAR
     //saco el LSB que seria pc++
-    const u8 LSB = ram->read( this->PC );
+    const u8 LSB = ram->read( this->PC ); //SOLO SUMA AL LSB DE PC!!!!!!!
     //saco el MSB que seria pc++
-    const u8 MSB = ram->read( inc(&this->PC) );
+    const u8 MSB = ram->read( inc(&this->PC) ); //SOLO SUMA AL LSB DE PC!!!!!!!
     _inc(&this->PC);
     return intToMem( (MSB << 8) | LSB );
 }
 
-u8 NES::indX(){
-    return 0x00;
+memoryAdr NES::indX(){ //anda y testeado
+    const u8 adr = ram->read( this->PC );
+    memoryAdr fetch = intToMem( (adr + this->X) & 0xFF ); // a esta direccion en zp busco el little endian
+    const u8 LSB = ram->read( fetch );
+    const u8 MSB = ram->read( inc(&fetch) ); //seria fetch++ en el primero
+    return intToMem( (MSB<<8) | LSB);
 }
 
 u8 NES::indY(){
@@ -382,22 +386,22 @@ memoryAdr NES::rel(){
     return intToMem(0x00);
 }
 
-u8 NES::zp(){ //Esta testeado
-    const u8 val = ram->read( intToMem(this->PC.adrLow) ); //me quedo nada mas con adrLow, es como hacer un and
+u8 NES::zp(){ //Esta arreglado
+    const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return val;
+    return this->ram->read(intToMem(val)); //devuelvo nada mas lo de LSB
 }
 
-u8 NES::zpX(){ //esta testeado
-    const u8 val = ram->read( intToMem( (this->PC.adrLow + X)  & 0xFF) ); //hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
+u8 NES::zpX(){ //esta arreglado
+    const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return val;
+    return this->ram->read( intToMem( (val + this->X) & 0xFF) );//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
 }
 
-u8 NES::zpY(){ //esta testeado
-    const u8 val = ram->read( intToMem( (this->PC.adrLow + Y)  & 0xFF) ); //hago lo mismo que con zp, sumando y y wrapeando porque no puedo estar seguro de que la suma da lindo
+u8 NES::zpY(){ //esta arreglado
+    const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return val;
+    return this->ram->read( intToMem( (val + this->Y) & 0xFF) );//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
 }
 
 //---Interrupciones---

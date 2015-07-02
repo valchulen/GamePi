@@ -97,7 +97,7 @@ public:
     u8 imm();
     u8 imp(); //si la haces void es lo mismo
     memoryAdr ind();
-    u8 indX();
+    memoryAdr indX();
     u8 indY();
     memoryAdr rel();
     u8 zp(); //implementado
