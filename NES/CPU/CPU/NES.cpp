@@ -175,6 +175,32 @@ void NES::exec(u8 instru) {
         case 0x88:
             deY(imp());
             break;
+        
+        //-----EOR-----
+        case 0x49:
+            eor(imm());
+            break;
+        case 0x45:
+            eor(zp());
+            break;
+        case 0x55:
+            eor(zpX());
+            break;
+        case 0x40:
+            eor(abs());
+            break;
+        case 0x50:
+            eor(absX());
+            break;
+        case 0x59:
+            eor(absY());
+            break;
+        case 0x41:
+            eor(indX());
+            break;
+        case 0x51:
+            eor(indY());
+            break;
             
         //-----INX-----
         case 0xE8:
@@ -249,6 +275,32 @@ void NES::exec(u8 instru) {
         case 0xEA:
             break;
             
+        //-----ORA-----
+        case 0x09:
+            ora(imm());
+            break;
+        case 0x05:
+            ora(zp());
+            break;
+        case 0x15:
+            ora(zpX());
+            break;
+        case 0x0D:
+            ora(abs());
+            break;
+        case 0x1D:
+            ora(absX());
+            break;
+        case 0x19:
+            ora(absY());
+            break;
+        case 0x01:
+            ora(indX());
+            break;
+        case 0x11:
+            ora(indY());
+            break;
+            
         //-----PHA-----
         case 0x48:
             phA(imp());
@@ -277,6 +329,31 @@ void NES::exec(u8 instru) {
         //-----RTS-----
         case 0x60:
             rts(imp());
+            break;
+        //-----SBC-----
+        case 0xE9:
+            sbc(imm());
+            break;
+        case 0xE5:
+            sbc(zp());
+            break;
+        case 0xF5:
+            sbc(zpX());
+            break;
+        case 0xED:
+            sbc(abs());
+            break;
+        case 0xFD:
+            sbc(absX());
+            break;
+        case 0xF9:
+            sbc(absY());
+            break;
+        case 0xE1:
+            sbc(indX());
+            break;
+        case 0xF1:
+            sbc(indY());
             break;
             
         //----SetF-----
@@ -331,22 +408,19 @@ void NES::exec(u8 instru) {
 
 //---Intrucciones---
 void NES::adc(u8 val) {
-    const u8 n = val;
     this->A=0x15;//borrar
     if (!dFlag()){
-        const unsigned temp=n+ this->A +(u8)cFlag();
+        const unsigned temp=val+ this->A +(u8)cFlag();
         this->A=temp & 0xFF;
     }
     else{
-        const unsigned temp= BCDtou8(u8toBCD(n)+ u8toBCD(this->A)+(u8)cFlag());
+        const unsigned temp= BCDtou8(u8toBCD(val)+ u8toBCD(this->A)+(u8)cFlag());
         this->A=temp & 0xFF;
     }
 
 }
 void NES::And(u8 val) {
     this->A=0x09;//borrar
-    val=0xFF;
- 
     this->A&=val;
 }
 void NES::asl(u8 val){
@@ -380,6 +454,9 @@ void NES::deY(u8 val){
     int temp =this->Y-1;
     this->Y=temp&0xFF;
 }
+void NES::eor(u8 val){
+    this->A^=val;
+}
 void NES::inX(u8 val){
     int temp =this->X+1;
     this->X=temp&0xFF;
@@ -396,6 +473,9 @@ void NES::ldX(u8 val){
 }
 void NES::ldY(u8 val){
     this->Y=val;
+}
+void NES::ora(u8 val){
+    this->A|=val;
 }
 void NES::phA(u8 val){
     pushStack(this->A);
@@ -419,6 +499,16 @@ void NES::rts(u8 val){
     this->PC.adrLow=popStack();
     this->PC.adrHigh=popStack();
     PC=intToMem((memToInt(PC)+1));
+}
+void NES::sbc(u8 val){
+    if (!dFlag()){
+        const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
+        this->A=temp & 0xFF;
+    }
+    else{
+        const unsigned temp= BCDtou8(u8toBCD(this->A)- u8toBCD(val)-(cFlag() ? 0 : 1));
+        this->A=temp & 0xFF;
+    }
 }
 void NES::setF(u8 val){
     //setea flag que llega en 1
