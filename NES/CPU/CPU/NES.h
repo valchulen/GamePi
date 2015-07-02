@@ -122,6 +122,8 @@ private:
     void cpY(u8);
     void deX(u8);
     void deY(u8);
+    void inX(u8);
+    void inY(u8);
     
     //Flags y SP
     void setFlags(u8, u8);

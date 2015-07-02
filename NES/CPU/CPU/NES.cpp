@@ -175,6 +175,15 @@ void NES::exec(u8 instru) {
         case 0x88:
             deY(imp());
             break;
+            
+        //-----INX-----
+        case 0xE8:
+            inX(imp());
+            break;
+            
+        //-----INY-----
+        case 0xC8:
+            inY(imp());
         
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -234,7 +243,14 @@ void NES::deY(u8 val){
     int temp =this->Y-1;
     this->Y=temp&0xFF;
 }
-
+void NES::inX(u8 val){
+    int temp =this->X+1;
+    this->X=temp&0xFF;
+}
+void NES::inY(u8 val){
+    int temp =this->X+1;
+    this->X=temp&0xFF;
+}
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada
     //u8 low = ram->read( this->PC ); //es en little endian
