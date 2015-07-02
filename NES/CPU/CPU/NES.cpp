@@ -361,8 +361,13 @@ u8 NES::imp(){
     return 0x00;
 }
 
-memoryAdr NES::ind(){
-    return intToMem(0x00);
+memoryAdr NES::ind(){ //testeada
+    //saco el LSB que seria pc++
+    const u8 LSB = ram->read( this->PC );
+    //saco el MSB que seria pc++
+    const u8 MSB = ram->read( inc(&this->PC) );
+    _inc(&this->PC);
+    return intToMem( (MSB << 8) | LSB );
 }
 
 u8 NES::indX(){

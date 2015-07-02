@@ -167,5 +167,8 @@ RAM::RAM (){
     for (int i = 0; i < PRG2_SIZE; i++) {
         PRG2[i] = 0x00;
     }
+    
+    this->write( intToMem(0x1234), 0x00);
+    this->write( intToMem(0x1235), 0x01);
 }
 
