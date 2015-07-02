@@ -90,6 +90,14 @@ void NES::exec(u8 instru) {
             asl(absX());
             break;
             
+        //-----BIT-----
+        case 0x24:
+            bit(zp());
+            break;
+        case 0x2C:
+            bit(abs());
+            break;
+            
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
         break;
@@ -111,12 +119,18 @@ void NES::adc(u8 val) {
     }
 
 }
-
 void NES::And(u8 val) {
     this->A=0x09;//borrar
     val=0xFF;
+ 
     this->A&=val;
 }
+void NES::bit(u8 val){
+    //this->A & val --> con esto prende el flag de 0 si es 0
+    //val & 0x40;	//Copia al 6to bit al 6to de flags
+    //val & 0x80;   //Copia el 7mo bit al 7mo de flags
+}
+
 
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada
