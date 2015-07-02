@@ -95,7 +95,7 @@ public:
     u8 absY(); //implementado
     u8 accu(); //implementado
     u8 imm();
-    u8 imp();
+    u8 imp(); //si la haces void es lo mismo
     memoryAdr ind();
     u8 indX();
     u8 indY();
@@ -120,6 +120,8 @@ private:
     void cmp(u8);
     void cpX(u8);
     void cpY(u8);
+    void deX(u8);
+    void deY(u8);
     
     //Flags y SP
     void setFlags(u8, u8);

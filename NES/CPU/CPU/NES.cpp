@@ -165,6 +165,16 @@ void NES::exec(u8 instru) {
         case 0xCC:
             cpY(abs());
             break;
+            
+        //-----DEX-----
+        case 0xCA:
+            deX(imp());
+            break;
+            
+        //-----DEY-----
+        case 0x88:
+            deY(imp());
+            break;
         
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -193,6 +203,9 @@ void NES::And(u8 val) {
  
     this->A&=val;
 }
+void NES::asl(u8 val){
+    
+}
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
@@ -212,6 +225,14 @@ void NES::cpX(u8 val){
 void NES::cpY(u8 val){
     int temp= this->Y -val;
     //setea N,Zy C
+}
+void NES::deX(u8 val){
+    int temp =this->X-1;
+    this->X=temp&0xFF;
+}
+void NES::deY(u8 val){
+    int temp =this->Y-1;
+    this->Y=temp&0xFF;
 }
 
 //---Tipos de direccionamiento---
@@ -245,6 +266,9 @@ u8 NES::imm(){ //testeada
     const u8 val = ram->read(this->PC);
     _inc(&this->PC);
     return val;
+}
+u8 NES::imp(){
+    return 0x00;
 }
 
 memoryAdr NES::ind(){
