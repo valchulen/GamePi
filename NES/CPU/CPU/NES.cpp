@@ -184,6 +184,67 @@ void NES::exec(u8 instru) {
         //-----INY-----
         case 0xC8:
             inY(imp());
+            
+        //-----LDA-----
+        case 0xA9:
+            ldA(imm());
+            break;
+        case 0xA5:
+            ldA(zp());
+            break;
+        case 0xB5:
+            ldA(zpX());
+            break;
+        case 0xAD:
+            ldA(abs());
+            break;
+        case 0xBD:
+            ldA(absX());
+            break;
+        case 0xB9:
+            ldA(absY());
+            break;
+        case 0xA1:
+            ldA(indX());
+            break;
+        case 0xB1:
+            ldA(indY());
+            break;
+            
+        //-----LDX-----
+        case 0xA2:
+            ldX(imm());
+            break;
+        case 0xA6:
+            ldX(zp());
+            break;
+        case 0xB6:
+            ldX(zpY());
+            break;
+        case 0xAE:
+            ldX(abs());
+            break;
+        case 0xBE:
+            ldX(absY());
+            break;
+            
+        //-----LDX-----
+        case 0xA0:
+            ldY(imm());
+            break;
+        case 0xA4:
+            ldY(zp());
+            break;
+        case 0xB4:
+            ldY(zpX());
+            break;
+        case 0xAC:
+            ldY(abs());
+            break;
+        case 0xBC:
+            ldY(absX());
+            break;
+            
         
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -250,6 +311,15 @@ void NES::inX(u8 val){
 void NES::inY(u8 val){
     int temp =this->X+1;
     this->X=temp&0xFF;
+}
+void NES::ldA(u8 val){
+    this->A=val;
+}
+void NES::ldX(u8 val){
+    this->X=val;
+}
+void NES::ldY(u8 val){
+    this->Y=val;
 }
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada
