@@ -249,6 +249,26 @@ void NES::exec(u8 instru) {
         case 0xEA:
             break;
             
+        //-----PHA-----
+        case 0x48:
+            phA(imp());
+            break;
+            
+        //-----PHP-----
+        case 0x08:
+            phP(imp());
+            break;
+            
+        //----PLA-----
+        case 0x68:
+            plA(imp());
+            break;
+            
+        //----PLP_____
+        case 0x28:
+            plP(imp());
+            break;
+            
         
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
@@ -324,6 +344,24 @@ void NES::ldX(u8 val){
 }
 void NES::ldY(u8 val){
     this->Y=val;
+}
+void NES::phA(u8 val){
+    pushStack(this->A);
+}
+void NES::phP(u8 val){
+    pushStack(flags);
+}
+void NES::plA(u8 val){
+    this->A=popStack();
+    //Cambiar flags de Z Y N
+}
+void NES::plP(u8 val){
+    this->flags=popStack();
+}
+void NES::rti(u8 val){
+    this->flags=popStack();
+    this->PC.adrLow=popStack();
+    this->PC.adrHigh=popStack();
 }
 //---Tipos de direccionamiento---
 u8 NES::abs(){ //testeada

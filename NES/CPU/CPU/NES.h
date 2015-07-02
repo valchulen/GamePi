@@ -127,6 +127,12 @@ private:
     void ldA(u8);
     void ldX(u8);
     void ldY(u8);
+    void phA(u8);
+    void phP(u8);
+    void plA(u8);
+    void plP(u8);
+    void rti(u8);
+    
     
     //Flags y SP
     void setFlags(u8, u8);
