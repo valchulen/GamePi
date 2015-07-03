@@ -731,8 +731,15 @@ memoryAdr NES::indY(){ //anda y testeado
     return intToMem( (MSB<<8) | LSB);
 }
 
-memoryAdr NES::rel(){
-    return intToMem(0x00);
+memoryAdr NES::rel(){ //re testeado DALE INGRID DALE
+    const u8 offset = ram->read(this->PC);
+    memoryAdr val;
+    if ( (offset & 0x80) == 0x80 )
+        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) - ((u8)(~offset - 1))); //complemento en 2 a u8 y despues resta
+    else
+        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) + offset);
+    _inc(&this->PC);
+    return val;
 }
 
 memoryAdr NES::zp(){ //Esta arreglado
