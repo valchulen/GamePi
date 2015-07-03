@@ -366,6 +366,14 @@ void NES::exec(u8 instru) {
         case 0x78:
             setF(I_FLAG);
             break;
+            
+        //-----STA-----
+        case 0x85:
+            stA(zp());
+            break;
+        //-----STX-----
+            
+        //-----STY-----
         
         //-----TAX-----
         case 0xAA:
@@ -501,8 +509,8 @@ void NES::rts(){
     PC=intToMem((memToInt(PC)+1));
 }
 void NES::sbc(u8 val){
-    this->A=0x020;
-    val=0x03;
+    this->A=0x01;
+    val=0x02;
     if (!dFlag()){
         const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
         this->A=temp & 0xFF;
@@ -514,6 +522,15 @@ void NES::sbc(u8 val){
 }
 void NES::setF(u8 val){
     //setea flag que llega en 1
+}
+void NES::stA(memoryAdr val){
+    ram->write(val, this->A);
+}
+void NES::stX(memoryAdr val){
+    ram->write(val, this->X);
+}
+void NES::stY(memoryAdr val){
+    ram->write(val, this->Y);
 }
 void NES::taX(){
     this->X=this->A;

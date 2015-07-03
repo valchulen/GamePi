@@ -22,7 +22,7 @@ class NES {
 #define B_FLAG 0x10
 #define O_FLAG 0x40 //podes ponerle V_FLAG inculto?
 #define N_FLAG 0x80
-#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG |D_FLAG |C_FLAG
+#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG |C_FLAG
     //Registros
     u8 A = 0x00;
     u8 X = 0x00;
@@ -136,6 +136,9 @@ private:
     void rts();
     void sbc(u8);
     void setF(u8);
+    void stA(memoryAdr);
+    void stX(memoryAdr);
+    void stY(memoryAdr);
     void taX();
     void taY();
     void tsX();
