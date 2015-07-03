@@ -79,7 +79,7 @@ void NES::exec(u8 instru) {
             asl(accu());
             break;
         case 0x06:
-            asl( ram->read( zp() ) );
+            asl(ram->read(zp()));
             break;
         case 0x16:
             asl( ram->read( zpX() ) );
@@ -201,6 +201,20 @@ void NES::exec(u8 instru) {
         case 0x51:
             eor( ram->read( indY() ) );
             break;
+        
+        //-----INC-----
+        case 0xE6:
+            inc(zp());
+            break;
+        case 0xF6:
+            inc(zpX());
+            break;
+        case 0xEE:
+            inc(abs());
+            break;
+        case 0xFE:
+            inc(absX());
+            break;
             
         //-----INX-----
         case 0xE8:
@@ -254,7 +268,7 @@ void NES::exec(u8 instru) {
             ldX( ram->read( absY() ) );
             break;
             
-        //-----LDX-----
+        //-----LDY-----
         case 0xA0:
             ldY(imm());
             break;
@@ -269,6 +283,22 @@ void NES::exec(u8 instru) {
             break;
         case 0xBC:
             ldY( ram->read( absX() ) );
+            break;
+        //-----LSR-----
+        case 0x4A:
+            lsr(accu());
+            break;
+        case 0x46:
+            lsr(ram->read(zp()));
+            break;
+        case 0x56:
+            lsr( ram->read( zpX() ) );
+            break;
+        case 0x4E:
+            lsr( ram->read( abs() ) );
+            break;
+        case 0x5E:
+            lsr( ram->read( absX() ) );
             break;
             
         //-----NOP-----
@@ -321,6 +351,40 @@ void NES::exec(u8 instru) {
             plP();
             break;
             
+        //-----ROL-----
+        case 0x2A:
+            rol(accu());
+            break;
+        case 0x26:
+            rol(ram->read(zp()));
+            break;
+        case 0x36:
+            rol( ram->read( zpX() ) );
+            break;
+        case 0x2E:
+            rol( ram->read( abs() ) );
+            break;
+        case 0x3E:
+            rol( ram->read( absX() ) );
+            break;
+            
+            //-----ROR-----
+        case 0x6A:
+            ror(accu());
+            break;
+        case 0x66:
+            ror(ram->read(zp()));
+            break;
+        case 0x76:
+            ror( ram->read( zpX() ) );
+            break;
+        case 0x6E:
+            ror( ram->read( abs() ) );
+            break;
+        case 0x7E:
+            ror( ram->read( absX() ) );
+            break;
+
         //-----RTI-----
         case 0x4D:
             rti();
@@ -371,9 +435,46 @@ void NES::exec(u8 instru) {
         case 0x85:
             stA(zp());
             break;
+        case 0x95:
+            stA(zpX());
+            break;
+        case 0x80:
+            stA(abs());
+            break;
+        case 0x90:
+            stA(absX());
+            break;
+        case 0x99:
+            stA(absY());
+            break;
+        case 0x81:
+            stA(indX());
+            break;
+        case 0x91:
+            stA(indY());
+            break;
+        
         //-----STX-----
+        case 0x86:
+            stX(zp());
+            break;
+        case 0x96:
+            stX(zpY());
+            break;
+        case 0x8E:
+            stX(abs());
+            break;
             
         //-----STY-----
+        case 0x84:
+            stY(zp());
+            break;
+        case 0x94:
+            stY(zpX());
+            break;
+        case 0x8C:
+            stY(abs());
+            break;
         
         //-----TAX-----
         case 0xAA:
@@ -428,11 +529,13 @@ void NES::adc(u8 val) {
 
 }
 void NES::And(u8 val) {
-    this->A=0x09;//borrar
+    //this->A=0x09;//borrar
     this->A&=val;
 }
 void NES::asl(u8 val){
-    
+    val=0x01;
+    int temp= val<<1;
+    this->A=temp&0xFF;
 }
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
@@ -482,6 +585,11 @@ void NES::ldX(u8 val){
 void NES::ldY(u8 val){
     this->Y=val;
 }
+void NES::lsr(u8 val){
+    val=0x02;
+    int temp= val>>1;
+    this->A=temp&0xFF;
+}
 void NES::ora(u8 val){
     this->A|=val;
 }
@@ -498,6 +606,19 @@ void NES::plA(){
 void NES::plP(){
     this->flags=popStack();
 }
+void NES::rol(u8 val){
+    val=0x81;//borrar
+    int temp=val<<1;
+    temp+=(temp&0x100)>>8;
+    this->A=temp&0xFF;
+    
+}
+void NES::ror(u8 val){
+    val=0x87;
+    int temp=val>>1;
+    temp+=(val&0x01)<<7;
+    this->A=temp&0xFF;
+}
 void NES::rti(){
     this->flags=popStack();
     this->PC.adrLow=popStack();
@@ -509,8 +630,8 @@ void NES::rts(){
     PC=intToMem((memToInt(PC)+1));
 }
 void NES::sbc(u8 val){
-    this->A=0x01;
-    val=0x02;
+    this->A=0x01;//borar
+    val=0x02;//borrar
     if (!dFlag()){
         const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
         this->A=temp & 0xFF;
