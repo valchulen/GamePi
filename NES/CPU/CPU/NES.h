@@ -143,8 +143,7 @@ private:
     void txA(u8);
     void txS(u8);
     void tyA(u8);
-    
-    
+        
     
     //Flags y SP
     void setFlags(u8, u8);
