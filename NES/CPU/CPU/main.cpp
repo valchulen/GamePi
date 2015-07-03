@@ -42,9 +42,8 @@ int main(int argc, const char * argv[]) {
                 cout<<"Error"<<endl;
         } else if (ins=="direc"){
             string cual="";
-            cout<<"Ingrese que modo de direc: ind, indx, indy, imm, abs, absx, absy, zp, zpx, zpy, accu"<<endl;
+            cout<<"Ingrese que modo de direc: rel, ind, indx, indy, imm, abs, absx, absy, zp, zpx, zpy, accu"<<endl;
             cin>>cual;
-            cout<<nes.estado()<<endl;
             u8 val = 0;
             memoryAdr mem;
             if (cual=="abs") {
@@ -69,6 +68,8 @@ int main(int argc, const char * argv[]) {
                 mem = nes.indX();
             } else if (cual=="indy") {
                 mem = nes.indY();
+            } else if (cual=="rel") {
+                mem = nes.rel();
             }
             if (val == 0) cout<<"Valor: 0x"<<hex(mem.adrHigh)<<hex(mem.adrLow)<<endl;
             else cout<<"Valor: 0x"<<hex(val)<<endl;

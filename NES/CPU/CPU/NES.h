@@ -94,11 +94,11 @@ public:
     memoryAdr absX(); //implementado
     memoryAdr absY(); //implementado
     u8 accu(); //implementado
-    u8 imm();
-    memoryAdr ind();
-    memoryAdr indX();
-    memoryAdr indY();
-    memoryAdr rel();
+    u8 imm(); //implementado
+    memoryAdr ind(); //implementado
+    memoryAdr indX(); //implementado
+    memoryAdr indY(); //implementado
+    memoryAdr rel(); //implementado
     memoryAdr zp(); //implementado
     memoryAdr zpX(); //implementado
     memoryAdr zpY(); //implementado
