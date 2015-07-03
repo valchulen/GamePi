@@ -113,7 +113,7 @@ private:
     //Instrucciones
     void adc(u8);
     void And(u8);
-    void asl(u8);
+    void asl(memoryAdr);
     void bit(u8);
     void clrF(u8);
     void cmp(u8);
@@ -123,20 +123,20 @@ private:
     void deX();
     void deY();
     void eor(u8);
-    void inc(memoryAdr);
+    void INC(memoryAdr); //todo con mayuscula para diferenciar de inc en types.h
     void inX();
     void inY();
     void ldA(u8);
     void ldX(u8);
     void ldY(u8);
-    void lsr(u8);
+    void lsr(memoryAdr);
     void ora(u8);
     void phA();
     void phP();
     void plA();
     void plP();
-    void rol(u8);
-    void ror(u8);
+    void rol(memoryAdr);
+    void ror(memoryAdr);
     void rti();
     void rts();
     void sbc(u8);
