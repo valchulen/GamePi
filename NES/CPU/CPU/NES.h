@@ -90,19 +90,18 @@ public:
     void pushStack(u8);
     
     //Tipos de direccionamiento--> si devuelve u8 es el valor a usar, si devuelve mem es para saltos
-    u8 abs(); //implementado
-    u8 absX(); //implementado
-    u8 absY(); //implementado
+    memoryAdr abs(); //implementado
+    memoryAdr absX(); //implementado
+    memoryAdr absY(); //implementado
     u8 accu(); //implementado
     u8 imm();
-    u8 imp(); //si la haces void es lo mismo
     memoryAdr ind();
     memoryAdr indX();
     memoryAdr indY();
     memoryAdr rel();
-    u8 zp(); //implementado
-    u8 zpX(); //implementado
-    u8 zpY(); //implementado
+    memoryAdr zp(); //implementado
+    memoryAdr zpX(); //implementado
+    memoryAdr zpY(); //implementado
     
     void exec (u8);
     
@@ -120,29 +119,29 @@ private:
     void cmp(u8);
     void cpX(u8);
     void cpY(u8);
-    void deX(u8);
-    void deY(u8);
+    void deX();
+    void deY();
     void eor(u8);
-    void inX(u8);
-    void inY(u8);
+    void inX();
+    void inY();
     void ldA(u8);
     void ldX(u8);
     void ldY(u8);
     void ora(u8);
-    void phA(u8);
-    void phP(u8);
-    void plA(u8);
-    void plP(u8);
-    void rti(u8);
-    void rts(u8);
+    void phA();
+    void phP();
+    void plA();
+    void plP();
+    void rti();
+    void rts();
     void sbc(u8);
     void setF(u8);
-    void taX(u8);
-    void taY(u8);
-    void tsX(u8);
-    void txA(u8);
-    void txS(u8);
-    void tyA(u8);
+    void taX();
+    void taY();
+    void tsX();
+    void txA();
+    void txS();
+    void tyA();
         
     
     //Flags y SP

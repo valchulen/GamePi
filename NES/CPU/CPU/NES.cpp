@@ -27,51 +27,51 @@ void NES::exec(u8 instru) {
             adc( ram->read( indX() ) );
             break;
         case 0x65:
-            adc(zp());
+            adc( ram->read( zp() ) );
             break;
         case 0x69:
             adc(imm());
             break;
         case 0x6D:
-            adc(abs());
+            adc( ram->read( abs() ) );
             break;
         case 0x71:
             adc( ram->read( indY() ) );
             break;
         case 0x75:
-            adc(zpX());
+            adc( ram->read( zpX() ) );
             break;
         case 0x79:
-            adc(absY());
+            adc( ram->read( absY() ) );
             break;
         case 0x7D:
-            adc(absX());
+            adc( ram->read( absX() ) );
             break;
             
         //-----AND-----
         case 0x21:
-            And( ram->read( indX() ));
+            And( ram->read( indX() ) );
             break;
         case 0x25:
-            And(zp());
+            And( ram->read( zp() ) );
             break;
         case 0x29:
             And(imm());
             break;
         case 0x2D:
-            And(abs());
+            And( ram->read( abs() ) );
             break;
         case 0x31:
             And( ram->read( indY() ) );
             break;
         case 0x35:
-            And(zpX());
+            And( ram->read( zpX() ) );
             break;
         case 0x3D:
-            And(absX());
+            And( ram->read( absX() ) );
             break;
         case 0x39:
-            And(absY());
+            And( ram->read( absY() ) );
             break;
             
         //----ASL-----
@@ -79,24 +79,24 @@ void NES::exec(u8 instru) {
             asl(accu());
             break;
         case 0x06:
-            asl(zp());
+            asl( ram->read( zp() ) );
             break;
         case 0x16:
-            asl(zpX());
+            asl( ram->read( zpX() ) );
             break;
         case 0x0E:
-            asl(abs());
+            asl( ram->read( abs() ) );
             break;
         case 0x1E:
-            asl(absX());
+            asl( ram->read( absX() ) );
             break;
             
         //-----BIT-----
         case 0x24:
-            bit(zp());
+            bit( ram->read( zp() ) );
             break;
         case 0x2C:
-            bit(abs());
+            bit( ram->read( abs() ) );
             break;
             
         //-----BRK-----
@@ -123,19 +123,19 @@ void NES::exec(u8 instru) {
             cmp(imm());
             break;
         case 0xC5:
-            cmp(zp());
+            cmp( ram->read( zp() ) );
             break;
         case 0xD5:
-            cmp(zpX());
+            cmp( ram->read( zpX() ) );
             break;
         case 0xCD:
-            cmp(abs());
+            cmp( ram->read( abs() ) );
             break;
         case 0xDD:
-            cmp(absX());
+            cmp( ram->read( absX() ) );
             break;
         case 0xD9:
-            cmp(absY());
+            cmp( ram->read( absY() ) );
             break;
         case 0xC1:
             cmp( ram->read( indX() ) );
@@ -149,10 +149,10 @@ void NES::exec(u8 instru) {
             cpX(imm());
             break;
         case 0xE4:
-            cpX(zp());
+            cpX( ram->read( zp() ) );
             break;
         case 0xEC:
-            cpX(abs());
+            cpX( ram->read( abs() ) );
             break;
             
         //-----CPY-----
@@ -160,20 +160,20 @@ void NES::exec(u8 instru) {
             cpY(imm());
             break;
         case 0xC4:
-            cpY(zp());
+            cpY( ram->read( zp() ) );
             break;
         case 0xCC:
-            cpY(abs());
+            cpY( ram->read( abs() ) );
             break;
             
         //-----DEX-----
         case 0xCA:
-            deX(imp());
+            deX();
             break;
             
         //-----DEY-----
         case 0x88:
-            deY(imp());
+            deY();
             break;
         
         //-----EOR-----
@@ -181,19 +181,19 @@ void NES::exec(u8 instru) {
             eor(imm());
             break;
         case 0x45:
-            eor(zp());
+            eor( ram->read( zp() ) );
             break;
         case 0x55:
-            eor(zpX());
+            eor( ram->read( zpX() ) );
             break;
         case 0x40:
-            eor(abs());
+            eor( ram->read( abs() ) );
             break;
         case 0x50:
-            eor(absX());
+            eor( ram->read( absX() ) );
             break;
         case 0x59:
-            eor(absY());
+            eor( ram->read( absY() ) );
             break;
         case 0x41:
             eor( ram->read( indX() ) );
@@ -204,37 +204,37 @@ void NES::exec(u8 instru) {
             
         //-----INX-----
         case 0xE8:
-            inX(imp());
+            inX();
             break;
             
         //-----INY-----
         case 0xC8:
-            inY(imp());
+            inY();
             
         //-----LDA-----
         case 0xA9:
             ldA(imm());
             break;
         case 0xA5:
-            ldA(zp());
+            ldA( ram->read( zp() ) );
             break;
         case 0xB5:
-            ldA(zpX());
+            ldA( ram->read( zpX() ) );
             break;
         case 0xAD:
-            ldA(abs());
+            ldA( ram->read( abs() ) );
             break;
         case 0xBD:
-            ldA(absX());
+            ldA( ram->read( absX() ) );
             break;
         case 0xB9:
-            ldA(absY());
+            ldA( ram->read( absY() ) );
             break;
         case 0xA1:
             ldA( ram->read( indX() ) );
             break;
         case 0xB1:
-            ldA( ram->read( indY() ));
+            ldA( ram->read( indY() ) );
             break;
             
         //-----LDX-----
@@ -242,16 +242,16 @@ void NES::exec(u8 instru) {
             ldX(imm());
             break;
         case 0xA6:
-            ldX(zp());
+            ldX( ram->read( zp() ) );
             break;
         case 0xB6:
-            ldX(zpY());
+            ldX( ram->read( zpY() ) );
             break;
         case 0xAE:
-            ldX(abs());
+            ldX( ram->read( abs() ) );
             break;
         case 0xBE:
-            ldX(absY());
+            ldX( ram->read( absY() ) );
             break;
             
         //-----LDX-----
@@ -259,16 +259,16 @@ void NES::exec(u8 instru) {
             ldY(imm());
             break;
         case 0xA4:
-            ldY(zp());
+            ldY( ram->read( zp() ) );
             break;
         case 0xB4:
-            ldY(zpX());
+            ldY( ram->read( zpX() ) );
             break;
         case 0xAC:
-            ldY(abs());
+            ldY( ram->read( abs() ) );
             break;
         case 0xBC:
-            ldY(absX());
+            ldY( ram->read( absX() ) );
             break;
             
         //-----NOP-----
@@ -280,19 +280,19 @@ void NES::exec(u8 instru) {
             ora(imm());
             break;
         case 0x05:
-            ora(zp());
+            ora( ram->read( zp() ) );
             break;
         case 0x15:
-            ora(zpX());
+            ora( ram->read( zpX() ) );
             break;
         case 0x0D:
-            ora(abs());
+            ora( ram->read( abs() ) );
             break;
         case 0x1D:
-            ora(absX());
+            ora( ram->read( absX() ) );
             break;
         case 0x19:
-            ora(absY());
+            ora( ram->read( absY() ) );
             break;
         case 0x01:
             ora( ram->read( indX() ) );
@@ -303,51 +303,51 @@ void NES::exec(u8 instru) {
             
         //-----PHA-----
         case 0x48:
-            phA(imp());
+            phA();
             break;
             
         //-----PHP-----
         case 0x08:
-            phP(imp());
+            phP();
             break;
             
         //----PLA-----
         case 0x68:
-            plA(imp());
+            plA();
             break;
             
         //-----PLP-----
         case 0x28:
-            plP(imp());
+            plP();
             break;
             
         //-----RTI-----
         case 0x4D:
-            rti(imp());
+            rti();
             break;
             
         //-----RTS-----
         case 0x60:
-            rts(imp());
+            rts();
             break;
         //-----SBC-----
         case 0xE9:
             sbc(imm());
             break;
         case 0xE5:
-            sbc(zp());
+            sbc( ram->read( zp() ) );
             break;
         case 0xF5:
-            sbc(zpX());
+            sbc( ram->read( zpX() ) );
             break;
         case 0xED:
-            sbc(abs());
+            sbc( ram->read( abs() ) );
             break;
         case 0xFD:
-            sbc(absX());
+            sbc( ram->read( absX() ) );
             break;
         case 0xF9:
-            sbc(absY());
+            sbc( ram->read( absY() ) );
             break;
         case 0xE1:
             sbc( ram->read( indX() ) );
@@ -369,32 +369,32 @@ void NES::exec(u8 instru) {
         
         //-----TAX-----
         case 0xAA:
-            taX(imp());
+            taX();
             break;
             
         //-----TAY-----
         case 0xA8:
-            taY(imp());
+            taY();
             break;
             
         //-----TSX-----
         case 0xBA:
-            tsX(imp());
+            tsX();
             break;
             
         //-----TXA-----
         case 0x8A:
-            txA(imp());
+            txA();
             break;
             
         //-----TXS-----
         case 0x9A:
-            txS(imp());
+            txS();
             break;
             
         //-----TYA-----
         case 0x98:
-            tyA(imp());
+            tyA();
             break;
         
             
@@ -446,22 +446,22 @@ void NES::cpY(u8 val){
     int temp= this->Y -val;
     //setea N,Zy C
 }
-void NES::deX(u8 val){
+void NES::deX(){
     int temp =this->X-1;
     this->X=temp&0xFF;
 }
-void NES::deY(u8 val){
+void NES::deY(){
     int temp =this->Y-1;
     this->Y=temp&0xFF;
 }
 void NES::eor(u8 val){
     this->A^=val;
 }
-void NES::inX(u8 val){
+void NES::inX(){
     int temp =this->X+1;
     this->X=temp&0xFF;
 }
-void NES::inY(u8 val){
+void NES::inY(){
     int temp =this->X+1;
     this->X=temp&0xFF;
 }
@@ -477,25 +477,25 @@ void NES::ldY(u8 val){
 void NES::ora(u8 val){
     this->A|=val;
 }
-void NES::phA(u8 val){
+void NES::phA(){
     pushStack(this->A);
 }
-void NES::phP(u8 val){
+void NES::phP(){
     pushStack(flags);
 }
-void NES::plA(u8 val){
+void NES::plA(){
     this->A=popStack();
     //Cambiar flags de Z Y N
 }
-void NES::plP(u8 val){
+void NES::plP(){
     this->flags=popStack();
 }
-void NES::rti(u8 val){
+void NES::rti(){
     this->flags=popStack();
     this->PC.adrLow=popStack();
     this->PC.adrHigh=popStack();
 }
-void NES::rts(u8 val){
+void NES::rts(){
     this->PC.adrLow=popStack();
     this->PC.adrHigh=popStack();
     PC=intToMem((memToInt(PC)+1));
@@ -515,45 +515,44 @@ void NES::sbc(u8 val){
 void NES::setF(u8 val){
     //setea flag que llega en 1
 }
-void NES::taX(u8 val){
+void NES::taX(){
     this->X=this->A;
 }
-void NES::taY(u8 val){
+void NES::taY(){
     this->Y=this->A;
 }
-void NES::tsX(u8 val){
+void NES::tsX(){
     this->X=this->SP;
 }
-void NES::txA(u8 val){
+void NES::txA(){
     this->A=this->X;
 }
-void NES::txS(u8 val){
+void NES::txS(){
     this->SP=this->X;
 }
-void NES::tyA(u8 val){
+void NES::tyA(){
     this->A=this->Y;
 }
+
 //---Tipos de direccionamiento---
-u8 NES::abs(){ //testeada
+memoryAdr NES::abs(){ //testeada
     //u8 low = ram->read( this->PC ); //es en little endian
     //u8 high = ram->read( inc(&this->PC) );
     const memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
     _inc(&this->PC);
-    
-    return ram->read( mem );
+    return mem;
 }
 
-u8 NES::absX(){ //testeada
+memoryAdr NES::absX(){ //testeada
     const memoryAdr mem = intToMem((ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8))  + this->X); //la misma logica que con abs + x, no hago wraping porque intToMem interpreta 16 bits max
     _inc(&this->PC);
-    return ram->read(mem);
+    return mem;
 }
 
-u8 NES::absY(){ //testeada, misma logica que  absX
+memoryAdr NES::absY(){ //testeada, misma logica que  absX
     const memoryAdr mem = intToMem((ram->read(this->PC) | (ram->read( inc(&this->PC) ) <<8) )  + this->Y);
     _inc(&this->PC);
-    return ram->read(mem);
-
+    return mem;
 }
 
 u8 NES::accu(){
@@ -564,9 +563,6 @@ u8 NES::imm(){ //testeada
     const u8 val = ram->read(this->PC);
     _inc(&this->PC);
     return val;
-}
-u8 NES::imp(){
-    return 0x00;
 }
 
 memoryAdr NES::ind(){ //ARREGLAR DESPUES DE ENTREGAR
@@ -601,22 +597,22 @@ memoryAdr NES::rel(){
     return intToMem(0x00);
 }
 
-u8 NES::zp(){ //Esta arreglado
+memoryAdr NES::zp(){ //Esta arreglado
     const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return this->ram->read(intToMem(val)); //devuelvo nada mas lo de LSB
+    return intToMem(val); //devuelvo nada mas lo de LSB
 }
 
-u8 NES::zpX(){ //esta arreglado
+memoryAdr NES::zpX(){ //esta arreglado
     const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return this->ram->read( intToMem( (val + this->X) & 0xFF) );//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
+    return intToMem( (val + this->X) & 0xFF);//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
 }
 
-u8 NES::zpY(){ //esta arreglado
+memoryAdr NES::zpY(){ //esta arreglado
     const u8 val = ram->read( this->PC );
     _inc(&this->PC);
-    return this->ram->read( intToMem( (val + this->Y) & 0xFF) );//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
+    return intToMem( (val + this->Y) & 0xFF);//hago lo mismo que con zp, sumando x y wrapeando porque no puedo estar seguro de que la suma da lindo
 }
 
 //---Interrupciones---

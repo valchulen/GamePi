@@ -48,19 +48,19 @@ int main(int argc, const char * argv[]) {
             u8 val = 0;
             memoryAdr mem;
             if (cual=="abs") {
-                val = nes.abs();
+                mem = nes.abs();
             } else if (cual=="accu"){
                 val = nes.accu();
             } else if (cual=="zp") {
-                val = nes.zp();
+                mem = nes.zp();
             } else if (cual=="zpx") {
-                val = nes.zpX();
+                mem = nes.zpX();
             } else if (cual=="zpy") {
-                val = nes.zpY();
+                mem = nes.zpY();
             } else if (cual=="absx") {
-                val = nes.absX();
+                mem = nes.absX();
             } else if (cual=="absy") {
-                val = nes.absY();
+                mem = nes.absY();
             } else if (cual=="imm") {
                 val = nes.imm();
             } else if (cual=="ind") {
