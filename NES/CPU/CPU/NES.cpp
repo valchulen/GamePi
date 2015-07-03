@@ -196,10 +196,10 @@ void NES::exec(u8 instru) {
             eor(absY());
             break;
         case 0x41:
-            eor(indX());
+            eor( ram->read( indX() ) );
             break;
         case 0x51:
-            eor(indY());
+            eor( ram->read( indY() ) );
             break;
             
         //-----INX-----
@@ -295,10 +295,10 @@ void NES::exec(u8 instru) {
             ora(absY());
             break;
         case 0x01:
-            ora(indX());
+            ora( ram->read( indX() ) );
             break;
         case 0x11:
-            ora(indY());
+            ora( ram->read( indY() ) );
             break;
             
         //-----PHA-----
@@ -350,10 +350,10 @@ void NES::exec(u8 instru) {
             sbc(absY());
             break;
         case 0xE1:
-            sbc(indX());
+            sbc( ram->read( indX() ) );
             break;
         case 0xF1:
-            sbc(indY());
+            sbc( ram->read( indY() ) );
             break;
             
         //----SetF-----
