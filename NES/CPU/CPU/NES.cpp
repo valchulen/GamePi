@@ -10,6 +10,8 @@
 #include "Types.h"
 using namespace std;
 
+#define NULL_MEM 0xFFFF //memoria reservada que no se usa en las instrucciones, para meter un null.
+
 NES::NES(RAM* ram){
     this->ram = ram;
 }
@@ -76,19 +78,19 @@ void NES::exec(u8 instru) {
             
         //----ASL-----
         case 0x0A:
-            asl(accu());
+            asl(intToMem(NULL_MEM));
             break;
         case 0x06:
-            asl(ram->read(zp()));
+            asl(zp());
             break;
         case 0x16:
-            asl( ram->read( zpX() ) );
+            asl(zpX());
             break;
         case 0x0E:
-            asl( ram->read( abs() ) );
+            asl(abs());
             break;
         case 0x1E:
-            asl( ram->read( absX() ) );
+            asl(absX());
             break;
             
         //-----BIT-----
@@ -160,10 +162,24 @@ void NES::exec(u8 instru) {
             cpY(imm());
             break;
         case 0xC4:
-            cpY( ram->read( zp() ) );
+            cpY( ram->read(zp()));
             break;
         case 0xCC:
             cpY( ram->read( abs() ) );
+            break;
+            
+        //-----DEC-----
+        case 0xC6:
+            dec(zp());
+            break;
+        case 0xD6:
+            dec(zpX());
+            break;
+        case 0xCE:
+            dec(abs());
+            break;
+        case 0xDE:
+            dec(absX());
             break;
             
         //-----DEX-----
@@ -204,16 +220,16 @@ void NES::exec(u8 instru) {
         
         //-----INC-----
         case 0xE6:
-            inc(zp());
+            INC(zp());
             break;
         case 0xF6:
-            inc(zpX());
+            INC(zpX());
             break;
         case 0xEE:
-            inc(abs());
+            INC(abs());
             break;
         case 0xFE:
-            inc(absX());
+            INC(absX());
             break;
             
         //-----INX-----
@@ -286,19 +302,19 @@ void NES::exec(u8 instru) {
             break;
         //-----LSR-----
         case 0x4A:
-            lsr(accu());
+            lsr(intToMem(NULL_MEM));
             break;
         case 0x46:
-            lsr(ram->read(zp()));
+            lsr(zp());
             break;
         case 0x56:
-            lsr( ram->read( zpX() ) );
+            lsr(zpX());
             break;
         case 0x4E:
-            lsr( ram->read( abs() ) );
+            lsr(abs());
             break;
         case 0x5E:
-            lsr( ram->read( absX() ) );
+            lsr(absX());
             break;
             
         //-----NOP-----
@@ -353,36 +369,36 @@ void NES::exec(u8 instru) {
             
         //-----ROL-----
         case 0x2A:
-            rol(accu());
+            rol(intToMem(NULL_MEM));
             break;
         case 0x26:
-            rol(ram->read(zp()));
+            rol(zp());
             break;
         case 0x36:
-            rol( ram->read( zpX() ) );
+            rol(zpX());
             break;
         case 0x2E:
-            rol( ram->read( abs() ) );
+            rol(abs());
             break;
         case 0x3E:
-            rol( ram->read( absX() ) );
+            rol(absX());
             break;
             
             //-----ROR-----
         case 0x6A:
-            ror(accu());
+            ror(intToMem(NULL_MEM));
             break;
         case 0x66:
-            ror(ram->read(zp()));
+            ror(zp());
             break;
         case 0x76:
-            ror( ram->read( zpX() ) );
+            ror(zpX());
             break;
         case 0x6E:
-            ror( ram->read( abs() ) );
+            ror(abs());
             break;
         case 0x7E:
-            ror( ram->read( absX() ) );
+            ror(absX());
             break;
 
         //-----RTI-----
@@ -532,10 +548,18 @@ void NES::And(u8 val) {
     //this->A=0x09;//borrar
     this->A&=val;
 }
-void NES::asl(u8 val){
-    val=0x01;
+void NES::asl(memoryAdr mem){
+    u8 val;
+    if (memToInt(mem)==0xFFFF){
+        val=this->A;
+    } else val=ram->read(mem);
+    //val=0x01;
     int temp= val<<1;
-    this->A=temp&0xFF;
+    if (memToInt(mem)==0xFFFF){
+        this->A=temp&0xFF;
+    }
+    else
+        ram->write(mem, temp&0xFF);
 }
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
@@ -557,6 +581,11 @@ void NES::cpY(u8 val){
     int temp= this->Y -val;
     //setea N,Zy C
 }
+void NES::dec(memoryAdr mem){
+    u8 val= ram->read(mem);
+    val--;
+    ram->write(mem,val);
+}
 void NES::deX(){
     int temp =this->X-1;
     this->X=temp&0xFF;
@@ -567,6 +596,11 @@ void NES::deY(){
 }
 void NES::eor(u8 val){
     this->A^=val;
+}
+void NES::INC(memoryAdr mem){
+    u8 val= ram->read(mem);
+    val++;
+    ram->write(mem,val);
 }
 void NES::inX(){
     int temp =this->X+1;
@@ -585,10 +619,18 @@ void NES::ldX(u8 val){
 void NES::ldY(u8 val){
     this->Y=val;
 }
-void NES::lsr(u8 val){
-    val=0x02;
+void NES::lsr(memoryAdr mem){
+    u8 val;
+    if (memToInt(mem)==0xFFFF){
+        val=this->A;
+    } else val=ram->read(mem);
+    //val=0x01;
     int temp= val>>1;
-    this->A=temp&0xFF;
+    if (memToInt(mem)==0xFFFF){
+        this->A=temp&0xFF;
+    }
+    else
+        ram->write(mem, temp&0xFF);
 }
 void NES::ora(u8 val){
     this->A|=val;
@@ -606,18 +648,33 @@ void NES::plA(){
 void NES::plP(){
     this->flags=popStack();
 }
-void NES::rol(u8 val){
-    val=0x81;//borrar
+void NES::rol(memoryAdr mem){
+    u8 val;
+    if (memToInt(mem)==0xFFFF){
+        val=this->A;
+    } else val = ram->read(mem);
+    //val=0x01;
     int temp=val<<1;
     temp+=(temp&0x100)>>8;
-    this->A=temp&0xFF;
-    
+    if (memToInt(mem)==0xFFFF){
+        this->A=temp&0xFF;
+    }
+    else
+        ram->write(mem, temp&0xFF);
 }
-void NES::ror(u8 val){
-    val=0x87;
+void NES::ror(memoryAdr mem){
+    u8 val;
+    if (memToInt(mem)==0xFFFF){
+        val=this->A;
+    } else val=ram->read(mem);
+    //val=0x01;
     int temp=val>>1;
     temp+=(val&0x01)<<7;
-    this->A=temp&0xFF;
+    if (memToInt(mem)==0xFFFF){
+        this->A=temp&0xFF;
+    }
+    else
+        ram->write(mem, temp&0xFF);
 }
 void NES::rti(){
     this->flags=popStack();
