@@ -132,6 +132,8 @@ private:
     void INC(memoryAdr); //todo con mayuscula para diferenciar de inc en types.h
     void inX();
     void inY();
+    void jmp(memoryAdr);
+    void jsr(memoryAdr);
     void ldA(u8);
     void ldX(u8);
     void ldY(u8);

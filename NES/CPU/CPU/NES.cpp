@@ -269,6 +269,20 @@ void NES::exec(u8 instru) {
         //-----INY-----
         case 0xC8:
             inY();
+            break;
+            
+        //-----JMP-----
+        case 0x4C:
+            jmp(abs());
+            break;
+        case 0x6C:
+            jmp(ind());
+            break;
+            
+        //-----JSR-----
+        case 0x20:
+            jsr(abs());
+            break;
             
         //-----LDA-----
         case 0xA9:
@@ -329,6 +343,7 @@ void NES::exec(u8 instru) {
         case 0xBC:
             ldY( ram->read( absX() ) );
             break;
+            
         //-----LSR-----
         case 0x4A:
             lsr(intToMem(NULL_MEM));
@@ -483,10 +498,10 @@ void NES::exec(u8 instru) {
         case 0x95:
             stA(zpX());
             break;
-        case 0x80:
+        case 0x8D:
             stA(abs());
             break;
-        case 0x90:
+        case 0x9D:
             stA(absX());
             break;
         case 0x99:
@@ -662,6 +677,16 @@ void NES::inX(){
 void NES::inY(){
     int temp =this->X+1;
     this->X=temp&0xFF;
+}
+void NES::jmp(memoryAdr mem){
+    this->PC=mem;
+}
+void NES::jsr(memoryAdr mem){
+    this->PC=intToMem(memToInt(PC)+1);
+    pushStack(PC.adrHigh); //cuidado aca
+    pushStack(PC.adrLow);
+    this->PC=mem;
+    
 }
 void NES::ldA(u8 val){
     this->A=val;
