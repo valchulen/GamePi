@@ -566,8 +566,6 @@ void NES::exec(u8 instru) {
             tyA();
             break;
         
-            
-        
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
         break;
@@ -683,7 +681,7 @@ void NES::jmp(memoryAdr mem){
 }
 void NES::jsr(memoryAdr mem){
     this->PC=intToMem(memToInt(PC)+1);
-    pushStack(PC.adrHigh); 
+    pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
     this->PC=mem;
     
