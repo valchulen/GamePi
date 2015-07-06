@@ -683,7 +683,7 @@ void NES::jmp(memoryAdr mem){
 }
 void NES::jsr(memoryAdr mem){
     this->PC=intToMem(memToInt(PC)+1);
-    pushStack(PC.adrHigh); //cuidado aca
+    pushStack(PC.adrHigh); 
     pushStack(PC.adrLow);
     this->PC=mem;
     
