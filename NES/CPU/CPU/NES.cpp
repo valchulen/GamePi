@@ -93,12 +93,41 @@ void NES::exec(u8 instru) {
             asl(absX());
             break;
             
+        //-----BCC-----
+        case 0x90:
+            bcc(rel());
+            break;
+        //-----BCS-----
+        case 0xB0:
+            bcs(rel());
+            break;
+            
+        //-----BEQ-----
+        case 0xF0:
+            beq(rel());
+            break;
+            
         //-----BIT-----
         case 0x24:
             bit( ram->read( zp() ) );
             break;
         case 0x2C:
             bit( ram->read( abs() ) );
+            break;
+            
+        //-----BMI-----
+        case 0x30:
+            bmi(rel());
+            break;
+            
+        //-----BNE-----
+        case 0xD0:
+            bne(rel());
+            break;
+            
+        //-----BPL-----
+        case 0x10:
+            bpl(rel());
             break;
             
         //-----BRK-----
@@ -561,10 +590,34 @@ void NES::asl(memoryAdr mem){
     else
         ram->write(mem, temp&0xFF);
 }
+void NES::bcc(memoryAdr mem){
+    if (!cFlag())
+    this->PC=mem;
+}
+void NES::bcs(memoryAdr mem){
+    if(cFlag())
+    this->PC=mem;
+}
+void NES::beq(memoryAdr mem){
+    if(zFlag())
+    this->PC=mem;
+}
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
     //val & 0x80;   //Copia el 7mo bit al 7mo de flags
+}
+void NES::bmi(memoryAdr mem){
+    if(nFlag())
+    this->PC=mem;
+}
+void NES::bne(memoryAdr mem){
+    if(!zFlag())
+    this->PC=mem;
+}
+void NES::bpl(memoryAdr mem){
+    if (!nFlag())
+    this->PC=mem;
 }
 void NES::clrF(u8 val){
     // setea en 0 el que te llega

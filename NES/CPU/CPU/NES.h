@@ -114,7 +114,13 @@ private:
     void adc(u8);
     void And(u8);
     void asl(memoryAdr);
+    void bcc(memoryAdr);
+    void bcs(memoryAdr);
+    void beq(memoryAdr);
     void bit(u8);
+    void bmi(memoryAdr);
+    void bne(memoryAdr);
+    void bpl(memoryAdr);
     void clrF(u8);
     void cmp(u8);
     void cpX(u8);
