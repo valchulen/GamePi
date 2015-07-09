@@ -165,7 +165,7 @@ private:
     inline bool nFlag();
     
     inline u8 cFlag(int); //devuelve 0x00 o C_FLAG dependiendo de la entrada
-    
+    inline u8 zFlag(int);
     
 };
 
