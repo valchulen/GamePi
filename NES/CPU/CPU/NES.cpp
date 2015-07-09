@@ -533,8 +533,15 @@ void NES::exec(u8 instru) {
 
 //---Intrucciones---
 void NES::adc(u8 val) {
-    this->A = 0x05;//borrar
-    val = 0xfb;
+    //this->A = 0xd0;//borrar
+    //val = 0xd0;
+    
+    //overflow
+    const u8 m = (this->A & 0x80) == 0x80 ? 0xFF : 0x00, n = (val & 0x80) == 0x80 ? 0xFF : 0x00;
+    const u8 c = (this->A & val & 0x40) == 0x40 ? 0xFF : 0x00;
+    const u8 v  = ( ~(m | n) & c) | (m & n & ~c);
+    //fin overflow
+    
     unsigned temp;
     //if (!dFlag()) {
         temp = val + this->A + (cFlag() ? 0x01 : 0x00);
@@ -542,8 +549,10 @@ void NES::adc(u8 val) {
         temp = BCDtou8(u8toBCD(val) + u8toBCD(this->A) + (cFlag() ? 0x01 : 0x00));
         setFlags( ((temp > 0x99) ? C_FLAG : 0x00), C_FLAG);
     }*/
+    
     this->A = temp & 0xFF;
-    setFlags( ((temp > 0xFF) ? C_FLAG : 0x00) | zFlag(this->A) | nFlag(this->A), C_FLAG | Z_FLAG | N_FLAG);
+    
+    setFlags( ((temp > 0xFF) ? C_FLAG : 0x00) | zFlag(this->A) | nFlag(this->A) | (V_FLAG & v), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
 }
 
 void NES::And(u8 val) {
@@ -747,13 +756,23 @@ void NES::rts(){
 void NES::sbc(u8 val){
     //int temp;
     //if (!dFlag()){
+    this->A=0x50;
+    val = 0xb0;
     const int temp = this->A - val - (cFlag() ? 0 : 1);
+    
+    
+    //overflow
+    const u8 m = (this->A & 0x80) == 0x80 ? 0xFF : 0x00, n = (val & 0x80) == 0x80 ? 0xFF : 0x00;
+    const u8 c = (this->A & val & 0x40) == 0x40 ? 0xFF : 0x00;
+    const u8 v  = (~m & n & c) | (m & ~(n | c));
+    //fin overflow
+    
     /*} else {
         temp = BCDtou8(u8toBCD(this->A) - u8toBCD(val) - (cFlag() ? 0 : 1));
     }*/
     this->A = temp & 0xFF;
     
-    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(this->A) | nFlag(this->A), C_FLAG | Z_FLAG | N_FLAG);
+    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(this->A) | nFlag(this->A) | (V_FLAG & v), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
 }
 
 void NES::setF(u8 val){
