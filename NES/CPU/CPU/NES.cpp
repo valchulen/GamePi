@@ -21,7 +21,8 @@ NES::~NES() {
 }
 
 void NES::exec(u8 instru) {
-    
+    bool existe=true;
+    this->opcode=instru;
     switch (instru) {
             
         //-----ADC------
@@ -93,6 +94,21 @@ void NES::exec(u8 instru) {
             asl(absX());
             break;
             
+        //-----BCC-----
+        case 0x90:
+            bcc(rel());
+            break;
+        
+        //-----BCS-----
+        case 0xB0:
+            bcs(rel());
+            break;
+            
+        //-----BEQ-----
+        case 0xF0:
+            beq(rel());
+            break;
+            
         //-----BIT-----
         case 0x24:
             bit( ram->read( zp() ) );
@@ -101,11 +117,36 @@ void NES::exec(u8 instru) {
             bit( ram->read( abs() ) );
             break;
             
+        //-----BMI-----
+        case 0x30:
+            bmi(rel());
+            break;
+            
+        //-----BNE-----
+        case 0xD0:
+            bne(rel());
+            break;
+            
+        //-----BPL-----
+        case 0x10:
+            bpl(rel());
+            break;
+            
         //-----BRK-----
         case 0x00:
             brk();
             break;
-            
+        
+        //-----BVC-----
+        case 0x50:
+            bvc(rel());
+            break;
+        
+        //-----BVS-----
+        case 0x70:
+            bvs(rel());
+            break;
+        
         //-----ClrF-----
         case 0x18:
             clrF(C_FLAG);
@@ -202,10 +243,10 @@ void NES::exec(u8 instru) {
         case 0x55:
             eor( ram->read( zpX() ) );
             break;
-        case 0x40:
+        case 0x4D:
             eor( ram->read( abs() ) );
             break;
-        case 0x50:
+        case 0x5D:
             eor( ram->read( absX() ) );
             break;
         case 0x59:
@@ -240,6 +281,20 @@ void NES::exec(u8 instru) {
         //-----INY-----
         case 0xC8:
             inY();
+            break;
+            
+        //-----JMP-----
+        case 0x4C:
+            jmp(abs());
+            break;
+        case 0x6C:
+            jmp(ind());
+            break;
+            
+        //-----JSR-----
+        case 0x20:
+            jsr(abs());
+            break;
             
         //-----LDA-----
         case 0xA9:
@@ -300,6 +355,7 @@ void NES::exec(u8 instru) {
         case 0xBC:
             ldY( ram->read( absX() ) );
             break;
+            
         //-----LSR-----
         case 0x4A:
             lsr(intToMem(NULL_MEM));
@@ -402,7 +458,7 @@ void NES::exec(u8 instru) {
             break;
 
         //-----RTI-----
-        case 0x4D:
+        case 0x40:
             rti();
             break;
             
@@ -454,10 +510,10 @@ void NES::exec(u8 instru) {
         case 0x95:
             stA(zpX());
             break;
-        case 0x80:
+        case 0x8D:
             stA(abs());
             break;
-        case 0x90:
+        case 0x9D:
             stA(absX());
             break;
         case 0x99:
@@ -522,12 +578,14 @@ void NES::exec(u8 instru) {
             tyA();
             break;
         
-            
-        
         default:
             cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
+            existe=false;
         break;
     }
+    if (existe)
+        ciclos+=cycleCount[(u8)opcode];
+    
 }
 
 
@@ -561,10 +619,42 @@ void NES::asl(memoryAdr mem){
     else
         ram->write(mem, temp&0xFF);
 }
+void NES::bcc(memoryAdr mem){
+    if (!cFlag())
+    this->PC=mem;
+}
+void NES::bcs(memoryAdr mem){
+    if(cFlag())
+    this->PC=mem;
+}
+void NES::beq(memoryAdr mem){
+    if(zFlag())
+    this->PC=mem;
+}
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
     //val & 0x80;   //Copia el 7mo bit al 7mo de flags
+}
+void NES::bmi(memoryAdr mem){
+    if(nFlag())
+    this->PC=mem;
+}
+void NES::bne(memoryAdr mem){
+    if(!zFlag())
+    this->PC=mem;
+}
+void NES::bpl(memoryAdr mem){
+    if (!nFlag())
+    this->PC=mem;
+}
+void NES::bvc(memoryAdr mem){
+    if (!cFlag())
+    this->PC=mem;
+}
+void NES::bvs(memoryAdr mem){
+    if (cFlag())
+    this->PC=mem;
 }
 void NES::clrF(u8 val){
     // setea en 0 el que te llega
@@ -609,6 +699,16 @@ void NES::inX(){
 void NES::inY(){
     int temp =this->X+1;
     this->X=temp&0xFF;
+}
+void NES::jmp(memoryAdr mem){
+    this->PC=mem;
+}
+void NES::jsr(memoryAdr mem){
+    this->PC=intToMem(memToInt(PC)+1);
+    pushStack(PC.adrHigh);
+    pushStack(PC.adrLow);
+    this->PC=mem;
+    
 }
 void NES::ldA(u8 val){
     this->A=val;
@@ -687,8 +787,8 @@ void NES::rts(){
     PC=intToMem((memToInt(PC)+1));
 }
 void NES::sbc(u8 val){
-    this->A=0x01;//borar
-    val=0x02;//borrar
+    this->A=0x81;//borar
+    val=0x2;//borrar
     if (!dFlag()){
         const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
         this->A=temp & 0xFF;
@@ -882,7 +982,7 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 string NES::estado(){
-    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Status: 0x"+ eflags(flags);
+    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status: 0x"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){
