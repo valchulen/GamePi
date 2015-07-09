@@ -31,10 +31,13 @@ class NES {
     memoryAdr PC;
     u8 flags = FLAG_RESET;
     
+    u8 ciclos=0;
+    u8 opcode;
+    
     RAM* ram;
     
     int instr_longitud[256] = { //incluyendo opcode
-        //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+      //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
         2,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 0
         2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// 1
         3,2,1,2,2,2,2,2,1,2,1,2,3,3,3,3,// 2
@@ -53,7 +56,7 @@ class NES {
         2,2,1,2,2,2,2,2,1,3,1,3,3,3,3,3,// F
     };
     int cycleCount[256] = { //ciclos de ins incluyendo opcode
-        //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+      //0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
         7,6,1,8,3,3,5,5,3,2,2,2,4,4,6,6,// 0
         2,5,1,8,4,4,6,6,2,4,2,7,4,4,7,7,// 1
         6,6,1,8,3,3,5,5,4,2,2,2,4,4,6,6,// 2
@@ -121,6 +124,8 @@ private:
     void bmi(memoryAdr);
     void bne(memoryAdr);
     void bpl(memoryAdr);
+    void bvc(memoryAdr);
+    void bvs(memoryAdr);
     void clrF(u8);
     void cmp(u8);
     void cpX(u8);
