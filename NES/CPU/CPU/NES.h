@@ -20,9 +20,10 @@ class NES {
 #define I_FLAG 0x04
 #define D_FLAG 0x08
 #define B_FLAG 0x10
-#define O_FLAG 0x40 //podes ponerle V_FLAG inculto?
+#define O_FLAG 0x40
+#define V_FLAG 0x40
 #define N_FLAG 0x80
-#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG |C_FLAG
+#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
     //Registros
     u8 A = 0x00;
     u8 X = 0x00;
@@ -176,6 +177,9 @@ private:
     inline bool oFlag();
     inline bool nFlag();
     
+    inline u8 cFlag(int); //devuelve 0x00 o C_FLAG dependiendo de la entrada
+    inline u8 zFlag(int);
+    inline u8 nFlag(int);
 };
 
 #endif /* defined(__CPU__NES__) */

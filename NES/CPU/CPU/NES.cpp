@@ -591,242 +591,342 @@ void NES::exec(u8 instru) {
 
 //---Intrucciones---
 void NES::adc(u8 val) {
-    this->A=0x15;//borrar
-    if (!dFlag()){
-        const unsigned temp=val+ this->A +(u8)cFlag();
-        this->A=temp & 0xFF;
-    }
-    else{
-        const unsigned temp= BCDtou8(u8toBCD(val)+ u8toBCD(this->A)+(u8)cFlag());
-        this->A=temp & 0xFF;
-    }
+    //this->A = 0xd0;//borrar
+    //val = 0xd0;
+    
+    //overflow
+    const u8 m = (this->A & 0x80) == 0x80 ? 0xFF : 0x00, n = (val & 0x80) == 0x80 ? 0xFF : 0x00;
+    const u8 c = (this->A & val & 0x40) == 0x40 ? 0xFF : 0x00;
+    const u8 v  = ( ~(m | n) & c) | (m & n & ~c);
+    //fin overflow
+    
+    unsigned temp;
+    //if (!dFlag()) {
+        temp = val + this->A + (cFlag() ? 0x01 : 0x00);
+    /*} else {
+        temp = BCDtou8(u8toBCD(val) + u8toBCD(this->A) + (cFlag() ? 0x01 : 0x00));
+        setFlags( ((temp > 0x99) ? C_FLAG : 0x00), C_FLAG);
+    }*/
+    
+    this->A = temp & 0xFF;
+    
+    setFlags( ((temp > 0xFF) ? C_FLAG : 0x00) | zFlag(this->A) | nFlag(this->A) | (V_FLAG & v), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+}
 
-}
 void NES::And(u8 val) {
-    //this->A=0x09;//borrar
-    this->A&=val;
+    this->A = 0xFF;//borrar
+    val = 0x10;
+    this->A &= val;
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::asl(memoryAdr mem){
     u8 val;
-    if (memToInt(mem)==0xFFFF){
-        val=this->A;
-    } else val=ram->read(mem);
+    if (memToInt(mem) == NULL_MEM){
+        val = this->A;
+    } else val = ram->read(mem);
     //val=0x01;
-    int temp= val<<1;
-    if (memToInt(mem)==0xFFFF){
-        this->A=temp&0xFF;
-    }
-    else
-        ram->write(mem, temp&0xFF);
+    int temp = val<<1;
+    if (memToInt(mem) == NULL_MEM){
+        this->A = temp & 0xFF;
+    } else
+        ram->write(mem, temp & 0xFF);
+    
+    setFlags(cFlag(temp) | zFlag(temp & 0xFF) | nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG);
 }
+
 void NES::bcc(memoryAdr mem){
     if (!cFlag())
-    this->PC=mem;
+        this->PC = mem;
 }
 void NES::bcs(memoryAdr mem){
     if(cFlag())
-    this->PC=mem;
+        this->PC = mem;
 }
 void NES::beq(memoryAdr mem){
     if(zFlag())
-    this->PC=mem;
+        this->PC = mem;
 }
+
 void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
     //val & 0x80;   //Copia el 7mo bit al 7mo de flags
 }
+
 void NES::bmi(memoryAdr mem){
     if(nFlag())
-    this->PC=mem;
+        this->PC=mem;
 }
+
 void NES::bne(memoryAdr mem){
     if(!zFlag())
-    this->PC=mem;
+        this->PC=mem;
 }
+
 void NES::bpl(memoryAdr mem){
     if (!nFlag())
-    this->PC=mem;
+        this->PC=mem;
 }
+
 void NES::bvc(memoryAdr mem){
     if (!cFlag())
-    this->PC=mem;
+        this->PC=mem;
 }
+
 void NES::bvs(memoryAdr mem){
     if (cFlag())
-    this->PC=mem;
+        this->PC=mem;
 }
+
 void NES::clrF(u8 val){
-    // setea en 0 el que te llega
+    setFlags(0x00, val);
 }
+
 void NES::cmp(u8 val){
-    int temp= this->A -val;
-    //setea N,Zy C
+    const int temp = this->A - val;
+    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(temp & 0xFF) | nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG);
 }
+
 void NES::cpX(u8 val){
-    int temp= this->X -val;
-    //setea N,Zy C
+    const int temp = this->X - val;
+    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(temp & 0xFF) | nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG);
 }
+
 void NES::cpY(u8 val){
-    int temp= this->Y -val;
-    //setea N,Zy C
+    const int temp = this->Y - val;
+    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(temp & 0xFF) | nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG);
 }
+
 void NES::dec(memoryAdr mem){
-    u8 val= ram->read(mem);
+    u8 val = ram->read(mem);
     val--;
-    ram->write(mem,val);
+    setFlags(zFlag(val) | nFlag(val), Z_FLAG | N_FLAG);
+    ram->write(mem, val);
 }
+
 void NES::deX(){
-    int temp =this->X-1;
-    this->X=temp&0xFF;
+    const int temp = this->X - 1;
+    this->X = temp & 0xFF;
+    
+    setFlags(zFlag(this->X)| nFlag(this->X), Z_FLAG | N_FLAG);
 }
+
 void NES::deY(){
-    int temp =this->Y-1;
-    this->Y=temp&0xFF;
+    const int temp = this->Y - 1;
+    this->Y = temp & 0xFF;
+    
+    setFlags(zFlag(this->Y)| nFlag(this->X), Z_FLAG | N_FLAG);
 }
+
 void NES::eor(u8 val){
-    this->A^=val;
+    this->A ^= val;
+    
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::INC(memoryAdr mem){
     u8 val= ram->read(mem);
     val++;
+    setFlags(zFlag(val) | nFlag(val), Z_FLAG | N_FLAG);
     ram->write(mem,val);
 }
+
 void NES::inX(){
-    int temp =this->X+1;
-    this->X=temp&0xFF;
+    const int temp = this->X + 1;
+    this->X = temp & 0xFF;
+    
+    setFlags(zFlag(this->X)| nFlag(this->X), Z_FLAG | N_FLAG);
 }
+
 void NES::inY(){
-    int temp =this->X+1;
-    this->X=temp&0xFF;
+    const int temp = this->Y + 1;
+    this->Y = temp & 0xFF;
+    
+    setFlags(zFlag(this->Y)| nFlag(this->Y), Z_FLAG | N_FLAG);
 }
+
 void NES::jmp(memoryAdr mem){
-    this->PC=mem;
+    this->PC = mem;
 }
+
 void NES::jsr(memoryAdr mem){
-    this->PC=intToMem(memToInt(PC)+1);
+    this->PC = intToMem(memToInt(PC) + 1);
     pushStack(PC.adrHigh);
     pushStack(PC.adrLow);
-    this->PC=mem;
+    this->PC = mem;
     
 }
+
 void NES::ldA(u8 val){
-    this->A=val;
+    this->A = val;
+    
+    setFlags(zFlag(val) | nFlag(val), Z_FLAG | N_FLAG);
 }
+
 void NES::ldX(u8 val){
-    this->X=val;
+    this->X = val;
+    
+    setFlags(zFlag(val) | nFlag(val), Z_FLAG | N_FLAG);
 }
+
 void NES::ldY(u8 val){
-    this->Y=val;
+    this->Y = val;
+    
+    setFlags(zFlag(val) | nFlag(val), Z_FLAG | N_FLAG);
 }
+
 void NES::lsr(memoryAdr mem){
     u8 val;
-    if (memToInt(mem)==0xFFFF){
-        val=this->A;
-    } else val=ram->read(mem);
-    //val=0x01;
-    int temp= val>>1;
-    if (memToInt(mem)==0xFFFF){
-        this->A=temp&0xFF;
+    if (memToInt(mem) == NULL_MEM){
+        val = this->A;
+    } else val = ram->read(mem);
+    //val=0xF4;
+    int temp = val>>1;
+    if (memToInt(mem) == NULL_MEM){
+        this->A = temp & 0xFF;
     }
     else
-        ram->write(mem, temp&0xFF);
+        ram->write(mem, temp & 0xFF);
+    
+    setFlags( (((val & 0x01) == 0x01) ? C_FLAG : 0x00) | zFlag(temp & 0xFF), C_FLAG | Z_FLAG); //uso el ternario porque el bit 0 indica C
 }
+
 void NES::ora(u8 val){
-    this->A|=val;
+    this->A |= val;
+    
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::phA(){
     pushStack(this->A);
 }
+
 void NES::phP(){
     pushStack(flags);
 }
+
 void NES::plA(){
-    this->A=popStack();
-    //Cambiar flags de Z Y N
+    this->A = popStack();
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::plP(){
-    this->flags=popStack();
+    this->flags = popStack();
 }
-void NES::rol(memoryAdr mem){
+
+void NES::rol(memoryAdr mem){ //arreglado
     u8 val;
-    if (memToInt(mem)==0xFFFF){
-        val=this->A;
+    if (memToInt(mem) == NULL_MEM){
+        val = this->A;
     } else val = ram->read(mem);
-    //val=0x01;
-    int temp=val<<1;
-    temp+=(temp&0x100)>>8;
-    if (memToInt(mem)==0xFFFF){
-        this->A=temp&0xFF;
+    //val=0xF1;
+    int temp = val<<1;
+    temp += cFlag() ? 1 : 0; //correxion, si el carry esta prendido
+    if (memToInt(mem) == NULL_MEM){
+        this->A = temp & 0xFF;
     }
     else
-        ram->write(mem, temp&0xFF);
+        ram->write(mem, temp & 0xFF);
+    
+    setFlags(cFlag(temp) | zFlag(temp & 0xFF) | nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG);
 }
-void NES::ror(memoryAdr mem){
+
+void NES::ror(memoryAdr mem){ //Arreglado
     u8 val;
-    if (memToInt(mem)==0xFFFF){
-        val=this->A;
-    } else val=ram->read(mem);
-    //val=0x01;
-    int temp=val>>1;
-    temp+=(val&0x01)<<7;
-    if (memToInt(mem)==0xFFFF){
-        this->A=temp&0xFF;
+    if (memToInt(mem) == NULL_MEM){
+        val = this->A;
+    } else val = ram->read(mem);
+    val=0xF2;
+    int temp = val>>1;
+    temp |= cFlag() ? 0x80 : 0x00;
+    if (memToInt(mem) == NULL_MEM){
+        this->A = temp & 0xFF;
     }
     else
-        ram->write(mem, temp&0xFF);
+        ram->write(mem, temp & 0xFF);
+    
+    setFlags( ((val & 0x01) == 0x01 ? C_FLAG : 0x00) | zFlag(temp & 0xFF)| nFlag(temp & 0xFF), C_FLAG | Z_FLAG | N_FLAG); //lo mismo que lsr
 }
+
 void NES::rti(){
-    this->flags=popStack();
-    this->PC.adrLow=popStack();
-    this->PC.adrHigh=popStack();
+    this->flags = popStack();
+    this->PC.adrLow = popStack();
+    this->PC.adrHigh = popStack();
 }
+
 void NES::rts(){
-    this->PC.adrLow=popStack();
-    this->PC.adrHigh=popStack();
-    PC=intToMem((memToInt(PC)+1));
+    this->PC.adrLow = popStack();
+    this->PC.adrHigh = popStack();
+    PC = intToMem(memToInt(PC) + 1);
 }
+
 void NES::sbc(u8 val){
-    this->A=0x81;//borar
-    val=0x2;//borrar
-    if (!dFlag()){
-        const unsigned temp=this->A-  val -(cFlag() ? 0 : 1);
-        this->A=temp & 0xFF;
-    }
-    else{
-        const unsigned temp= BCDtou8(u8toBCD(this->A)- u8toBCD(val)-(cFlag() ? 0 : 1));
-        this->A=temp & 0xFF;
-    }
+    //int temp;
+    //if (!dFlag()){
+    //this->A=0x50;
+    //val = 0xb0;
+    const int temp = this->A - val - (cFlag() ? 0 : 1);
+    
+    
+    //overflow
+    const u8 m = (this->A & 0x80) == 0x80 ? 0xFF : 0x00, n = (val & 0x80) == 0x80 ? 0xFF : 0x00;
+    const u8 c = (this->A & val & 0x40) == 0x40 ? 0xFF : 0x00;
+    const u8 v  = (~m & n & c) | (m & ~(n | c));
+    //fin overflow
+    
+    /*} else {
+        temp = BCDtou8(u8toBCD(this->A) - u8toBCD(val) - (cFlag() ? 0 : 1));
+    }*/
+    this->A = temp & 0xFF;
+    
+    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(this->A) | nFlag(this->A) | (V_FLAG & v), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
 }
+
 void NES::setF(u8 val){
-    //setea flag que llega en 1
+    setFlags(val, val);
 }
+
 void NES::stA(memoryAdr val){
     ram->write(val, this->A);
 }
+
 void NES::stX(memoryAdr val){
     ram->write(val, this->X);
 }
+
 void NES::stY(memoryAdr val){
     ram->write(val, this->Y);
 }
+
 void NES::taX(){
-    this->X=this->A;
+    this->X = this->A;
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::taY(){
-    this->Y=this->A;
+    this->Y = this->A;
+    setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
+
 void NES::tsX(){
-    this->X=this->SP;
+    this->X = this->SP;
+    setFlags(zFlag(this->SP) | nFlag(this->SP), Z_FLAG | N_FLAG);
 }
+
 void NES::txA(){
-    this->A=this->X;
+    this->A = this->X;
+    setFlags(zFlag(this->X) | nFlag(this->X), Z_FLAG | N_FLAG);
 }
+
 void NES::txS(){
-    this->SP=this->X;
+    this->SP = this->X;
+    setFlags(zFlag(this->X) | nFlag(this->X), Z_FLAG | N_FLAG);
 }
+
 void NES::tyA(){
-    this->A=this->Y;
+    this->A = this->Y;
+    setFlags(zFlag(this->Y) | nFlag(this->Y), Z_FLAG | N_FLAG);
 }
 
 //---Tipos de direccionamiento---
@@ -942,6 +1042,7 @@ void NES::irq(){
     pushStack(flags);
     this->PC = intToMem((ram->read(intToMem(0xFFFF)) << 8) | ram->read(intToMem(0xFFFE)));
 }
+
 void NES::brk(){
     PC=intToMem((memToInt(PC)+2)); //Sumo 2 a PC asi pushea la siguiente instruccion.
     pushStack(PC.adrHigh); //cuidado aca
@@ -982,7 +1083,7 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 string NES::estado(){
-    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status: 0x"+ eflags(flags);
+    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){
@@ -1023,4 +1124,16 @@ inline bool NES::nFlag() {
 
 inline memoryAdr NES::realSP() {
     return intToMem((0x01<<8) | (this->SP & 0xFF)); //quedaria concatenado el adrLow con el SP wrapeado en adrLow
+}
+
+inline u8 NES::cFlag(int res) {
+    return (res & 0x100) == 0x100 ? C_FLAG : 0x00;
+}
+
+inline u8 NES::nFlag(int res) {
+    return (res & 0x80) == 0x80 ? N_FLAG : 0x00;
+}
+
+inline u8 NES::zFlag(int res) {
+    return (res == 0x00) ? Z_FLAG : 0x00;
 }
