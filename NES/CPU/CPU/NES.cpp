@@ -865,15 +865,14 @@ void NES::rts(){
 void NES::sbc(u8 val){
     //int temp;
     //if (!dFlag()){
-    //this->A=0x50;
-    //val = 0xb0;
-    const int temp = this->A - val - (cFlag() ? 0 : 1);
+    this->A=0x50;
+    val = 0x70;
+    
+    const int temp = this->A - val - (1-(cFlag() ? 1 : 0));
     
     
     //overflow
-    const u8 m = (this->A & 0x80) == 0x80 ? 0xFF : 0x00, n = (val & 0x80) == 0x80 ? 0xFF : 0x00;
-    const u8 c = (this->A & val & 0x40) == 0x40 ? 0xFF : 0x00;
-    const u8 v  = (~m & n & c) | (m & ~(n | c));
+    const u8 vflag  = ((((this->A ^ temp) & 0x80) !=0 && ((this->A ^ val) & 0x80) !=0 ) ? V_FLAG : 0);
     //fin overflow
     
     /*} else {
@@ -881,7 +880,7 @@ void NES::sbc(u8 val){
     }*/
     this->A = temp & 0xFF;
     
-    setFlags( ((temp & 0x80) == 0x80 ? 0 : C_FLAG) | zFlag(this->A) | nFlag(this->A) | (V_FLAG & v), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
+    setFlags( (temp < 0 ?  0x00: C_FLAG) | zFlag(this->A) | nFlag(this->A) | (vflag), C_FLAG | Z_FLAG | N_FLAG | V_FLAG);
 }
 
 void NES::setF(u8 val){

@@ -23,7 +23,7 @@ class NES {
 #define O_FLAG 0x40
 #define V_FLAG 0x40
 #define N_FLAG 0x80
-#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG
+#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG | C_FLAG
     //Registros
     u8 A = 0x00;
     u8 X = 0x00;
