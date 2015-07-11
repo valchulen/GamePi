@@ -652,6 +652,7 @@ void NES::bit(u8 val){
     //this->A & val --> con esto prende el flag de 0 si es 0
     //val & 0x40;	//Copia al 6to bit al 6to de flags
     //val & 0x80;   //Copia el 7mo bit al 7mo de flags
+    setFlags((val & V_FLAG) | (val & N_FLAG) | zFlag(this->A & val), V_FLAG | N_FLAG | Z_FLAG);
 }
 
 void NES::bmi(memoryAdr mem){
