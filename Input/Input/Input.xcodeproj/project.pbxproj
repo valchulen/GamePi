@@ -66,13 +66,13 @@
 		6011E25F1B6FE3D500D93725 /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				6011E2601B6FE3D500D93725 /* main.cpp */,
 				6011E2671B6FE46200D93725 /* NES.cpp */,
 				6011E2681B6FE46200D93725 /* NES.h */,
 				6011E2691B6FE46200D93725 /* RAM.cpp */,
 				6011E26A1B6FE46200D93725 /* RAM.h */,
 				6011E26B1B6FE46200D93725 /* Types.cpp */,
 				6011E26C1B6FE46200D93725 /* Types.h */,
-				6011E2601B6FE3D500D93725 /* main.cpp */,
 			);
 			path = Input;
 			sourceTree = "<group>";
