@@ -16,7 +16,7 @@ ifstream* archivo = NULL;
 
 string read (ifstream* v, int size) {
     string s = "";
-    for(int i = 0; i <= size; i++) s += v->get();
+    for(int i = 0; i < size; i++) s += v->get();
     return s;
 }
 
@@ -34,19 +34,20 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     cout<<"Se abrio el archivo "<<n_archivo<<endl;
-    if ( read(archivo, 4) == "NESZ") {
-        u8 n_16_rom = read(archivo);
+    if ( read(archivo, 3) == "NES") {
+        u8 n_16_rom = read(archivo); //ojo que es el 4, y creo que ahora corresponde con el 3
         u8 n_8_rom = read(archivo);
         u8 cositas_1 = read(archivo),
             cositas_2 = read(archivo);
         u8 n_8_ram = read(archivo);
         u8 cositas_3 = read(archivo);
-        u8 
+    
         while (!archivo->eof()) {
             cout<<(char)archivo->get();
         }
-    } else cout<<"Archvio no interpretable";
+    } else cout<<"Archivo no interpretable";
     cout<<endl;
     //Destructor de archivo;
+    archivo->close();
     return 0;
 }

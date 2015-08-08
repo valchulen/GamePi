@@ -55,6 +55,13 @@ u8 BCDtou8(u8 num){ //BCD a hexa
         return (((num / 10) << 4) | (num % 10));
 }
 
+u8 toU8(const char msb, const char lsb) {
+    char val[] = {
+        msb, lsb
+    };
+    return toU8(val);
+}
+
 u8 toU8(const char * str){
     u8 val = 0;
     for (int i = 0; i < 2; i++) {
