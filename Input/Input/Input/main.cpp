@@ -51,6 +51,7 @@ int main(int argc, const char * argv[]) {
     if (flags_6 & 0x04) trainer = read(archivo, 512);
         u8* prg_rom = read(archivo, 16384 * prg_16_rom);
     u8* chr_rom = read(archivo, 8192 * chr_8_rom);
+    if (archivo->eof()) cout<<"se leyó bien";
     //Destructor de archivo;
     archivo->close();
     return 0;

@@ -11,6 +11,7 @@
 		6011E26D1B6FE46200D93725 /* NES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6011E2671B6FE46200D93725 /* NES.cpp */; };
 		6011E26E1B6FE46200D93725 /* RAM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6011E2691B6FE46200D93725 /* RAM.cpp */; };
 		6011E26F1B6FE46200D93725 /* Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6011E26B1B6FE46200D93725 /* Types.cpp */; };
+		609B10C91B791BD700121F23 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 609B10C71B791BD700121F23 /* Input.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		6011E26A1B6FE46200D93725 /* RAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAM.h; sourceTree = "<group>"; };
 		6011E26B1B6FE46200D93725 /* Types.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Types.cpp; sourceTree = "<group>"; };
 		6011E26C1B6FE46200D93725 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		609B10C71B791BD700121F23 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		609B10C81B791BD700121F23 /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 			isa = PBXGroup;
 			children = (
 				6011E2601B6FE3D500D93725 /* main.cpp */,
+				609B10C71B791BD700121F23 /* Input.cpp */,
+				609B10C81B791BD700121F23 /* Input.h */,
 				6011E2671B6FE46200D93725 /* NES.cpp */,
 				6011E2681B6FE46200D93725 /* NES.h */,
 				6011E2691B6FE46200D93725 /* RAM.cpp */,
@@ -137,6 +142,7 @@
 				6011E26D1B6FE46200D93725 /* NES.cpp in Sources */,
 				6011E2611B6FE3D500D93725 /* main.cpp in Sources */,
 				6011E26F1B6FE46200D93725 /* Types.cpp in Sources */,
+				609B10C91B791BD700121F23 /* Input.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +259,7 @@
 				6011E2661B6FE3D500D93725 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
