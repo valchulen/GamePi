@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include "Types.h"
+#include "Input.h"
 
 using namespace std;
 
