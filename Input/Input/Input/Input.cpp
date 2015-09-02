@@ -50,9 +50,9 @@ Input::Input (string filename) {
     }
 }
 
-Input::~Input() {
+/*Input::~Input() {
     free(this->file);
     free(this->trainer);
     free(this->prg_rom);
     free(this->chr_rom);
-}
+}*/

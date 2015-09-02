@@ -31,10 +31,10 @@ public:
     int trainer_size = 0;
     u8* trainer = NULL;
     u8* prg_rom = NULL;
-    u8* chr_rom = NULL;
+    u8* chr_rom = NULL; //es de ppu
     
     Input(string);
-    ~Input();
+    //~Input();
 };
 
 #endif /* defined(____Input__) */

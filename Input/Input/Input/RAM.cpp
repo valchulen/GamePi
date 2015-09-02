@@ -146,6 +146,17 @@ realMemory RAM::toRealAdr(const memoryAdr adr){
     return ret;
 }
 
+RAM::RAM(Input* i) {
+    int init = 0x00;
+    for (; init < i->prg_16_rom * 16384 && init < PRG1_SIZE; init++) {
+        PRG1[init] = i->prg_rom[init];
+    }
+    for (; init < i->prg_16_rom * 16384 && init < PRG1_SIZE + PRG1_SIZE; init++) {
+        this->PRG2_mirror = false;
+        PRG2[init - PRG1_SIZE] = i->prg_rom[init];
+    }
+}
+
 RAM::RAM (){
     //seteo RAM_D en 0x00 primero
     for (int i = 0; i < RAM_D_SIZE; i++) {
