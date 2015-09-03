@@ -18,7 +18,7 @@ using namespace std;
 class Input {
     ifstream* file;
 private:
-    u8* read (int);
+    u8* read (int, u8*);
     void skip (int);
     u8 read ();
 public:

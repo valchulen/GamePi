@@ -21,7 +21,9 @@ int main(int argc, const char * argv[]) {
     Input i(n_archivo);
     RAM r(&i);
     for (int i  = 0x8000; i < 0xFFFF; i++) {
-        cout<<r.read(intToMem(i));
+        cout<<hex(r.read(intToMem(i++)));
+        cout<<hex(r.read(intToMem(i)));
+        cout<<endl;
     }
     return 0;
 }

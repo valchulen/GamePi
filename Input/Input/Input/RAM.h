@@ -83,6 +83,7 @@ public:
     RAM(Input*);
     
 private:
+    void setup();
     realMemory toRealAdr (memoryAdr adr);
 };
 
