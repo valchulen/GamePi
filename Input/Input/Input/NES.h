@@ -107,7 +107,7 @@ public:
     memoryAdr zpX(); //implementado
     memoryAdr zpY(); //implementado
     
-    void exec (u8);
+    void exec ();
     
     //Debug
     string estado();
