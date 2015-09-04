@@ -11,6 +11,7 @@
 #include "Types.h"
 #include "Input.h"
 #include "RAM.h"
+#include "NES.h"
 
 using namespace std;
 
@@ -18,12 +19,12 @@ int main(int argc, const char * argv[]) {
     cout<<"Ingrese el nombre del archivo"<<endl;
     string n_archivo;
     cin>>n_archivo;
-    Input i(n_archivo);
+    Input i(n_archivo); //hay que destruir i
     RAM r(&i);
-    for (int i  = 0x8000; i < 0xFFFF; i++) {
-        cout<<hex(r.read(intToMem(i++)));
-        cout<<hex(r.read(intToMem(i)));
-        cout<<endl;
+    NES n(&r);
+    while (true) {
+        n.exec();
+        cout<<n.estado();
     }
     return 0;
 }

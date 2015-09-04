@@ -14,16 +14,19 @@ using namespace std;
 
 NES::NES(RAM* ram){
     this->ram = ram;
+    init();
 }
 
 NES::~NES() {
     
 }
 
-void NES::exec(u8 instru) {
-    bool existe=true;
-    this->opcode=instru;
-    switch (instru) {
+void NES::exec() {
+    bool existe = true;
+    this->opcode = ram->read(PC);
+    
+    _inc(&PC);
+    switch (this->opcode) {
             
         //-----ADC------
         case 0x61:
@@ -579,13 +582,12 @@ void NES::exec(u8 instru) {
             break;
         
         default:
-            cout<<"Opcode 0x"<<hex(instru)<<" no implementado o inexistente"<<endl;
+            cout<<"Opcode 0x"<<hex(this->opcode)<<" no implementado o inexistente"<<endl;
             existe=false;
         break;
     }
     if (existe)
         ciclos+=cycleCount[(u8)opcode];
-    
 }
 
 
@@ -930,7 +932,7 @@ void NES::tyA(){
 }
 
 //---Tipos de direccionamiento---
-memoryAdr NES::abs(){ //testeada
+memoryAdr NES::abs(){ //puede que esté mal
     //u8 low = ram->read( this->PC ); //es en little endian
     //u8 high = ram->read( inc(&this->PC) );
     const memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
@@ -1058,10 +1060,10 @@ void NES::reset(){
 
 void NES::init(){
     //Borrar memoria
-    this->A=0x00;
-    this->X=0x00;
-    this->Y=0x00;
-    this->SP=0xFF;
+    this->A = 0x00;
+    this->X = 0x00;
+    this->Y = 0x00;
+    this->SP = 0xFF;
     this->flags = FLAG_RESET;
     this->PC = intToMem((ram->read(intToMem(0xFFFD)) << 8) | ram->read(intToMem(0xFFFC)));
 }
@@ -1083,7 +1085,7 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 string NES::estado(){
-    return "A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
+    return "Instruccion:"+hex(this->opcode)+" A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){
