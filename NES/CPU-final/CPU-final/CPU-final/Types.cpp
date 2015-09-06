@@ -23,8 +23,9 @@ void _inc(memoryAdr* val){
 }
 
 memoryAdr inc(memoryAdr* val){
-    _inc(val);
-    return *val;
+    if (val->adrLow == 0xFF) val->adrHigh++;
+    val->adrLow++;
+    return intToMem(val->adrHigh << 4 | val->adrLow);
 }
 
 inline char h (u8 e){

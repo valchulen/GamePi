@@ -932,12 +932,14 @@ void NES::tyA(){
 }
 
 //---Tipos de direccionamiento---
-memoryAdr NES::abs(){ //puede que esté mal
-    //u8 low = ram->read( this->PC ); //es en little endian
-    //u8 high = ram->read( inc(&this->PC) );
-    const memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
-    _inc(&this->PC);
-    return mem;
+memoryAdr NES::abs(){
+    const u8 low = ram->read(PC); // en este orden por little endian
+    _inc(&PC);
+    const u8 high = ram->read(PC); //hay un problema aca, deberia devolver 0x20 y no 0x00
+    memoryAdr m;
+    m.adrLow = low;
+    m.adrHigh = high;
+    return m;
 }
 
 memoryAdr NES::absX(){ //testeada
