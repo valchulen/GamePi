@@ -25,7 +25,7 @@ void NES::exec() {
     bool existe = true;
     this->opcode = ram->read(PC);
     
-    _inc(&PC);
+    _inc(&PC); //pc++
     switch (this->opcode) {
             
         //-----ADC------
@@ -936,9 +936,11 @@ memoryAdr NES::abs(){
     const u8 low = ram->read(PC); // en este orden por little endian
     _inc(&PC);
     const u8 high = ram->read(PC); //hay un problema aca, deberia devolver 0x20 y no 0x00
+    _inc(&PC);
     memoryAdr m;
     m.adrLow = low;
     m.adrHigh = high;
+    cout<<"Low:"<<hex(low)<<" High:"<<hex(high)<<endl;
     return m;
 }
 
@@ -965,7 +967,7 @@ u8 NES::imm(){ //testeada
 }
 
 memoryAdr NES::ind(){ //ARREGLAR DESPUES DE ENTREGAR
-    //saco el LSB que seria pc++
+    //saco el LSB que seria pc
     const u8 LSB = ram->read( this->PC ); //SOLO SUMA AL LSB DE PC!!!!!!!
     //saco el MSB que seria pc++
     const u8 MSB = ram->read( inc(&this->PC) ); //SOLO SUMA AL LSB DE PC!!!!!!!

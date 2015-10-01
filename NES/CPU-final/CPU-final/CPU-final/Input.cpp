@@ -33,7 +33,10 @@ void Input::skip (int size) {
 }
 
 u8 Input::read () {
-    return this->file->get();
+    const char c =this->file->get();
+    if (c == 0x20)
+        return 0x20;
+    else return c;
 }
 
 Input::Input (string filename) {
