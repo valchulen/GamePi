@@ -22,12 +22,18 @@ int main(int argc, const char * argv[]) {
     RAM r(&i);
     //destructor de i
     NES n(&r);
-    while ( cin.get() != 'q') {
+    char c = ' ';
+    while ( (c = cin.get()) != 'q') {
+        if (c == 'n'){
+            n.setFlags(N_FLAG, N_FLAG);
+        } else if (c == '0') {
+            n.X = 0xff;
+        }
         n.exec();
         cout<<n.estado()<<endl;
     }
 }
 
 //llegamos con debug y todo resuelto hasta:
-//a040 ad09 014a 9002 a0c0 8c----
-//0x03 no anda, porque no es instruccion pero lo levanta como que si
+//llegamos hasta afcc
+//seguro no anda el and, besitos
