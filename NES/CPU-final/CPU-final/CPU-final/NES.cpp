@@ -24,7 +24,8 @@ NES::~NES() {
 void NES::exec() {
     bool existe = true;
     this->opcode = ram->read(PC);
-    
+    if (opcode == 0x03)
+        cout<<"brk"<<endl;
     _inc(&PC); //pc++
     switch (this->opcode) {
             
@@ -940,7 +941,7 @@ memoryAdr NES::abs(){
     memoryAdr m;
     m.adrLow = low;
     m.adrHigh = high;
-    cout<<"Low:"<<hex(low)<<" High:"<<hex(high)<<endl;
+    //cout<<"Low:"<<hex(low)<<" High:"<<hex(high)<<endl;
     return m;
 }
 
@@ -996,10 +997,10 @@ memoryAdr NES::indY(){ //anda y testeado
 
 memoryAdr NES::rel(){ //re testeado DALE INGRID DALE
     const u8 offset = ram->read(this->PC);
-    memoryAdr val;
-    if ( (offset & 0x80) == 0x80 )
-        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) - ((u8)(~offset - 1))); //complemento en 2 a u8 y despues resta
-    else
+   memoryAdr val;
+//    if ( (offset & 0x80) == 0x80 )
+//        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) - ((u8)(~offset - 1))); //complemento en 2 a u8 y despues resta
+//    else
         val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) + offset);
     _inc(&this->PC);
     return val;

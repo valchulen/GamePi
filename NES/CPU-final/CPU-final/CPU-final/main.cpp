@@ -27,3 +27,7 @@ int main(int argc, const char * argv[]) {
         cout<<n.estado()<<endl;
     }
 }
+
+//llegamos con debug y todo resuelto hasta:
+//a040 ad09 014a 9002 a0c0 8c----
+//0x03 no anda, porque no es instruccion pero lo levanta como que si
