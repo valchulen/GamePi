@@ -31,7 +31,7 @@ class NES {
     memoryAdr PC;
     u8 flags = FLAG_RESET;
     
-    u8 ciclos=0;
+    unsigned int ciclos = 0;
     u8 opcode;
     
     RAM* ram;
