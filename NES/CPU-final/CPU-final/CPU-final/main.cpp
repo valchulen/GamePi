@@ -35,5 +35,4 @@ int main(int argc, const char * argv[]) {
 }
 
 //llegamos con debug y todo resuelto hasta:
-//llegamos hasta afcc
-//seguro no anda el and, besitos
+//llegamos hasta b0b0 --> alto loop

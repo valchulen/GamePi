@@ -24,7 +24,7 @@ NES::~NES() {
 void NES::exec() {
     bool existe = true;
     this->opcode = ram->read(PC);
-    if (opcode == 0x20)
+    if (opcode == 0x25)
         cout<<"brk"<<endl;
     _inc(&PC); //pc++
     switch (this->opcode) {
@@ -617,8 +617,6 @@ void NES::adc(u8 val) {
 }
 
 void NES::And(u8 val) {
-    this->A = 0xFF;//borrar
-    val = 0x10;
     this->A &= val;
     setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
