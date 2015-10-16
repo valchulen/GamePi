@@ -11,6 +11,7 @@
 #include "NES.h"
 #include "RAM.h"
 #include "Types.h"
+#include "PPU.h"
 
 using namespace std;
 
@@ -20,6 +21,6 @@ int main(int argc, const char * argv[]) {
     Input input (filename);
     RAM ram (&input);
     NES cpu (&ram);
-    
+    PPU ppu (&ram);
     
 }

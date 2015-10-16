@@ -79,12 +79,12 @@ public:
     bool PRG2_mirror = true;
     u8 read (memoryAdr adr);
     bool write (memoryAdr adr, u8 val); // devuelve true si se pudo escribir
+    realMemory toRealAdr (memoryAdr adr);
     RAM();
     RAM(Input*);
     
 private:
     void setup();
-    realMemory toRealAdr (memoryAdr adr);
 };
 
 #endif /* defined(__RAM__RAM__) */

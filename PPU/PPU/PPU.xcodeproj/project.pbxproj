@@ -12,6 +12,8 @@
 		6018FE1A1BCDA08900EEDF6E /* RAM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6018FE151BCDA08900EEDF6E /* RAM.cpp */; settings = {ASSET_TAGS = (); }; };
 		6018FE1B1BCDA08900EEDF6E /* Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6018FE171BCDA08900EEDF6E /* Types.cpp */; settings = {ASSET_TAGS = (); }; };
 		6018FE1E1BCDA0AC00EEDF6E /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6018FE1C1BCDA0AC00EEDF6E /* Input.cpp */; settings = {ASSET_TAGS = (); }; };
+		60AA031A1BD16AC700FC72E6 /* PPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60AA03181BD16AC700FC72E6 /* PPU.cpp */; settings = {ASSET_TAGS = (); }; };
+		60AA031D1BD16D5D00FC72E6 /* VRAM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60AA031B1BD16D5D00FC72E6 /* VRAM.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +39,10 @@
 		6018FE181BCDA08900EEDF6E /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		6018FE1C1BCDA0AC00EEDF6E /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
 		6018FE1D1BCDA0AC00EEDF6E /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		60AA03181BD16AC700FC72E6 /* PPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PPU.cpp; sourceTree = "<group>"; };
+		60AA03191BD16AC700FC72E6 /* PPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPU.h; sourceTree = "<group>"; };
+		60AA031B1BD16D5D00FC72E6 /* VRAM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VRAM.cpp; sourceTree = "<group>"; };
+		60AA031C1BD16D5D00FC72E6 /* VRAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRAM.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,10 @@
 				6018FE161BCDA08900EEDF6E /* RAM.h */,
 				6018FE171BCDA08900EEDF6E /* Types.cpp */,
 				6018FE181BCDA08900EEDF6E /* Types.h */,
+				60AA03181BD16AC700FC72E6 /* PPU.cpp */,
+				60AA03191BD16AC700FC72E6 /* PPU.h */,
+				60AA031B1BD16D5D00FC72E6 /* VRAM.cpp */,
+				60AA031C1BD16D5D00FC72E6 /* VRAM.h */,
 			);
 			path = PPU;
 			sourceTree = "<group>";
@@ -141,6 +151,8 @@
 				6018FE1A1BCDA08900EEDF6E /* RAM.cpp in Sources */,
 				6018FE191BCDA08900EEDF6E /* NES.cpp in Sources */,
 				6018FE0D1BCDA05F00EEDF6E /* main.cpp in Sources */,
+				60AA031A1BD16AC700FC72E6 /* PPU.cpp in Sources */,
+				60AA031D1BD16D5D00FC72E6 /* VRAM.cpp in Sources */,
 				6018FE1B1BCDA08900EEDF6E /* Types.cpp in Sources */,
 				6018FE1E1BCDA0AC00EEDF6E /* Input.cpp in Sources */,
 			);
@@ -259,6 +271,7 @@
 				6018FE121BCDA05F00EEDF6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
