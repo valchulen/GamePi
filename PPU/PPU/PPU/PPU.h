@@ -13,6 +13,9 @@
 
 #include "RAM.h"
 #include "Types.h"
+#include "VRAM.h"
+#include "Sprite.h"
+
 using namespace std;
 class PPU{
     RAM* ram;
@@ -26,7 +29,8 @@ class PPU{
     u8 nmi; //Execute NMI on VBlank    |0 = Disabled |1 = Enabled
     //$2001
     u8 displaytype;
-    
+    VRAM* vram;
+    Sprite SPR[64];
     
 public:
     PPU(RAM*);
