@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Types.h"
+#include "Input.h"
 
 class VRAM {
 #define PT0_SIZE 0x1000
@@ -87,6 +88,14 @@ class VRAM {
 #define VRAM_MIR1_START 0x4000
     u8 VRAM_MIR1[VRAM_MIR1_SIZE];
 #define VRAM_MIR1_END 0xFFFF
+    
+public:
+    u8 read(const int);
+    void write(const int, const u8);
+    VRAM(const Input*);
+    
+private:
+    u8* getVRAMAdr(const int);
 };
 
 #endif /* VRAM_hpp */
