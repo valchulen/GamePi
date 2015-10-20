@@ -32,9 +32,21 @@ class PPU{
     VRAM* vram;
     Sprite SPR[64];
     
+    int pallete[64];
+    
+    u8 BGP0[3];
+    u8 BGP1[3];
+    u8 BGP2[3];
+    u8 BGP3[3];
+    u8 SpP0[3];
+    u8 SpP1[3];
+    u8 SpP2[3];
+    u8 SpP3[3];
+    
 public:
     PPU(RAM*);
     ~PPU();
+    void cargarPallete();
     memoryAdr getNameTable();
     memoryAdr getSpriteTable();
     memoryAdr getBGTable();
