@@ -24,8 +24,9 @@ NES::~NES() {
 void NES::exec() {
     bool existe = true;
     this->opcode = ram->read(PC);
-    
-    _inc(&PC);
+    if (opcode == 0x25)
+        cout<<"brk"<<endl;
+    _inc(&PC); //pc++
     switch (this->opcode) {
             
         //-----ADC------
@@ -616,8 +617,6 @@ void NES::adc(u8 val) {
 }
 
 void NES::And(u8 val) {
-    this->A = 0xFF;//borrar
-    val = 0x10;
     this->A &= val;
     setFlags(zFlag(this->A) | nFlag(this->A), Z_FLAG | N_FLAG);
 }
@@ -754,9 +753,8 @@ void NES::jmp(memoryAdr mem){
 }
 
 void NES::jsr(memoryAdr mem){
-    this->PC = intToMem(memToInt(PC) + 1);
     pushStack(PC.adrHigh);
-    pushStack(PC.adrLow);
+    pushStack(PC.adrLow - 1);
     this->PC = mem;
     
 }
@@ -932,12 +930,16 @@ void NES::tyA(){
 }
 
 //---Tipos de direccionamiento---
-memoryAdr NES::abs(){ //puede que esté mal
-    //u8 low = ram->read( this->PC ); //es en little endian
-    //u8 high = ram->read( inc(&this->PC) );
-    const memoryAdr mem = intToMem(ram->read(this->PC) | (ram->read( inc(&this->PC) )<<8) ); //concateno en este orden para que el low se haga primero por el little endian
-    _inc(&this->PC);
-    return mem;
+memoryAdr NES::abs(){
+    const u8 low = ram->read(PC); // en este orden por little endian
+    _inc(&PC);
+    const u8 high = ram->read(PC); //hay un problema aca, deberia devolver 0x20 y no 0x00
+    _inc(&PC);
+    memoryAdr m;
+    m.adrLow = low;
+    m.adrHigh = high;
+    //cout<<"Low:"<<hex(low)<<" High:"<<hex(high)<<endl;
+    return m;
 }
 
 memoryAdr NES::absX(){ //testeada
@@ -963,7 +965,7 @@ u8 NES::imm(){ //testeada
 }
 
 memoryAdr NES::ind(){ //ARREGLAR DESPUES DE ENTREGAR
-    //saco el LSB que seria pc++
+    //saco el LSB que seria pc
     const u8 LSB = ram->read( this->PC ); //SOLO SUMA AL LSB DE PC!!!!!!!
     //saco el MSB que seria pc++
     const u8 MSB = ram->read( inc(&this->PC) ); //SOLO SUMA AL LSB DE PC!!!!!!!
@@ -991,12 +993,12 @@ memoryAdr NES::indY(){ //anda y testeado
 }
 
 memoryAdr NES::rel(){ //re testeado DALE INGRID DALE
-    const u8 offset = ram->read(this->PC);
-    memoryAdr val;
-    if ( (offset & 0x80) == 0x80 )
-        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) - ((u8)(~offset - 1))); //complemento en 2 a u8 y despues resta
-    else
-        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) + offset);
+    const char offset = ram->read(this->PC);
+   memoryAdr val;
+//    if ( (offset & 0x80) == 0x80 )
+//        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) - ((u8)(~offset - 1))); //complemento en 2 a u8 y despues resta
+//    else
+        val = intToMem(((this->PC.adrHigh << 8) | this->PC.adrLow) + offset + 1);
     _inc(&this->PC);
     return val;
 }

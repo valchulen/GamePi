@@ -23,16 +23,15 @@ class NES {
 #define O_FLAG 0x40
 #define V_FLAG 0x40
 #define N_FLAG 0x80
-#define FLAG_RESET Z_FLAG | I_FLAG | B_FLAG | C_FLAG
+#define FLAG_RESET I_FLAG
     //Registros
     u8 A = 0x00;
-    u8 X = 0x00;
     u8 Y = 0x00;
     u8 SP = 0xFF;
     memoryAdr PC;
     u8 flags = FLAG_RESET;
     
-    u8 ciclos=0;
+    unsigned int ciclos = 0;
     u8 opcode;
     
     RAM* ram;
@@ -79,6 +78,8 @@ class NES {
     //futuro: PPU* ppu;
     
 public:
+    u8 X = 0x00;
+    
     NES(RAM*);
     ~NES();
     
@@ -92,6 +93,9 @@ public:
     //Stack
     u8 popStack();
     void pushStack(u8);
+    
+    
+    void setFlags(u8, u8);
     
     //Tipos de direccionamiento--> si devuelve u8 es el valor a usar, si devuelve mem es para saltos
     memoryAdr abs(); //implementado
@@ -167,7 +171,6 @@ private:
         
     
     //Flags y SP
-    void setFlags(u8, u8);
     inline memoryAdr realSP ();
     inline bool cFlag(); //prendido true
     inline bool zFlag();

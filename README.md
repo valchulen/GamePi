@@ -16,7 +16,7 @@ Cada módulo se dará como completado cuando su funcionalidad esté terminada, t
 Además deberá contar con un archivo README.md donde se explique el progreso, como se usa la interfaz y el comando de compilación necesario
 Los productos parciales se integrarán con el producto final a medida que estos se vean concluidos
 
-- [ ] RAM
+- [x] RAM
 - [ ] NES
 - [ ] Input
 - [ ] Format
