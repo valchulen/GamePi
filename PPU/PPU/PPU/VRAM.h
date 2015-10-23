@@ -66,8 +66,7 @@ class VRAM {
     
 #define VRAM_MIR0_SIZE 0x0F00
 #define VRAM_MIR0_START 0x3000
-    u8 VRAM_MIR0[VRAM_MIR0_SIZE];
-#define VRAM_MIR0_END 0x3DFF
+#define VRAM_MIR0_END 0x3EFF
     
 #define IP1_SIZE 0x0010
 #define IP1_START 0x3F00
@@ -79,15 +78,8 @@ class VRAM {
     u8 SP1[SP1_SIZE];
 #define SP1_END 0x3F1F
     
-#define PM_MIR_SIZE 0x00E0
 #define PM_MIR_START 0x3F20
-    u8 PM_MIR[PM_MIR_SIZE];
 #define PM_MIR_END 0x3FFF
-    
-#define VRAM_MIR1_SIZE 0xC000
-#define VRAM_MIR1_START 0x4000
-    u8 VRAM_MIR1[VRAM_MIR1_SIZE];
-#define VRAM_MIR1_END 0xFFFF
     
 public:
     u8 read(const int);

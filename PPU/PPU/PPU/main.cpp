@@ -22,5 +22,4 @@ int main(int argc, const char * argv[]) {
     RAM ram (&input);
     NES cpu (&ram);
     PPU ppu (&ram);
-    
 }
