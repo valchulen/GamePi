@@ -7,3 +7,10 @@
 //
 
 #include "Sprite.h"
+
+Sprite::Sprite(u8* ptr) {
+    this->Y = *ptr;
+    this->tileNum = *(ptr+1);
+    this->data = *(ptr+2);
+    this->X = *(ptr+3);
+}

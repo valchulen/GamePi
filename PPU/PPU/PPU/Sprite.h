@@ -14,6 +14,7 @@
 
 class Sprite {
 public:
+    Sprite (u8*);
     u8 Y = 0;
     u8 X = 0;
     u8 tileNum = 0;

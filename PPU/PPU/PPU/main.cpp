@@ -21,5 +21,5 @@ int main(int argc, const char * argv[]) {
     Input input (filename);
     RAM ram (&input);
     NES cpu (&ram);
-    PPU ppu (&ram);
+    PPU ppu (&ram, &input);
 }

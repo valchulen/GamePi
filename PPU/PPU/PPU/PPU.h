@@ -30,7 +30,7 @@ class PPU{
     //$2001
     u8 displaytype;
     VRAM* vram;
-    Sprite SPR[64];
+    Sprite* SPR[64];
     
     int pallete[64];
     
@@ -44,9 +44,10 @@ class PPU{
     u8 SpP3[3];
     
 public:
-    PPU(RAM*);
+    PPU(RAM*, Input*);
     ~PPU();
     void cargarPallete();
+    void cargarCHR (Input*);
     memoryAdr getNameTable();
     memoryAdr getSpriteTable();
     memoryAdr getBGTable();

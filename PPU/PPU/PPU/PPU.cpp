@@ -12,15 +12,23 @@
 using namespace std;
 
 
-PPU::PPU(RAM* ram){
+PPU::PPU(RAM* ram, Input* i){
     this->ram = ram;
+    this->vram = new VRAM(i);
     dir2000 = ram->toRealAdr(intToMem(0x2000));
     dir2001 = ram->toRealAdr(intToMem(0x2001));
     dir2002 = ram->toRealAdr(intToMem(0x2002));
     cargarPallete();
+    cargarCHR(i);
 }
 
 PPU::~PPU() {
+}
+
+void PPU::cargarCHR (Input* i) {
+    for (int j = 0; j < i->chr_8_rom * 8192; j++) {
+        this->vram->write(j, i->chr_rom[j]);
+    }
 }
 
 void PPU::cargarPallete(){

@@ -21,7 +21,7 @@ using namespace std;
 //    return val; //Si se usa, hay que liberarlo despues
 //}
 
-u8* Input::read(int size, u8* ptr) {
+u8* Input::read(int size, u8 ptr[]) {
     ptr = new u8[size];
     for(int i = 0; i < size; i++)
         ptr[i] = read();
