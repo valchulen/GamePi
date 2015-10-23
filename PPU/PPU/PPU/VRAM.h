@@ -85,6 +85,7 @@ public:
     u8 read(const int);
     void write(const int, const u8);
     VRAM(const Input*);
+    bool horizontal = true;
     
 private:
     u8* getVRAMAdr(const int);

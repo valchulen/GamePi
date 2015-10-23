@@ -30,11 +30,18 @@ u8* VRAM::getVRAMAdr(const int adr0) {
     int adr = adr0 & PM_MIR_END; //wrapeo para que la ultima direccion sea 0x3FFF
     
     u8* retval = NULL;
-    //para los mirrors
+    //para los mirrors x defecto
     if (VRAM_MIR0_START <= adr && adr <= VRAM_MIR0_END) //mirrorea 0x2000-0x2EFF / termina en 0x3EFF
         adr -= VRAM_MIR0_SIZE;
     else if (PM_MIR_START <= adr) //mirrorea 0x3F00-0x3F1F / termina en 0x3FFF / entra 7 veces
         adr &= SP1_END;
+    
+    if (horizontal){ //mirror horizontal y vertical de nametables y attributetables
+        if ((NT1_START <= adr && adr <= AT1_END) || (NT3_START <= adr && adr <= AT3_END))
+        adr -= NT1_SIZE;
+    } else
+        if ((NT2_START <= adr && adr <= AT2_END) || (NT3_START <= adr && adr <= AT3_END))
+            adr -= NT2_SIZE * 2;
     
     if (PT0_START <= adr && adr <= PT0_END) //hasta 0x0FFF
         retval = &PT0[adr - PT0_START];
