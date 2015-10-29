@@ -113,6 +113,27 @@ void PPU::cargarPallete(){
      };*/
 }
 
+void PPU::makePattern(int n, u8* arr) { //recibo el numero de pattern, tengo que limpiarlo
+    //si usa la primera patterTable
+    u8 temp[16];
+    
+    const int base = (n<<4); //aca sumo si usa la 0x1000, lo corro 4 porque tiene que empezar ahi
+    for (int i = 0; i < 16; i++) {
+        temp[i] = vram->read(base+i);
+        arr[i] = 0;
+        arr[i*2] = 0;
+    }
+    for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
+            const u8 index = y + (x / 2);
+            const u8 low = temp[y] & (1<<x);
+            const u8 high = temp[y+8] & (1<<x);
+            const u8 nFinal = low | (high<<1);
+            arr[index] |= nFinal<<(x % 2 == 0 ? 0 : 4);
+        }
+    }
+}
+
 memoryAdr PPU::getNameTable(){
     u8 val= *dir2000 & 0x03;
     switch (val) {

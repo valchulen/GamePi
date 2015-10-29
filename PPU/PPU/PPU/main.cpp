@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Input.h"
+#include <math.h>
 #include "NES.h"
 #include "RAM.h"
 #include "Types.h"
@@ -22,4 +23,7 @@ int main(int argc, const char * argv[]) {
     RAM ram (&input);
     NES cpu (&ram);
     PPU ppu (&ram, &input);
+    u8 arr[32];
+    ppu.makePattern(0, arr);
+    cout<<"qareh!"<<endl;
 }
