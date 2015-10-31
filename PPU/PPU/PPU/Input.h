@@ -29,9 +29,9 @@ public:
         prg_8_ram,
         flags_9;
     int trainer_size = 0;
-    u8* trainer = NULL;
-    u8* prg_rom = NULL;
-    u8* chr_rom = NULL; //es de ppu
+    u8* trainer;
+    u8* prg_rom;
+    u8* chr_rom;
     
     Input(string);
     //~Input();

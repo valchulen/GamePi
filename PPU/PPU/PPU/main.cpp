@@ -18,7 +18,8 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     string filename;
-    cin>>filename;
+    //cin>>filename;
+    filename = "dk.nes";
     Input input (filename);
     RAM ram (&input);
     NES cpu (&ram);

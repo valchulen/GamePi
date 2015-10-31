@@ -43,9 +43,12 @@ class PPU{
     u8 SpP2[3];
     u8 SpP3[3];
     
+    u8 patterns[0x1FFF * 2]; //la matriz se mueve de a 32 espacios
+    
 public:
     
     void makePattern (int, u8*); //recibe una matriz (8x8) de pixeles (2 bits de profundidad), 32 u8, uno en cada nibble
+    void makeTile (int);
     PPU(RAM*, Input*);
     ~PPU();
     void cargarPallete();
