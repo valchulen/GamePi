@@ -100,20 +100,24 @@ void PPU::cargarPallete(){
     pallete[62]=0x111111;
     pallete[63]=0x111111;
     
-    /*{
-     //0/8           1/9         2/A         3/B         4/C         5/D         6/E         7/F
-     0x00808080, 0x00003DA6, 0x000012B0, 0x00440096, 0x00A1005E, 0x00C70028, 0x00BA0600, 0x008C1700, //0
-     0x005C2F00, 0x00104500, 0x00054A00, 0x0000472E, 0x00004166, 0x00000000, 0x00050505, 0x00050505,
-     
-     0x00C7C7C7, 0x000077FF, 0x002155FF, 0x008237FA, 0x00EB2FB5, 0x00FF2950, 0x00FF2200, 0x00D63200, //1
-     0x00C46200, 0x00358000, 0x00058F00, 0x00008A55, 0x000099CC, 0x00212121, 0x00090909, 0x00090909,
-     
-     0x00FFFFFF, 0x000FD7FF, 0x0069A2FF, 0x00D480FF, 0x00FF45F3, 0x00FF618B, 0x00FF8833, 0x00FF9C12, //2
-     0x00FABC20, 0x009FE30E, 0x002BF035, 0x000CF0A4, 0x0005FBFF, 0x005E5E5E, 0x000D0D0D, 0x000D0D0D,
-     
-     0x00FFFFFF, 0x00A6FCFF, 0x00B3ECFF, 0x00DAABEB, 0x00FFA8F9, 0x00FFABB3, 0x00FFD2B0, 0x00FFEFA6, //3
-     0x00FFF79C, 0x00D7E895, 0x00A6EDAF, 0x00A2F2DA, 0x0099FFFC, 0x00DDDDDD, 0x00111111, 0x00111111
-     };*/
+}
+void PPU::updatePallete(){
+    for (int i = 0; i < 16; i++) {
+        if (getDsiplayType() == 0) { //color display
+            BGP[i] = pallete[(vram->read(0x3F00 + i) & 63)]; //saca el indice y los busca en los RGB
+        }
+        else { //monocolor display
+            BGP[i] = pallete[(vram->read(0x3F00 + i) & 32)];
+        }
+    }
+    for (int i = 0; i < 16; i++) {
+        if (getDsiplayType() == 0) {
+            SprP[i] = pallete[(vram->read(0x3F10 + i) & 63)];
+        }
+        else {
+            SprP[i] = pallete[(vram->read(0x3F10 + i) & 32)];
+        }
+    }
 }
 
 void PPU::makePattern(int n, u8* arr) { //recibo el numero de pattern, tengo que limpiarlo
@@ -189,7 +193,7 @@ u8 PPU::getNmi(){
 }
 
 u8 PPU::getDsiplayType(){
-    return *dir2001 & 0x01;
+    return *dir2001 & 0x01; //0 = Colour display, 1 = Monochrome display
 }
 
 u8 PPU::getBGClip(){

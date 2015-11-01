@@ -34,14 +34,8 @@ class PPU{
     
     int pallete[64];
     
-    u8 BGP0[3];
-    u8 BGP1[3];
-    u8 BGP2[3];
-    u8 BGP3[3];
-    u8 SpP0[3];
-    u8 SpP1[3];
-    u8 SpP2[3];
-    u8 SpP3[3];
+    int BGP[16]; //palletes de fondo
+    int SprP[16]; //pallete de sprites
     
     u8 patterns[0x1FFF * 2]; //la matriz se mueve de a 32 espacios
     
@@ -51,7 +45,8 @@ public:
     void makeTile (int);
     PPU(RAM*, Input*);
     ~PPU();
-    void cargarPallete();
+    void cargarPallete(); // traduce pallete a RGB
+    void updatePallete(); // saca palletes de memoria
     void cargarCHR (Input*);
     memoryAdr getNameTable();
     memoryAdr getSpriteTable();
