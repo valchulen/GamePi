@@ -16,6 +16,12 @@
 #include "VRAM.h"
 #include "Sprite.h"
 
+class Pattern {
+    u8 mat[8][8];
+public:
+    Pattern(int, VRAM*);
+};
+
 using namespace std;
 class PPU{
     RAM* ram;
@@ -43,11 +49,13 @@ class PPU{
     u8 SpP2[3];
     u8 SpP3[3];
     
-    u8 patterns[0x1FFF * 2]; //la matriz se mueve de a 32 espacios
+    Pattern* patterns[0x1FF];
+    
+#define TOT_PIX 32*30*8*8
+    
+    int matrix[TOT_PIX]; //la matriz final en RGB a mostrar
     
 public:
-    
-    void makePattern (int, u8*); //recibe una matriz (8x8) de pixeles (2 bits de profundidad), 32 u8, uno en cada nibble
     void makeTile (int);
     PPU(RAM*, Input*);
     ~PPU();

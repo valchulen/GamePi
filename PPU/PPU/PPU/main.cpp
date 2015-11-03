@@ -24,7 +24,5 @@ int main(int argc, const char * argv[]) {
     RAM ram (&input);
     NES cpu (&ram);
     PPU ppu (&ram, &input);
-    u8 arr[32];
-    ppu.makePattern(90, arr);
     cout<<"qareh!"<<endl;
 }
