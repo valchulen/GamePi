@@ -20,7 +20,7 @@ class Pattern {
     u8 mat[8][8];
 public:
     Pattern(int, VRAM*);
-    const u8 sub (const int);
+    inline const u8 sub (const int);
 };
 
 using namespace std;

@@ -128,10 +128,10 @@ void PPU::render() {
 
 void PPU::renderBg() {
     const int baseAtr = 0x23c0; //por ahora lo pongo fijo
-    for (int yj = 0, yi = 0; yj < 16; yj++, yi+=4 ) {
-        for (int xj = 0, xi = 0; xj < 16; xj++, xi+=4 ) {
+    for (int yj = 0; yj < 16; yj++) {
+        for (int xj = 0; xj < 16; xj++) {
             const int j = (16*yj) + xj;
-            calcSquare(vram->read(baseAtr + j), xi, yi);
+            calcSquare(vram->read(baseAtr + j), xj, yj);
         }
     }
 }
@@ -167,17 +167,22 @@ void PPU::calcSquare(const u8 atr, const int x, const int y) {
     calcPixels(_3, x+3, y+3);
 }
 
-const u8 Pattern::sub (const int i) {
+inline const u8 Pattern::sub (const int i) {
     return this->mat[i%8][i/8];
 }
 
 void PPU::calcPixels(const u8 n, const int x, const int y) {
-    const int baseX = x*8, baseY = y*8;
-    const int i = (32*y) + x;
-    const int baseNT = 0x2000;
-    Pattern* p = patterns[ vram->read(baseNT+i) ];
-    for (int k = 0; k < 64; k++) {
-        pixels[ baseX + (k%8) ][ baseY + (k/8) ] = pallete[ n | p->sub(k) ];
+    if (y < 30){ //para que no se pase de alto
+        const int baseX = x*8, baseY = y*8;
+        const int i = (32*y) + x;
+        const int baseNT = 0x2000;
+        Pattern* p = patterns[ vram->read(baseNT+i) ];
+        for (int k = 0; k < 64; k++){
+            const int xx =  baseX + (k%8);
+            const int yy = baseY + (k/8);
+            const int val = pallete[ n | p->sub(k) ];
+            pixels[xx][yy] = val;
+        }
     }
 }
 
