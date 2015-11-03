@@ -20,6 +20,7 @@ class Pattern {
     u8 mat[8][8];
 public:
     Pattern(int, VRAM*);
+    const u8 sub (const int);
 };
 
 using namespace std;
@@ -51,16 +52,21 @@ class PPU{
     
     Pattern* patterns[0x1FF];
     
-#define TOT_PIX 32*30*8*8
+    int pixels[32*8][30*8]; //la matriz final en RGB a mostrar
     
-    int matrix[TOT_PIX]; //la matriz final en RGB a mostrar
-    
-public:
-    void makeTile (int);
-    PPU(RAM*, Input*);
-    ~PPU();
+private:
     void cargarPallete();
     void cargarCHR (Input*);
+    void renderBg ();
+    void renderSpr ();
+    void calcSquare (const u8, const int, const int);
+    void calcPixels (const u8, const int, const int);
+    
+public:
+    void render ();
+    
+    PPU(RAM*, Input*);
+    ~PPU();
     memoryAdr getNameTable();
     memoryAdr getSpriteTable();
     memoryAdr getBGTable();

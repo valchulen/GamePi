@@ -23,8 +23,10 @@ PPU::PPU(RAM* ram, Input* i){
     for (int i = 0; i < 0x1FF; i++) {
         patterns[i] = new Pattern(i, vram);
     }
-    for (int i = 0; i < TOT_PIX; i++){
-        matrix[i] = 0;
+    for (int x = 0; x < 32*8; x++){
+        for (int y = 0; y < 30*8; y++) {
+            pixels[x][y] = 0;
+        }
     }
 }
 
@@ -119,6 +121,66 @@ void PPU::cargarPallete(){
      };*/
 }
 
+void PPU::render() {
+    renderBg();
+    renderSpr();
+}
+
+void PPU::renderBg() {
+    const int baseAtr = 0x23c0; //por ahora lo pongo fijo
+    for (int yj = 0, yi = 0; yj < 16; yj++, yi+=4 ) {
+        for (int xj = 0, xi = 0; xj < 16; xj++, xi+=4 ) {
+            const int j = (16*yj) + xj;
+            calcSquare(vram->read(baseAtr + j), xi, yi);
+        }
+    }
+}
+
+void PPU::renderSpr() {
+    
+}
+
+void PPU::calcSquare(const u8 atr, const int x, const int y) {
+    const u8 _0 = (atr<<2) & 0xC,
+        _1 = atr & 0xC,
+        _2 = (atr>>2) & 0xC,
+        _3 = (atr>>4) & 0xC;
+    
+    calcPixels(_0, x, y);
+    calcPixels(_0, x+1, y);
+    calcPixels(_0, x, y+1);
+    calcPixels(_0, x+1, y+1);
+    
+    calcPixels(_1, x+2, y);
+    calcPixels(_1, x+3, y);
+    calcPixels(_1, x+2, y+1);
+    calcPixels(_1, x+3, y+1);
+    
+    calcPixels(_2, x, y+2);
+    calcPixels(_2, x+1, y+2);
+    calcPixels(_2, x, y+3);
+    calcPixels(_2, x+1, y+3);
+    
+    calcPixels(_3, x+2, y+2);
+    calcPixels(_3, x+3, y+2);
+    calcPixels(_3, x+2, y+3);
+    calcPixels(_3, x+3, y+3);
+}
+
+const u8 Pattern::sub (const int i) {
+    return this->mat[i%8][i/8];
+}
+
+void PPU::calcPixels(const u8 n, const int x, const int y) {
+    const int baseX = x*8, baseY = y*8;
+    const int i = (32*y) + x;
+    const int baseNT = 0x2000;
+    Pattern* p = patterns[ vram->read(baseNT+i) ];
+    for (int k = 0; k < 64; k++) {
+        pixels[ baseX + (k%8) ][ baseY + (k/8) ] = pallete[ n | p->sub(k) ];
+    }
+}
+
 Pattern::Pattern(int n, VRAM* vram) {
     u8 temp[16];
     const int base = (n<<4); //lo corro 4 porque tiene que empezar ahi; 0x 0??x
@@ -133,10 +195,6 @@ Pattern::Pattern(int n, VRAM* vram) {
             mat[x][y] = nFinal;
         }
     }
-}
-
-void PPU::makeTile(int adr) {
-    
 }
 
 memoryAdr PPU::getNameTable(){
