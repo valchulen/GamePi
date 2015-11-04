@@ -8,6 +8,8 @@
 
 #include "Input.h"
 #include "Types.h"
+#include "RAM.h"
+#include "VRAM.h"
 #include <fstream>
 #include <iostream>
 
@@ -21,11 +23,20 @@ using namespace std;
 //    return val; //Si se usa, hay que liberarlo despues
 //}
 
-u8* Input::read(int size, u8 ptr[]) {
-    ptr = new u8[size];
+void Input::read(int size, u8 ptr[]) {
     for(int i = 0; i < size; i++)
         ptr[i] = read();
-    return ptr;
+}
+
+void Input::readToRam(int size, RAM* ram) {
+    if (size > PRG1_SIZE) ram->PRG2_mirror = true;
+    for(int i = 0; i < size; i++)
+        ram->write(intToMem(i+PRG1_START), read());
+}
+
+void Input::readToVram(VRAM* vram) {
+    for(int i = 0; i < 0x3FFF; i++)
+        vram->write(i, read());
 }
 
 void Input::skip (int size) {
@@ -39,7 +50,7 @@ u8 Input::read () {
     else return c;
 }
 
-Input::Input (string filename) {
+Input::Input (string filename, RAM* ram, VRAM* vram) {
     this->file = new ifstream(filename);
     if (this->file->is_open()) {
         skip(3);//corresponde con el "NES", lo leo porque paja convertir de u8 a string
@@ -53,10 +64,10 @@ Input::Input (string filename) {
         this->flags_9 = read();
         skip(5);
         if (flags_6 & 0x04)
-            this->trainer = read(512, this->trainer);
+            read(512, this->trainer);
         this->trainer_size = 512;
-        this->prg_rom = read(16384 * this->prg_16_rom, this->prg_rom);
-        this->chr_rom = read(8192 * this->chr_8_rom, this->chr_rom);
+        readToRam(16384 * this->prg_16_rom, ram);
+        readToVram(vram);
         //Destructor de archivo;
         this->file->close();
     }

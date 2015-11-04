@@ -56,7 +56,6 @@ class PPU{
     
 private:
     void cargarPallete();
-    void cargarCHR (Input*);
     void renderBg ();
     void renderSpr ();
     void calcSquare (const u8, const int, const int);
@@ -65,11 +64,11 @@ private:
 public:
     void render ();
     
-    PPU(RAM*, Input*);
+    PPU(RAM*, VRAM*);
     ~PPU();
-    memoryAdr getNameTable();
-    memoryAdr getSpriteTable();
-    memoryAdr getBGTable();
+    int getNameTable();
+    int getSpriteTable();
+    int getBGTable();
     u8 getIncrement();
     u8 getSpriteSize();
     u8 getNmi();

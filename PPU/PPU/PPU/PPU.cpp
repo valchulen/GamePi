@@ -12,14 +12,13 @@
 using namespace std;
 
 
-PPU::PPU(RAM* ram, Input* i){
+PPU::PPU(RAM* ram, VRAM* i){
     this->ram = ram;
-    this->vram = new VRAM(i);
+    this->vram = i;
     dir2000 = ram->toRealAdr(intToMem(0x2000));
     dir2001 = ram->toRealAdr(intToMem(0x2001));
     dir2002 = ram->toRealAdr(intToMem(0x2002));
     cargarPallete();
-    cargarCHR(i);
     for (int i = 0; i < 0x1FF; i++) {
         patterns[i] = new Pattern(i, vram);
     }
@@ -31,12 +30,6 @@ PPU::PPU(RAM* ram, Input* i){
 }
 
 PPU::~PPU() {
-}
-
-void PPU::cargarCHR (Input* i) {
-    for (int j = 0; j < i->chr_8_rom * 8192; j++) {
-        this->vram->write(j, i->chr_rom[j]);
-    }
 }
 
 void PPU::cargarPallete(){
@@ -202,39 +195,37 @@ Pattern::Pattern(int n, VRAM* vram) {
     }
 }
 
-memoryAdr PPU::getNameTable(){
-    u8 val= *dir2000 & 0x03;
+int PPU::getNameTable(){
+    u8 val = *dir2000 & 0x03;
     switch (val) {
         case 0:
-            return intToMem(0x2000);
+        default:
+            return 0x2000;
             break;
         case 1:
-            return intToMem(0x2400);
+            return 0x2400;
             break;
         case 2:
-            return intToMem(0x2800);
+            return 0x2800;
             break;
         case 3:
-            return intToMem(0x2C00);
-            break;
-        default:
-            return intToMem(0x0000);
+            return 0x2C00;
             break;
     }
 }
 
-memoryAdr PPU::getSpriteTable(){
-    if ((*dir2000>>3&0x01)==0)
-        return intToMem(0x0000);
+int PPU::getSpriteTable(){
+    if ( (*dir2000>>3 & 0x01) ==0)
+        return 0x0000;
     else
-        return intToMem(0x1000);
+        return 0x1000;
 }
 
-memoryAdr PPU::getBGTable(){
-    if ((*dir2000>>4&0x01)==0)
-        return intToMem(0x0000);
+int PPU::getBGTable(){
+    if ( (*dir2000>>4 & 0x01) ==0)
+        return 0x0000;
     else
-        return intToMem(0x1000);
+        return 0x1000;
 }
 
 u8 PPU::getIncrement(){

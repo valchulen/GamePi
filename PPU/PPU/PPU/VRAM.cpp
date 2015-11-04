@@ -12,10 +12,7 @@
 
 using namespace std;
 
-VRAM::VRAM(const Input* i) {
-    //no puedo avanzar hasta tener internet gracias wifi <3
-    for (int x = 0; x < 0x8000; x++)
-        this->write(x, 0x00);
+VRAM::VRAM() {
 }
 
 void VRAM::write(const int adr, const u8 val) {

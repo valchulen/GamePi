@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include "Types.h"
-#include "Input.h"
 
 class VRAM {
 #define PT0_SIZE 0x1000
@@ -84,7 +83,7 @@ class VRAM {
 public:
     u8 read(const int);
     void write(const int, const u8);
-    VRAM(const Input*);
+    VRAM();
     bool horizontal = true;
     
 private:

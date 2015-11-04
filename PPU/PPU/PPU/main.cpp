@@ -20,9 +20,12 @@ int main(int argc, const char * argv[]) {
     string filename;
     //cin>>filename;
     filename = "dk.nes";
-    Input input (filename);
-    RAM ram (&input);
+    
+    RAM ram;
+    VRAM vram;
+    Input input (filename, &ram, &vram);
     NES cpu (&ram);
-    PPU ppu (&ram, &input);
+    PPU ppu(&ram, &vram);
+    cpu.exec();
     ppu.render();
 }

@@ -9,7 +9,6 @@
 #ifndef __RAM__RAM__
 #define __RAM__RAM__
 #include "Types.h"
-#include "Input.h"
 #include <iostream>
 
 class RAM {
@@ -78,10 +77,11 @@ class RAM {
 public:
     bool PRG2_mirror = true;
     u8 read (memoryAdr adr);
-    bool write (memoryAdr adr, u8 val); // devuelve true si se pudo escribir
+    void write (memoryAdr adr, u8 val); // devuelve true si se pudo escribir
     realMemory toRealAdr (memoryAdr adr);
     RAM();
-    RAM(Input*);
+    
+    bool canWriteToPRG = true;
     
 private:
     void setup();
