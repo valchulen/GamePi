@@ -28,4 +28,5 @@ int main(int argc, const char * argv[]) {
     PPU ppu(&ram, &vram);
     cpu.exec();
     ppu.render();
+    //ppu a -> 1.79 MHz
 }

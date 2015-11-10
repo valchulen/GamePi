@@ -38,6 +38,7 @@ class PPU{
     u8 displaytype;
     VRAM* vram;
     Sprite* SPR[64];
+    Sprite* SPR_secondary[8];
     
     int pallete[64];
     

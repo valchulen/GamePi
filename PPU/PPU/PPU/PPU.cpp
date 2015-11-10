@@ -130,7 +130,20 @@ void PPU::renderBg() {
 }
 
 void PPU::renderSpr() {
-    
+    ram->write(intToMem(0x2004), 0xFF); //Despues hay que escribir algo con sentido aca
+    //originalmente lee por scanline, por eso asi de feo
+    for (int y = 0; y < 30 * 8; y++) {
+        int secondary_oam_count = 0;
+        for (int n = 0; (n < 64) && (secondary_oam_count < 8); n++) {
+            if (SPR[n]->Y == y) {
+                secondary_oam_count++;
+                
+            }
+        }
+        if (secondary_oam_count ==) {
+            <#statements#>
+        }
+    }
 }
 
 void PPU::calcSquare(const u8 atr, const int x, const int y) {
