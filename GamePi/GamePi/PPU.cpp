@@ -8,6 +8,7 @@
 
 #include "PPU.h"
 #include "Types.h"
+#include <QtCore>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ PPU::PPU(RAM* ram, VRAM* i){
     dir2000 = ram->toRealAdr(intToMem(0x2000));
     dir2001 = ram->toRealAdr(intToMem(0x2001));
     dir2002 = ram->toRealAdr(intToMem(0x2002));
+    (*dir2002) = -1;
     cargarPallete();
     for (int i = 0; i < 0x1FF; i++) {
         patterns[i] = new Pattern(i, vram);
@@ -121,16 +123,16 @@ void PPU::render() {
 
 void PPU::renderBg() {
     const int baseAtr = 0x23c0; //por ahora lo pongo fijo
-    for (int yj = 0; yj < 16; yj++) {
-        for (int xj = 0; xj < 16; xj++) {
-            const int j = (16*yj) + xj;
+    for (int yj = 0; yj < 30; yj++) {
+        for (int xj = 0; xj < 32; xj++) {
+            const int j = (32*yj) + xj;
             calcSquare(vram->read(baseAtr + j), xj, yj);
         }
     }
 }
 
 void PPU::renderSpr() {
-    ram->write(intToMem(0x2004), 0xFF); //Despues hay que escribir algo con sentido aca
+    /*ram->write(intToMem(0x2004), 0xFF); //Despues hay que escribir algo con sentido aca
     //originalmente lee por scanline, por eso asi de feo
     for (int y = 0; y < 30 * 8; y++) {
         int secondary_oam_count = 0;
@@ -143,7 +145,7 @@ void PPU::renderSpr() {
         if (secondary_oam_count ==) {
             <#statements#>
         }
-    }
+    }*/
 }
 
 void PPU::calcSquare(const u8 atr, const int x, const int y) {
@@ -151,7 +153,7 @@ void PPU::calcSquare(const u8 atr, const int x, const int y) {
         _1 = atr & 0xC,
         _2 = (atr>>2) & 0xC,
         _3 = (atr>>4) & 0xC;
-    
+    qDebug() << x;
     calcPixels(_0, x, y);
     calcPixels(_0, x+1, y);
     calcPixels(_0, x, y+1);
@@ -180,12 +182,14 @@ inline const u8 Pattern::sub (const int i) {
 void PPU::calcPixels(const u8 n, const int x, const int y) {
     if (y < 30){ //para que no se pase de alto
         const int baseX = x*8, baseY = y*8;
+        //qDebug() << baseX;
         const int i = (32*y) + x;
         const int baseNT = 0x2000;
         Pattern* p = patterns[ vram->read(baseNT+i) ];
         for (int k = 0; k < 64; k++){
             const int xx =  baseX + (k%8);
             const int yy = baseY + (k/8);
+
             const int val = pallete[ n | p->sub(k) ];
             pixels[xx][yy] = val;
         }

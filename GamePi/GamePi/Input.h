@@ -14,11 +14,11 @@
 #include "Types.h"
 #include "RAM.h"
 #include "VRAM.h"
-
+#include <QtCore>
 using namespace std;
 
 class Input {
-    ifstream* file;
+    QTextStream* file;
 public:
     u8 prg_16_rom,
     chr_8_rom,
@@ -29,14 +29,16 @@ public:
     int trainer_size = 0;
     u8 trainer[512];
     
-    Input(string, RAM*, VRAM*);
+    Input(QString, RAM*, VRAM*);
     //~Input();
 private:
+    QTextStream* in;
+    int iFile = 0;
     void read (int, u8*);
+    u8 read ();
     void readToRam(int, RAM*);
     void readToVram(VRAM*);
     void skip (int);
-    u8 read ();
 };
 
 #endif /* defined(____Input__) */

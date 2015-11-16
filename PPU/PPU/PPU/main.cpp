@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Input.h"
+#include <math.h>
 #include "NES.h"
 #include "RAM.h"
 #include "Types.h"
@@ -17,10 +18,15 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     string filename;
-    cin>>filename;
-    Input input (filename);
-    RAM ram (&input);
-    NES cpu (&ram);
-    PPU ppu (&ram);
+    //cin>>filename;
+    filename = "dk.nes";
     
+    RAM ram;
+    VRAM vram;
+    Input input (filename, &ram, &vram);
+    NES cpu (&ram);
+    PPU ppu(&ram, &vram);
+    cpu.exec();
+    ppu.render();
+    //ppu a -> 1.79 MHz
 }

@@ -53,8 +53,6 @@ class PPU{
     
     Pattern* patterns[0x1FF];
     
-    int pixels[32*8][30*8]; //la matriz final en RGB a mostrar
-    
 private:
     void cargarPallete();
     void renderBg ();
@@ -63,6 +61,8 @@ private:
     void calcPixels (const u8, const int, const int);
     
 public:
+    int pixels[32*8][30*8]; //la matriz final en RGB a mostrar
+
     void render ();
     
     PPU(RAM*, VRAM*);

@@ -12,6 +12,8 @@
 #include "VRAM.h"
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
+#include <QTextStream>
 
 using namespace std;
 
@@ -22,6 +24,11 @@ using namespace std;
 //        val[i] = this->file->get();
 //    return val; //Si se usa, hay que liberarlo despues
 //}
+
+void Input::skip(int size) {
+    for (int i = 0; i < size; i++)
+        read ();
+}
 
 void Input::read(int size, u8 ptr[]) {
     for(int i = 0; i < size; i++)
@@ -39,20 +46,28 @@ void Input::readToVram(VRAM* vram) {
         vram->write(i, read());
 }
 
-void Input::skip (int size) {
-    for(int i = 0; i < size; i++) this->file->get();
-}
-
 u8 Input::read () {
-    const char c =this->file->get();
-    if (c == 0x20)
-        return 0x20;
-    else return c;
+    bool bstatus = false;
+    u8 byte = this->in->read(2).toInt(&bstatus, 16); // el 0x20 lo lee bien
+    this->iFile++;
+    if (this->iFile % 16 == 0)
+        this->in->read(1); //esto hay que hacerlo para que lea de a lineas de 16 bits
+    return byte;
 }
 
-Input::Input (string filename, RAM* ram, VRAM* vram) {
-    this->file = new ifstream(filename);
-    if (this->file->is_open()) {
+Input::Input (QString filename, RAM* ram, VRAM* vram) {
+    //this->file = new ifstream(filename.c_str());
+    //if (this->file->is_open()) {
+    QFile file(filename);
+    if(!file.open(QFile::ReadOnly |
+                  QFile::Text))
+    {
+        qDebug() << " Could not open the file for reading";
+        return;
+    }
+
+    in = new QTextStream(&file);
+
         skip(3);//corresponde con el "NES", lo leo porque paja convertir de u8 a string
         //el header deberia tene siempre 16 bytes
         skip(2); //skipeo dos porqye tiene " " + el EOF de ms
@@ -69,8 +84,11 @@ Input::Input (string filename, RAM* ram, VRAM* vram) {
         readToRam(16384 * this->prg_16_rom, ram);
         readToVram(vram);
         //Destructor de archivo;
-        this->file->close();
-    }
+        //this->file->close();
+    //}
+
+        file.close();
+
 }
 
 /*Input::~Input() {
