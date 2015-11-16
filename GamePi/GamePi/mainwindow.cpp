@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    t = new Thread(ui->myLabel);
+    t = new Thread(ui->myLabel, "/Users/valchu/Documents/GamePi/GamePi/GamePi/dk.nes");
     t->start();
 }
 

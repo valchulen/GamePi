@@ -14,9 +14,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    thread.cpp
+    thread.cpp \
+    PPU.cpp \
+    Input.cpp \
+    RAM.cpp \
+    VRAM.cpp \
+    Pines.cpp \
+    Sprite.cpp \
+    NES.cpp \
+    Types.cpp
 
 HEADERS  += mainwindow.h \
-    thread.h
+    thread.h \
+    PPU.h \
+    Input.h \
+    RAM.h \
+    VRAM.h \
+    Pines.h \
+    Sprite.h \
+    NES.h \
+    Types.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    dk.nes
