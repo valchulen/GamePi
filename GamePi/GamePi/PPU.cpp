@@ -153,7 +153,7 @@ void PPU::calcSquare(const u8 atr, const int x, const int y) {
         _1 = atr & 0xC,
         _2 = (atr>>2) & 0xC,
         _3 = (atr>>4) & 0xC;
-    qDebug() << x;
+    //qDebug() << x;
     calcPixels(_0, x, y);
     calcPixels(_0, x+1, y);
     calcPixels(_0, x, y+1);
