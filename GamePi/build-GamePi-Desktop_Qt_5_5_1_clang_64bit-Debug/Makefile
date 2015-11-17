@@ -58,7 +58,10 @@ SOURCES       = ../GamePi/main.cpp \
 		../GamePi/Pines.cpp \
 		../GamePi/Sprite.cpp \
 		../GamePi/NES.cpp \
-		../GamePi/Types.cpp moc_mainwindow.cpp
+		../GamePi/Types.cpp \
+		../GamePi/MenuPrincipal.cpp qrc_resource.cpp \
+		moc_mainwindow.cpp \
+		moc_MenuPrincipal.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		thread.o \
@@ -70,7 +73,10 @@ OBJECTS       = main.o \
 		Sprite.o \
 		NES.o \
 		Types.o \
-		moc_mainwindow.o
+		MenuPrincipal.o \
+		qrc_resource.o \
+		moc_mainwindow.o \
+		moc_MenuPrincipal.o
 DIST          = ../GamePi/dk.nes \
 		../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/qdevice.pri \
@@ -223,7 +229,8 @@ DIST          = ../GamePi/dk.nes \
 		../GamePi/Pines.h \
 		../GamePi/Sprite.h \
 		../GamePi/NES.h \
-		../GamePi/Types.h ../GamePi/main.cpp \
+		../GamePi/Types.h \
+		../GamePi/MenuPrincipal.h ../GamePi/main.cpp \
 		../GamePi/mainwindow.cpp \
 		../GamePi/thread.cpp \
 		../GamePi/PPU.cpp \
@@ -233,7 +240,8 @@ DIST          = ../GamePi/dk.nes \
 		../GamePi/Pines.cpp \
 		../GamePi/Sprite.cpp \
 		../GamePi/NES.cpp \
-		../GamePi/Types.cpp
+		../GamePi/Types.cpp \
+		../GamePi/MenuPrincipal.cpp
 QMAKE_TARGET  = GamePi
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = GamePi.app/Contents/MacOS/GamePi
@@ -271,7 +279,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_MenuPrincipal.h $(OBJECTS)  
 	@test -d GamePi.app/Contents/MacOS/ || mkdir -p GamePi.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -418,6 +426,7 @@ Makefile: ../GamePi/GamePi.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qm
 		../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf \
 		../GamePi/GamePi.pro \
+		../GamePi/resource.qrc \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl
@@ -565,6 +574,7 @@ Makefile: ../GamePi/GamePi.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qm
 ../../../../Qt/5.5/clang_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.5/clang_64/mkspecs/features/lex.prf:
 ../GamePi/GamePi.pro:
+../GamePi/resource.qrc:
 /Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 /Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl:
 /Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -597,9 +607,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/mainwindow.h ../GamePi/thread.h ../GamePi/PPU.h ../GamePi/Input.h ../GamePi/RAM.h ../GamePi/VRAM.h ../GamePi/Pines.h ../GamePi/Sprite.h ../GamePi/NES.h ../GamePi/Types.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/main.cpp ../GamePi/mainwindow.cpp ../GamePi/thread.cpp ../GamePi/PPU.cpp ../GamePi/Input.cpp ../GamePi/RAM.cpp ../GamePi/VRAM.cpp ../GamePi/Pines.cpp ../GamePi/Sprite.cpp ../GamePi/NES.cpp ../GamePi/Types.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/resource.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/mainwindow.h ../GamePi/thread.h ../GamePi/PPU.h ../GamePi/Input.h ../GamePi/RAM.h ../GamePi/VRAM.h ../GamePi/Pines.h ../GamePi/Sprite.h ../GamePi/NES.h ../GamePi/Types.h ../GamePi/MenuPrincipal.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/main.cpp ../GamePi/mainwindow.cpp ../GamePi/thread.cpp ../GamePi/PPU.cpp ../GamePi/Input.cpp ../GamePi/RAM.cpp ../GamePi/VRAM.cpp ../GamePi/Pines.cpp ../GamePi/Sprite.cpp ../GamePi/NES.cpp ../GamePi/Types.cpp ../GamePi/MenuPrincipal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/mainwindow.ui ../GamePi/MenuPrincipal.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -623,23 +634,35 @@ check: first
 
 compiler_objective_c_make_all:
 compiler_objective_c_clean:
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resource.cpp
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+	-$(DEL_FILE) qrc_resource.cpp
+qrc_resource.cpp: ../GamePi/resource.qrc
+	/Users/valchu/Qt/5.5/clang_64/bin/rcc -name resource ../GamePi/resource.qrc -o qrc_resource.cpp
+
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_MenuPrincipal.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_MenuPrincipal.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../GamePi/mainwindow.h
 	/Users/valchu/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/valchu/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/valchu/Documents/GamePi/GamePi/GamePi -I/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Users/valchu/Qt/5.5/clang_64/lib ../GamePi/mainwindow.h -o moc_mainwindow.cpp
 
+moc_MenuPrincipal.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../GamePi/MenuPrincipal.h
+	/Users/valchu/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/valchu/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/valchu/Documents/GamePi/GamePi/GamePi -I/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Users/valchu/Qt/5.5/clang_64/lib ../GamePi/MenuPrincipal.h -o moc_MenuPrincipal.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_MenuPrincipal.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_MenuPrincipal.h
 ui_mainwindow.h: ../GamePi/mainwindow.ui
 	/Users/valchu/Qt/5.5/clang_64/bin/uic ../GamePi/mainwindow.ui -o ui_mainwindow.h
+
+ui_MenuPrincipal.h: ../GamePi/MenuPrincipal.ui
+	/Users/valchu/Qt/5.5/clang_64/bin/uic ../GamePi/MenuPrincipal.ui -o ui_MenuPrincipal.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -649,13 +672,13 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-main.o: ../GamePi/main.cpp ../GamePi/mainwindow.h \
-		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+main.o: ../GamePi/main.cpp ../GamePi/MenuPrincipal.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../GamePi/main.cpp
@@ -1383,11 +1406,186 @@ NES.o: ../GamePi/NES.cpp ../GamePi/NES.h \
 		../GamePi/Types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NES.o ../GamePi/NES.cpp
 
-Types.o: ../GamePi/Types.cpp ../GamePi/Types.h
+Types.o: ../GamePi/Types.cpp ../GamePi/Types.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QtCore \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstractanimation.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qanimationgroup.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qparallelanimationgroup.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpauseanimation.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpropertyanimation.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsequentialanimationgroup.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvariantanimation.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtextcodec.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcompilerdetection.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qendian.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qflags.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qglobal.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qglobalstatic.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qisenum.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlibraryinfo.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qnamespace.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qnumeric.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qprocessordetection.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsysinfo.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsystemdetection.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtypeinfo.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtypetraits.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbuffer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdatastream.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdir.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdiriterator.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfiledevice.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfileinfo.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfileselector.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfilesystemwatcher.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qiodevice.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlockfile.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qloggingcategory.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qprocess.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qresource.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsavefile.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsettings.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstandardpaths.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstorageinfo.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtemporarydir.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtemporaryfile.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtextstream.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qurl.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qurlquery.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstractitemmodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstractproxymodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qidentityproxymodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qitemselectionmodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsortfilterproxymodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstringlistmodel.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qjsonarray.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qjsonvalue.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstracteventdispatcher.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstractnativeeventfilter.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbasictimer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcoreapplication.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcoreevent.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qeventloop.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmath.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmetaobject.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmetatype.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmimedata.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qobjectcleanuphandler.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qobjectdefs.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpointer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsharedmemory.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsignalmapper.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsocketnotifier.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsystemsemaphore.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtranslator.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qwineventnotifier.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmimedatabase.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmimetype.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfactoryinterface.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlibrary.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qplugin.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpluginloader.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/quuid.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstractstate.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qabstracttransition.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qeventtransition.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfinalstate.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qhistorystate.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsignaltransition.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstate.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstatemachine.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qatomic.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qexception.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfuture.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfutureinterface.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfuturesynchronizer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qfuturewatcher.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qgenericatomic.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmutex.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qreadwritelock.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qresultstore.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qrunnable.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsemaphore.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qthreadpool.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qthreadstorage.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qwaitcondition.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qalgorithms.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qarraydata.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qarraydataops.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qarraydatapointer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbitarray.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbytearray.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbytearraylist.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qbytearraymatcher.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcache.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qchar.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcollator.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcommandlineoption.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcommandlineparser.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcontainerfwd.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcontiguouscache.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qcryptographichash.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qeasingcurve.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qelapsedtimer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qhash.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qiterator.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qline.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlinkedlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qlocale.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmap.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmargins.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qmessageauthenticationcode.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpair.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qpoint.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qqueue.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qrect.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qrefcount.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qregexp.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qregularexpression.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qscopedpointer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qscopedvaluerollback.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qset.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qshareddata.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsharedpointer.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsize.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstack.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstringbuilder.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstringlist.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qstringmatcher.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtextboundaryfinder.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtimeline.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtimezone.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvarlengtharray.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qxmlstream.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qtcoreversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Types.o ../GamePi/Types.cpp
+
+MenuPrincipal.o: ../GamePi/MenuPrincipal.cpp ../GamePi/MenuPrincipal.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_MenuPrincipal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuPrincipal.o ../GamePi/MenuPrincipal.cpp
+
+qrc_resource.o: qrc_resource.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_MenuPrincipal.o: moc_MenuPrincipal.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MenuPrincipal.o moc_MenuPrincipal.cpp
 
 ####### Install
 

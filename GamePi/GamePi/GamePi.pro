@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     Pines.cpp \
     Sprite.cpp \
     NES.cpp \
-    Types.cpp
+    Types.cpp \
+    MenuPrincipal.cpp
 
 HEADERS  += mainwindow.h \
     thread.h \
@@ -33,9 +34,14 @@ HEADERS  += mainwindow.h \
     Pines.h \
     Sprite.h \
     NES.h \
-    Types.h
+    Types.h \
+    MenuPrincipal.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    MenuPrincipal.ui
 
 DISTFILES += \
     dk.nes
+
+RESOURCES += \
+    resource.qrc
