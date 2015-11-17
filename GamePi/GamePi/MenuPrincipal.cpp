@@ -22,10 +22,15 @@ MenuPrincipal::~MenuPrincipal()
 void MenuPrincipal::biblioteca() {
     mb = new MenuBiblioteca ();
     mb->show();
+    this->close();
 }
 
-void MenuPrincipal::informacion() {
+void MenuPrincipal::informacion() { //todavia no andan, tiene que ser QMainWindow
+    mi = new MenuInformacion;
+    mi->show();
 }
 
 void MenuPrincipal::opciones() {
+    mo = new MenuOpciones;
+    mo->show();
 }

@@ -3,12 +3,15 @@
 #include <QDirIterator>
 #include <QPushButton>
 #include <QDebug>
+#include "thread.h"
+#include "MenuPrincipal.h"
 
 MenuBiblioteca::MenuBiblioteca(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MenuBiblioteca)
 {
     ui->setupUi(this);
+    ui->myLabel->hide();
     BuscarArchivos("/Users/valchu/Documents/GamePi/GamePi");
 }
 
@@ -31,8 +34,19 @@ void MenuBiblioteca::CrearArchivo(QString filename) {
     QPushButton* b = new QPushButton(filename);
     connect(b, SIGNAL(released()), this, SLOT(exec()));
     this->ui->verticalLayout->addWidget(b);
+    this->botones.push_back(b);
 }
 
 void MenuBiblioteca::exec() {
-    qDebug() << (this->path + "/" + ((QPushButton*)sender())->text());
+    for (std::vector<QPushButton*>::iterator it = this->botones.begin(); it != this->botones.end(); ++it)
+        ((QPushButton*)(*it))->hide();
+    //qDebug() << (this->path + "/" + ((QPushButton*)sender())->text());
+    ui->myLabel->show();
+    thread = new Thread(ui->myLabel, (this->path + "/" + ((QPushButton*)sender())->text()));
+}
+
+void MenuBiblioteca::closeEvent(QCloseEvent * event) {
+    MenuPrincipal* mp = new  MenuPrincipal;
+    mp->show();
+    this->close();
 }

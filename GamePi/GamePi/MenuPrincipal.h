@@ -23,6 +23,7 @@ private:
     MenuBiblioteca* mb;
     MenuInformacion* mi;
     MenuOpciones* mo;
+
 private slots:
     void biblioteca ();
     void informacion ();

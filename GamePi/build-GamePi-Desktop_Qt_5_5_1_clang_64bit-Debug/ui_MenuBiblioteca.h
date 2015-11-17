@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -26,6 +27,7 @@ public:
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
+    QLabel *myLabel;
 
     void setupUi(QMainWindow *MenuBiblioteca)
     {
@@ -40,6 +42,11 @@ public:
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        myLabel = new QLabel(verticalLayoutWidget);
+        myLabel->setObjectName(QStringLiteral("myLabel"));
+
+        verticalLayout->addWidget(myLabel);
+
         MenuBiblioteca->setCentralWidget(centralwidget);
 
         retranslateUi(MenuBiblioteca);
@@ -50,6 +57,7 @@ public:
     void retranslateUi(QMainWindow *MenuBiblioteca)
     {
         MenuBiblioteca->setWindowTitle(QApplication::translate("MenuBiblioteca", "MainWindow", 0));
+        myLabel->setText(QApplication::translate("MenuBiblioteca", "TextLabel", 0));
     } // retranslateUi
 
 };
