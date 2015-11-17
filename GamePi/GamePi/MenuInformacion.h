@@ -14,6 +14,7 @@ class MenuInformacion : public QMainWindow
 public:
     explicit MenuInformacion(QWidget *parent = 0);
     ~MenuInformacion();
+    virtual void closeEvent(QCloseEvent*);
 
 private:
     Ui::MenuInformacion *ui;

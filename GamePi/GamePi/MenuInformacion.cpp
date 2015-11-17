@@ -1,5 +1,6 @@
 #include "MenuInformacion.h"
 #include "ui_MenuInformacion.h"
+#include "MenuPrincipal.h"
 
 MenuInformacion::MenuInformacion(QWidget *parent) :
     QMainWindow(parent),
@@ -11,4 +12,10 @@ MenuInformacion::MenuInformacion(QWidget *parent) :
 MenuInformacion::~MenuInformacion()
 {
     delete ui;
+}
+
+void MenuInformacion::closeEvent(QCloseEvent * event) {
+    MenuPrincipal* mp = new  MenuPrincipal;
+    mp->show();
+    this->close();
 }

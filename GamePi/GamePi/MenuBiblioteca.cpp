@@ -32,6 +32,7 @@ void MenuBiblioteca::BuscarArchivos(QString path) {
 
 void MenuBiblioteca::CrearArchivo(QString filename) {
     QPushButton* b = new QPushButton(filename);
+    b->setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);");
     connect(b, SIGNAL(released()), this, SLOT(exec()));
     this->ui->verticalLayout->addWidget(b);
     this->botones.push_back(b);

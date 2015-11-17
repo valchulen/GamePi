@@ -14,7 +14,6 @@ MenuOpciones::~MenuOpciones()
     delete ui;
 }
 
-
 void MenuOpciones::closeEvent(QCloseEvent * event) {
     MenuPrincipal* mp = new  MenuPrincipal;
     mp->show();

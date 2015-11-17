@@ -28,6 +28,7 @@ void MenuPrincipal::biblioteca() {
 void MenuPrincipal::informacion() { //todavia no andan, tiene que ser QMainWindow
     mi = new MenuInformacion;
     mi->show();
+    this->close();
 }
 
 void MenuPrincipal::opciones() {
