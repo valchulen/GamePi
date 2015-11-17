@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     Types.cpp \
     MenuPrincipal.cpp \
     MenuOpciones.cpp \
-    MenuInformacion.cpp
+    MenuInformacion.cpp \
+    MenuBiblioteca.cpp
 
 HEADERS  += mainwindow.h \
     thread.h \
@@ -39,12 +40,14 @@ HEADERS  += mainwindow.h \
     Types.h \
     MenuPrincipal.h \
     MenuOpciones.h \
-    MenuInformacion.h
+    MenuInformacion.h \
+    MenuBiblioteca.h
 
 FORMS    += mainwindow.ui \
     MenuPrincipal.ui \
     MenuOpciones.ui \
-    MenuInformacion.ui
+    MenuInformacion.ui \
+    MenuBiblioteca.ui
 
 DISTFILES += \
     dk.nes

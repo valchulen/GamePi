@@ -1,10 +1,10 @@
-#include "MenuOpciones.h"
+#include "MenuBiblioteca.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MenuOpciones w;
+    MenuBiblioteca w;
 
     w.show();
 

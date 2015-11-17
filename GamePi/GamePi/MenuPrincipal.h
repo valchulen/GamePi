@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::MenuPrincipal *ui;
+private slots:
+    void biblioteca ();
+    void informacion ();
+    void opciones ();
 };
 
 #endif // MENUPRINCIPAL_H
