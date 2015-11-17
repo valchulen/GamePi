@@ -2,6 +2,9 @@
 #define MENUPRINCIPAL_H
 
 #include <QWidget>
+#include "MenuBiblioteca.h"
+#include "MenuOpciones.h"
+#include "MenuInformacion.h"
 
 namespace Ui {
 class MenuPrincipal;
@@ -17,6 +20,9 @@ public:
 
 private:
     Ui::MenuPrincipal *ui;
+    MenuBiblioteca* mb;
+    MenuInformacion* mi;
+    MenuOpciones* mo;
 private slots:
     void biblioteca ();
     void informacion ();

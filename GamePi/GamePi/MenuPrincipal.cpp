@@ -20,16 +20,12 @@ MenuPrincipal::~MenuPrincipal()
 }
 
 void MenuPrincipal::biblioteca() {
-    // link a biblio
+    mb = new MenuBiblioteca ();
+    mb->show();
 }
 
 void MenuPrincipal::informacion() {
-    MenuInformacion mi;
-    mi.show();
-    this->hide();
 }
 
 void MenuPrincipal::opciones() {
-    MenuOpciones mo;
-    mo.show();
 }
