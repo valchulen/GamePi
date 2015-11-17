@@ -33,4 +33,5 @@ void MenuPrincipal::informacion() { //todavia no andan, tiene que ser QMainWindo
 void MenuPrincipal::opciones() {
     mo = new MenuOpciones;
     mo->show();
+    this->close();
 }

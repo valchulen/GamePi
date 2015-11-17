@@ -19,6 +19,9 @@ public:
     ~MenuBiblioteca();
     virtual void closeEvent(QCloseEvent*);
 
+private slots:
+    void exec ();
+
 private:
     Ui::MenuBiblioteca *ui;
     void BuscarArchivos(QString);
@@ -26,9 +29,6 @@ private:
     QString path;
     std::vector<QPushButton*> botones;
     Thread* thread;
-
-private slots:
-    void exec ();
 };
 
 #endif // MENUBIBLIOTECA_H

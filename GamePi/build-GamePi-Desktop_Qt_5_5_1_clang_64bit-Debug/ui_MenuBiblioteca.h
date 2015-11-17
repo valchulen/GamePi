@@ -33,7 +33,7 @@ public:
     {
         if (MenuBiblioteca->objectName().isEmpty())
             MenuBiblioteca->setObjectName(QStringLiteral("MenuBiblioteca"));
-        MenuBiblioteca->resize(399, 296);
+        MenuBiblioteca->resize(400, 300);
         centralwidget = new QWidget(MenuBiblioteca);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);

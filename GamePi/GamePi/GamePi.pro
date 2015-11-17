@@ -13,7 +13,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     thread.cpp \
     PPU.cpp \
     Input.cpp \
@@ -24,11 +23,11 @@ SOURCES += main.cpp\
     NES.cpp \
     Types.cpp \
     MenuPrincipal.cpp \
+    MenuBiblioteca.cpp \
     MenuOpciones.cpp \
-    MenuInformacion.cpp \
-    MenuBiblioteca.cpp
+    MenuInformacion.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     thread.h \
     PPU.h \
     Input.h \
@@ -38,16 +37,16 @@ HEADERS  += mainwindow.h \
     Sprite.h \
     NES.h \
     Types.h \
-    MenuPrincipal.h \
-    MenuOpciones.h \
     MenuInformacion.h \
-    MenuBiblioteca.h
+    MenuBiblioteca.h \
+    MenuOpciones.h \
+    MenuPrincipal.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     MenuPrincipal.ui \
+    MenuBiblioteca.ui \
     MenuOpciones.ui \
-    MenuInformacion.ui \
-    MenuBiblioteca.ui
+    MenuInformacion.ui
 
 DISTFILES += \
     dk.nes

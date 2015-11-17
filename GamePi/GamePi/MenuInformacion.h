@@ -1,13 +1,13 @@
 #ifndef MENUINFORMACION_H
 #define MENUINFORMACION_H
 
-#include <QWidget>
+#include <QMainWindow>
 
 namespace Ui {
 class MenuInformacion;
 }
 
-class MenuInformacion : public QWidget
+class MenuInformacion : public QMainWindow
 {
     Q_OBJECT
 

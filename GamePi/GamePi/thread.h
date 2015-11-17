@@ -3,7 +3,6 @@
 
 #include <QThread>
 #include <QLabel>
-#include "mainwindow.h"
 #include "NES.h"
 #include "PPU.h"
 #include "RAM.h"

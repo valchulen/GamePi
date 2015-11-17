@@ -2,7 +2,7 @@
 #include "ui_MenuInformacion.h"
 
 MenuInformacion::MenuInformacion(QWidget *parent) :
-    QWidget(parent),
+    QMainWindow(parent),
     ui(new Ui::MenuInformacion)
 {
     ui->setupUi(this);
