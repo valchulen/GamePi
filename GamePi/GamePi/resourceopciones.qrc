@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../Imagines Finales/Pantallab.png</file>
+        <file>../../../Imagines Finales/OpcionesT.png</file>
+    </qresource>
+</RCC>
