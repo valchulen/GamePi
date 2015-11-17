@@ -114,7 +114,7 @@ public:
     void exec ();
     
     //Debug
-    string estado();
+    const string estado();
     string eflags(u8);
     
 private:

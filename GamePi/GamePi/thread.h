@@ -19,6 +19,7 @@ private:
     QLabel *myLabel = NULL;
     void render ();
     void exec ();
+    void delay(int);
 
     NES* cpu = NULL;
     PPU* ppu = NULL;

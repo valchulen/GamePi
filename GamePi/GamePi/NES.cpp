@@ -1086,8 +1086,8 @@ void NES::pushStack(u8 val){
 
 //---Debug---
 
-string NES::estado(){
-    return "Instruccion:"+hex(this->opcode)+" A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
+const string NES::estado(){
+    return "Instruccion: "+hex(this->opcode)+" A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){

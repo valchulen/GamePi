@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../Imagines Finales/Pantallab.png</file>
+        <file>../../../Imagines Finales/OpcionesT.png</file>
+        <file>../../../Imagines Finales/Opcionesb.png</file>
+        <file>../../../Imagines Finales/JuegoFavorito.png</file>
+        <file>../../../Imagines Finales/InformacionT.png</file>
+        <file>../../../Imagines Finales/Informacionb.png</file>
+        <file>../../../Imagines Finales/HorasTotalesJugadas.png</file>
+        <file>../../../Imagines Finales/GamePi.png</file>
+        <file>../../../Imagines Finales/Creditos.png</file>
+        <file>../../../Imagines Finales/BibliotecaT.png</file>
+        <file>../../../Imagines Finales/Bibliotecab.png</file>
+    </qresource>
+</RCC>

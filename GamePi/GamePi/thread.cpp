@@ -13,16 +13,25 @@ Thread::Thread(QLabel* mw, QString s)
 }
 
 void Thread::run() {
-    bool a = true;
-    while (a) {
+    bool play = true;
+    while (play) {
         exec ();
         render ();
-        a = false;
+        delay(3000);
+    }
+}
+void Thread::delay( int millisecondsToWait )
+{
+    QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
+    while( QTime::currentTime() < dieTime )
+    {
+        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
 }
 
 void Thread::exec() {
     cpu->exec();
+    qDebug() << cpu->estado().c_str();
 }
 
 void Thread::render() {
