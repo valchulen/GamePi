@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     NES.cpp \
     Types.cpp \
     MenuPrincipal.cpp \
-    MenuOpciones.cpp
+    MenuOpciones.cpp \
+    MenuInformacion.cpp
 
 HEADERS  += mainwindow.h \
     thread.h \
@@ -37,15 +38,18 @@ HEADERS  += mainwindow.h \
     NES.h \
     Types.h \
     MenuPrincipal.h \
-    MenuOpciones.h
+    MenuOpciones.h \
+    MenuInformacion.h
 
 FORMS    += mainwindow.ui \
     MenuPrincipal.ui \
-    MenuOpciones.ui
+    MenuOpciones.ui \
+    MenuInformacion.ui
 
 DISTFILES += \
     dk.nes
 
 RESOURCES += \
     resource.qrc \
-    resourceopciones.qrc
+    resourceopciones.qrc \
+    resourceinformacion.qrc

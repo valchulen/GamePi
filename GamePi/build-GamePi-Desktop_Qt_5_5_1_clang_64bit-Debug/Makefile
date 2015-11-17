@@ -60,11 +60,14 @@ SOURCES       = ../GamePi/main.cpp \
 		../GamePi/NES.cpp \
 		../GamePi/Types.cpp \
 		../GamePi/MenuPrincipal.cpp \
-		../GamePi/MenuOpciones.cpp qrc_resource.cpp \
+		../GamePi/MenuOpciones.cpp \
+		../GamePi/MenuInformacion.cpp qrc_resource.cpp \
 		qrc_resourceopciones.cpp \
+		qrc_resourceinformacion.cpp \
 		moc_mainwindow.cpp \
 		moc_MenuPrincipal.cpp \
-		moc_MenuOpciones.cpp
+		moc_MenuOpciones.cpp \
+		moc_MenuInformacion.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		thread.o \
@@ -78,11 +81,14 @@ OBJECTS       = main.o \
 		Types.o \
 		MenuPrincipal.o \
 		MenuOpciones.o \
+		MenuInformacion.o \
 		qrc_resource.o \
 		qrc_resourceopciones.o \
+		qrc_resourceinformacion.o \
 		moc_mainwindow.o \
 		moc_MenuPrincipal.o \
-		moc_MenuOpciones.o
+		moc_MenuOpciones.o \
+		moc_MenuInformacion.o
 DIST          = ../GamePi/dk.nes \
 		../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/qdevice.pri \
@@ -237,7 +243,8 @@ DIST          = ../GamePi/dk.nes \
 		../GamePi/NES.h \
 		../GamePi/Types.h \
 		../GamePi/MenuPrincipal.h \
-		../GamePi/MenuOpciones.h ../GamePi/main.cpp \
+		../GamePi/MenuOpciones.h \
+		../GamePi/MenuInformacion.h ../GamePi/main.cpp \
 		../GamePi/mainwindow.cpp \
 		../GamePi/thread.cpp \
 		../GamePi/PPU.cpp \
@@ -249,7 +256,8 @@ DIST          = ../GamePi/dk.nes \
 		../GamePi/NES.cpp \
 		../GamePi/Types.cpp \
 		../GamePi/MenuPrincipal.cpp \
-		../GamePi/MenuOpciones.cpp
+		../GamePi/MenuOpciones.cpp \
+		../GamePi/MenuInformacion.cpp
 QMAKE_TARGET  = GamePi
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = GamePi.app/Contents/MacOS/GamePi
@@ -287,7 +295,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h ui_MenuInformacion.h $(OBJECTS)  
 	@test -d GamePi.app/Contents/MacOS/ || mkdir -p GamePi.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -436,6 +444,7 @@ Makefile: ../GamePi/GamePi.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qm
 		../GamePi/GamePi.pro \
 		../GamePi/resource.qrc \
 		../GamePi/resourceopciones.qrc \
+		../GamePi/resourceinformacion.qrc \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl \
 		/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl
@@ -585,6 +594,7 @@ Makefile: ../GamePi/GamePi.pro ../../../../Qt/5.5/clang_64/mkspecs/macx-clang/qm
 ../GamePi/GamePi.pro:
 ../GamePi/resource.qrc:
 ../GamePi/resourceopciones.qrc:
+../GamePi/resourceinformacion.qrc:
 /Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 /Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/QtGui.prl:
 /Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -617,10 +627,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/resource.qrc ../GamePi/resourceopciones.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/mainwindow.h ../GamePi/thread.h ../GamePi/PPU.h ../GamePi/Input.h ../GamePi/RAM.h ../GamePi/VRAM.h ../GamePi/Pines.h ../GamePi/Sprite.h ../GamePi/NES.h ../GamePi/Types.h ../GamePi/MenuPrincipal.h ../GamePi/MenuOpciones.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/main.cpp ../GamePi/mainwindow.cpp ../GamePi/thread.cpp ../GamePi/PPU.cpp ../GamePi/Input.cpp ../GamePi/RAM.cpp ../GamePi/VRAM.cpp ../GamePi/Pines.cpp ../GamePi/Sprite.cpp ../GamePi/NES.cpp ../GamePi/Types.cpp ../GamePi/MenuPrincipal.cpp ../GamePi/MenuOpciones.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../GamePi/mainwindow.ui ../GamePi/MenuPrincipal.ui ../GamePi/MenuOpciones.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/resource.qrc ../GamePi/resourceopciones.qrc ../GamePi/resourceinformacion.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/mainwindow.h ../GamePi/thread.h ../GamePi/PPU.h ../GamePi/Input.h ../GamePi/RAM.h ../GamePi/VRAM.h ../GamePi/Pines.h ../GamePi/Sprite.h ../GamePi/NES.h ../GamePi/Types.h ../GamePi/MenuPrincipal.h ../GamePi/MenuOpciones.h ../GamePi/MenuInformacion.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/main.cpp ../GamePi/mainwindow.cpp ../GamePi/thread.cpp ../GamePi/PPU.cpp ../GamePi/Input.cpp ../GamePi/RAM.cpp ../GamePi/VRAM.cpp ../GamePi/Pines.cpp ../GamePi/Sprite.cpp ../GamePi/NES.cpp ../GamePi/Types.cpp ../GamePi/MenuPrincipal.cpp ../GamePi/MenuOpciones.cpp ../GamePi/MenuInformacion.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../GamePi/mainwindow.ui ../GamePi/MenuPrincipal.ui ../GamePi/MenuOpciones.ui ../GamePi/MenuInformacion.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -644,18 +654,21 @@ check: first
 
 compiler_objective_c_make_all:
 compiler_objective_c_clean:
-compiler_rcc_make_all: qrc_resource.cpp qrc_resourceopciones.cpp
+compiler_rcc_make_all: qrc_resource.cpp qrc_resourceopciones.cpp qrc_resourceinformacion.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_resource.cpp qrc_resourceopciones.cpp
+	-$(DEL_FILE) qrc_resource.cpp qrc_resourceopciones.cpp qrc_resourceinformacion.cpp
 qrc_resource.cpp: ../GamePi/resource.qrc
 	/Users/valchu/Qt/5.5/clang_64/bin/rcc -name resource ../GamePi/resource.qrc -o qrc_resource.cpp
 
 qrc_resourceopciones.cpp: ../GamePi/resourceopciones.qrc
 	/Users/valchu/Qt/5.5/clang_64/bin/rcc -name resourceopciones ../GamePi/resourceopciones.qrc -o qrc_resourceopciones.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_MenuPrincipal.cpp moc_MenuOpciones.cpp
+qrc_resourceinformacion.cpp: ../GamePi/resourceinformacion.qrc
+	/Users/valchu/Qt/5.5/clang_64/bin/rcc -name resourceinformacion ../GamePi/resourceinformacion.qrc -o qrc_resourceinformacion.cpp
+
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_MenuPrincipal.cpp moc_MenuOpciones.cpp moc_MenuInformacion.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_MenuPrincipal.cpp moc_MenuOpciones.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_MenuPrincipal.cpp moc_MenuOpciones.cpp moc_MenuInformacion.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../GamePi/mainwindow.h
@@ -671,11 +684,16 @@ moc_MenuOpciones.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Header
 		../GamePi/MenuOpciones.h
 	/Users/valchu/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/valchu/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/valchu/Documents/GamePi/GamePi/GamePi -I/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Users/valchu/Qt/5.5/clang_64/lib ../GamePi/MenuOpciones.h -o moc_MenuOpciones.cpp
 
+moc_MenuInformacion.cpp: ../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../GamePi/MenuInformacion.h
+	/Users/valchu/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/valchu/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/valchu/Documents/GamePi/GamePi/GamePi -I/Users/valchu/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Users/valchu/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Users/valchu/Qt/5.5/clang_64/lib ../GamePi/MenuInformacion.h -o moc_MenuInformacion.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h
+compiler_uic_make_all: ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h ui_MenuInformacion.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h
+	-$(DEL_FILE) ui_mainwindow.h ui_MenuPrincipal.h ui_MenuOpciones.h ui_MenuInformacion.h
 ui_mainwindow.h: ../GamePi/mainwindow.ui
 	/Users/valchu/Qt/5.5/clang_64/bin/uic ../GamePi/mainwindow.ui -o ui_mainwindow.h
 
@@ -684,6 +702,9 @@ ui_MenuPrincipal.h: ../GamePi/MenuPrincipal.ui
 
 ui_MenuOpciones.h: ../GamePi/MenuOpciones.ui
 	/Users/valchu/Qt/5.5/clang_64/bin/uic ../GamePi/MenuOpciones.ui -o ui_MenuOpciones.h
+
+ui_MenuInformacion.h: ../GamePi/MenuInformacion.ui
+	/Users/valchu/Qt/5.5/clang_64/bin/uic ../GamePi/MenuInformacion.ui -o ui_MenuInformacion.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -697,7 +718,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: ../GamePi/main.cpp ../GamePi/MenuPrincipal.h \
+main.o: ../GamePi/main.cpp ../GamePi/MenuOpciones.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QApplication \
@@ -1605,11 +1626,20 @@ MenuOpciones.o: ../GamePi/MenuOpciones.cpp ../GamePi/MenuOpciones.h \
 		ui_MenuOpciones.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuOpciones.o ../GamePi/MenuOpciones.cpp
 
+MenuInformacion.o: ../GamePi/MenuInformacion.cpp ../GamePi/MenuInformacion.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_MenuInformacion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuInformacion.o ../GamePi/MenuInformacion.cpp
+
 qrc_resource.o: qrc_resource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
 
 qrc_resourceopciones.o: qrc_resourceopciones.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resourceopciones.o qrc_resourceopciones.cpp
+
+qrc_resourceinformacion.o: qrc_resourceinformacion.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resourceinformacion.o qrc_resourceinformacion.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -1619,6 +1649,9 @@ moc_MenuPrincipal.o: moc_MenuPrincipal.cpp
 
 moc_MenuOpciones.o: moc_MenuOpciones.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MenuOpciones.o moc_MenuOpciones.cpp
+
+moc_MenuInformacion.o: moc_MenuInformacion.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MenuInformacion.o moc_MenuInformacion.cpp
 
 ####### Install
 

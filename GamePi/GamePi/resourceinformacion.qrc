@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../../Imagines Finales/JuegoFavorito.png</file>
+        <file>../../../Imagines Finales/InformacionT.png</file>
+        <file>../../../Imagines Finales/HorasTotalesJugadas.png</file>
+        <file>../../../Imagines Finales/Creditos.png</file>
+    </qresource>
+</RCC>
