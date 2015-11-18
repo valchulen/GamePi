@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
@@ -23,33 +24,37 @@ QT_BEGIN_NAMESPACE
 class Ui_MenuOpciones
 {
 public:
-    QLabel *lblOpciones;
+    QWidget *centralwidget;
+    QLabel *label;
     QPushButton *btnPantalla;
 
-    void setupUi(QWidget *MenuOpciones)
+    void setupUi(QMainWindow *MenuOpciones)
     {
         if (MenuOpciones->objectName().isEmpty())
             MenuOpciones->setObjectName(QStringLiteral("MenuOpciones"));
         MenuOpciones->resize(400, 300);
         MenuOpciones->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 0);"));
-        lblOpciones = new QLabel(MenuOpciones);
-        lblOpciones->setObjectName(QStringLiteral("lblOpciones"));
-        lblOpciones->setGeometry(QRect(128, 30, 161, 81));
-        lblOpciones->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/OpcionesT.png);"));
-        btnPantalla = new QPushButton(MenuOpciones);
+        centralwidget = new QWidget(MenuOpciones);
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(110, 30, 161, 81));
+        label->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/OpcionesT.png);"));
+        btnPantalla = new QPushButton(centralwidget);
         btnPantalla->setObjectName(QStringLiteral("btnPantalla"));
-        btnPantalla->setGeometry(QRect(120, 110, 181, 81));
+        btnPantalla->setGeometry(QRect(110, 150, 171, 81));
         btnPantalla->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/Pantallab.png);"));
+        MenuOpciones->setCentralWidget(centralwidget);
 
         retranslateUi(MenuOpciones);
 
         QMetaObject::connectSlotsByName(MenuOpciones);
     } // setupUi
 
-    void retranslateUi(QWidget *MenuOpciones)
+    void retranslateUi(QMainWindow *MenuOpciones)
     {
-        MenuOpciones->setWindowTitle(QApplication::translate("MenuOpciones", "Form", 0));
-        lblOpciones->setText(QString());
+        MenuOpciones->setWindowTitle(QApplication::translate("MenuOpciones", "MainWindow", 0));
+        label->setText(QString());
         btnPantalla->setText(QString());
     } // retranslateUi
 

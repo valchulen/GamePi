@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
@@ -23,46 +24,52 @@ QT_BEGIN_NAMESPACE
 class Ui_MenuInformacion
 {
 public:
-    QLabel *lblInformacion;
-    QLabel *lblHorasJugads;
-    QLabel *lblJuegoFavorito;
+    QWidget *centralwidget;
+    QLabel *label;
+    QLabel *label_2;
     QPushButton *btnCreditos;
+    QLabel *lblsegundos;
 
-    void setupUi(QWidget *MenuInformacion)
+    void setupUi(QMainWindow *MenuInformacion)
     {
         if (MenuInformacion->objectName().isEmpty())
             MenuInformacion->setObjectName(QStringLiteral("MenuInformacion"));
         MenuInformacion->resize(400, 300);
-        MenuInformacion->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 0);"));
-        lblInformacion = new QLabel(MenuInformacion);
-        lblInformacion->setObjectName(QStringLiteral("lblInformacion"));
-        lblInformacion->setGeometry(QRect(130, 10, 171, 61));
-        lblInformacion->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/InformacionT.png);"));
-        lblHorasJugads = new QLabel(MenuInformacion);
-        lblHorasJugads->setObjectName(QStringLiteral("lblHorasJugads"));
-        lblHorasJugads->setGeometry(QRect(130, 70, 171, 71));
-        lblHorasJugads->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/HorasTotalesJugadas.png);"));
-        lblJuegoFavorito = new QLabel(MenuInformacion);
-        lblJuegoFavorito->setObjectName(QStringLiteral("lblJuegoFavorito"));
-        lblJuegoFavorito->setGeometry(QRect(130, 140, 171, 71));
-        lblJuegoFavorito->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/JuegoFavorito.png);"));
-        btnCreditos = new QPushButton(MenuInformacion);
+        MenuInformacion->setStyleSheet(QStringLiteral("background-color: rgb(2, 2, 2);"));
+        centralwidget = new QWidget(MenuInformacion);
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(120, 0, 165, 71));
+        label->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/InformacionT.png);"));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(10, 100, 171, 81));
+        label_2->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/HorasTotalesJugadas.png);"));
+        btnCreditos = new QPushButton(centralwidget);
         btnCreditos->setObjectName(QStringLiteral("btnCreditos"));
-        btnCreditos->setGeometry(QRect(130, 210, 171, 81));
+        btnCreditos->setGeometry(QRect(110, 210, 171, 81));
         btnCreditos->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/Creditos.png);"));
+        lblsegundos = new QLabel(centralwidget);
+        lblsegundos->setObjectName(QStringLiteral("lblsegundos"));
+        lblsegundos->setGeometry(QRect(200, 120, 181, 41));
+        lblsegundos->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
+"font: 18pt \".SF NS Text\";\n"
+""));
+        MenuInformacion->setCentralWidget(centralwidget);
 
         retranslateUi(MenuInformacion);
 
         QMetaObject::connectSlotsByName(MenuInformacion);
     } // setupUi
 
-    void retranslateUi(QWidget *MenuInformacion)
+    void retranslateUi(QMainWindow *MenuInformacion)
     {
-        MenuInformacion->setWindowTitle(QApplication::translate("MenuInformacion", "Form", 0));
-        lblInformacion->setText(QString());
-        lblHorasJugads->setText(QString());
-        lblJuegoFavorito->setText(QString());
+        MenuInformacion->setWindowTitle(QApplication::translate("MenuInformacion", "MainWindow", 0));
+        label->setText(QString());
+        label_2->setText(QString());
         btnCreditos->setText(QString());
+        lblsegundos->setText(QApplication::translate("MenuInformacion", "TextLabel", 0));
     } // retranslateUi
 
 };

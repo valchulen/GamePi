@@ -59,8 +59,7 @@ Input::Input (QString filename, RAM* ram, VRAM* vram) {
     //this->file = new ifstream(filename.c_str());
     //if (this->file->is_open()) {
     QFile file(filename);
-    if(!file.open(QFile::ReadOnly |
-                  QFile::Text))
+    if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         qDebug() << " Could not open the file for reading";
         return;

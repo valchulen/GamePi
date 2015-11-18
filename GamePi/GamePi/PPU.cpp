@@ -123,9 +123,9 @@ void PPU::render() {
 
 void PPU::renderBg() {
     const int baseAtr = 0x23c0; //por ahora lo pongo fijo
-    for (int yj = 0; yj < 30; yj++) {
-        for (int xj = 0; xj < 32; xj++) {
-            const int j = (32*yj) + xj;
+    for (int yj = 0; yj < 16; yj++) {
+        for (int xj = 0; xj < 16; xj++) {
+            const int j = (16*yj) + xj;
             calcSquare(vram->read(baseAtr + j), xj, yj);
         }
     }

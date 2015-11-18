@@ -33,7 +33,8 @@ public:
     {
         if (MenuBiblioteca->objectName().isEmpty())
             MenuBiblioteca->setObjectName(QStringLiteral("MenuBiblioteca"));
-        MenuBiblioteca->resize(399, 296);
+        MenuBiblioteca->resize(400, 300);
+        MenuBiblioteca->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 0);"));
         centralwidget = new QWidget(MenuBiblioteca);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayoutWidget = new QWidget(centralwidget);
@@ -44,6 +45,8 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         myLabel = new QLabel(verticalLayoutWidget);
         myLabel->setObjectName(QStringLiteral("myLabel"));
+        myLabel->setBaseSize(QSize(400, 300));
+        myLabel->setStyleSheet(QStringLiteral(""));
 
         verticalLayout->addWidget(myLabel);
 
