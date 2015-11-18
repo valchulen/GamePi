@@ -46,10 +46,12 @@ void MenuBiblioteca::exec() {
     //qDebug() << (this->path + "/" + ((QPushButton*)sender())->text());
     ui->myLabel->show();
     thread = new Thread(ui->myLabel, (this->path + "/" + ((QPushButton*)sender())->text()));
+    MenuInformacion::empezarReloj();
     thread->start();
 }
 
 void MenuBiblioteca::closeEvent(QCloseEvent * event) {
+    MenuInformacion::terminarReloj();
     MenuPrincipal* mp = new  MenuPrincipal;
     mp->show();
     this->close();

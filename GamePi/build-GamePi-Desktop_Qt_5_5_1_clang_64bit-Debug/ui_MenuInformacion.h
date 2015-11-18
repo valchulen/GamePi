@@ -27,8 +27,8 @@ public:
     QWidget *centralwidget;
     QLabel *label;
     QLabel *label_2;
-    QLabel *label_3;
     QPushButton *btnCreditos;
+    QLabel *lblsegundos;
 
     void setupUi(QMainWindow *MenuInformacion)
     {
@@ -44,16 +44,18 @@ public:
         label->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/InformacionT.png);"));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(60, 70, 171, 61));
+        label_2->setGeometry(QRect(10, 100, 171, 81));
         label_2->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/HorasTotalesJugadas.png);"));
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(60, 130, 171, 81));
-        label_3->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/JuegoFavorito.png);"));
         btnCreditos = new QPushButton(centralwidget);
         btnCreditos->setObjectName(QStringLiteral("btnCreditos"));
         btnCreditos->setGeometry(QRect(110, 210, 171, 81));
         btnCreditos->setStyleSheet(QStringLiteral("background-image: url(:/Imagines Finales/Creditos.png);"));
+        lblsegundos = new QLabel(centralwidget);
+        lblsegundos->setObjectName(QStringLiteral("lblsegundos"));
+        lblsegundos->setGeometry(QRect(200, 120, 181, 41));
+        lblsegundos->setStyleSheet(QLatin1String("color: rgb(255, 255, 255);\n"
+"font: 18pt \".SF NS Text\";\n"
+""));
         MenuInformacion->setCentralWidget(centralwidget);
 
         retranslateUi(MenuInformacion);
@@ -66,8 +68,8 @@ public:
         MenuInformacion->setWindowTitle(QApplication::translate("MenuInformacion", "MainWindow", 0));
         label->setText(QString());
         label_2->setText(QString());
-        label_3->setText(QString());
         btnCreditos->setText(QString());
+        lblsegundos->setText(QApplication::translate("MenuInformacion", "TextLabel", 0));
     } // retranslateUi
 
 };

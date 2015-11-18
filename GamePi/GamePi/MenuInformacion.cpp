@@ -3,6 +3,9 @@
 #include "MenuPrincipal.h"
 #include <QMessageBox>
 
+long double MenuInformacion::comienzo = 0;
+const QString MenuInformacion::archivoTimer = "archivoTimer.txt";
+
 MenuInformacion::MenuInformacion(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MenuInformacion)
@@ -10,6 +13,8 @@ MenuInformacion::MenuInformacion(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->btnCreditos, SIGNAL(released()), this, SLOT(creditos()));
+    long double ld = MenuInformacion::leer();
+    ui->lblsegundos->setText(QString::number((int)ld) + " Segundos");
 }
 
 MenuInformacion::~MenuInformacion()
