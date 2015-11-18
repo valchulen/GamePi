@@ -18,6 +18,9 @@ public:
 
 private:
     Ui::MenuInformacion *ui;
+
+private slots:
+    void creditos ();
 };
 
 #endif // MENUINFORMACION_H
