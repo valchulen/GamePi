@@ -48,8 +48,7 @@ FORMS    += \
     MenuOpciones.ui \
     MenuInformacion.ui
 
-DISTFILES += \
-    dk.nes
+DISTFILES +=
 
 RESOURCES += \
     resource.qrc \

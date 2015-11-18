@@ -29,6 +29,12 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="myLabel">
+       <property name="baseSize">
+        <size>
+         <width>400</width>
+         <height>300</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>

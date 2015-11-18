@@ -89,8 +89,7 @@ OBJECTS       = main.o \
 		moc_MenuBiblioteca.o \
 		moc_MenuOpciones.o \
 		moc_MenuPrincipal.o
-DIST          = ../GamePi/dk.nes \
-		../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
+DIST          = ../../../../Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.5/clang_64/mkspecs/features/device_config.prf \
 		../../../../Qt/5.5/clang_64/mkspecs/common/unix.conf \
@@ -1698,13 +1697,49 @@ MenuBiblioteca.o: ../GamePi/MenuBiblioteca.cpp ../GamePi/MenuBiblioteca.h \
 MenuOpciones.o: ../GamePi/MenuOpciones.cpp ../GamePi/MenuOpciones.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_MenuOpciones.h
+		ui_MenuOpciones.h \
+		../GamePi/MenuPrincipal.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../GamePi/MenuBiblioteca.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../GamePi/thread.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../GamePi/NES.h \
+		../GamePi/RAM.h \
+		../GamePi/Types.h \
+		../GamePi/PPU.h \
+		../GamePi/VRAM.h \
+		../GamePi/Sprite.h \
+		../GamePi/MenuInformacion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuOpciones.o ../GamePi/MenuOpciones.cpp
 
 MenuInformacion.o: ../GamePi/MenuInformacion.cpp ../GamePi/MenuInformacion.h \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_MenuInformacion.h
+		ui_MenuInformacion.h \
+		../GamePi/MenuPrincipal.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../GamePi/MenuBiblioteca.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../GamePi/thread.h \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../../Qt/5.5/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../GamePi/NES.h \
+		../GamePi/RAM.h \
+		../GamePi/Types.h \
+		../GamePi/PPU.h \
+		../GamePi/VRAM.h \
+		../GamePi/Sprite.h \
+		../GamePi/MenuOpciones.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MenuInformacion.o ../GamePi/MenuInformacion.cpp
 
 qrc_resource.o: qrc_resource.cpp 

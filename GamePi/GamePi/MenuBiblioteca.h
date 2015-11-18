@@ -26,8 +26,8 @@ private:
     Ui::MenuBiblioteca *ui;
     void BuscarArchivos(QString);
     void CrearArchivo (QString);
-    QString path;
-    std::vector<QPushButton*> botones;
+    QString path = "/Users/valchu/Documents/GamePi/GamePi/GamePi";
+    std::vector<QPushButton*> *botones;
     Thread* thread;
 };
 

@@ -45,6 +45,7 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         myLabel = new QLabel(verticalLayoutWidget);
         myLabel->setObjectName(QStringLiteral("myLabel"));
+        myLabel->setBaseSize(QSize(400, 300));
         myLabel->setStyleSheet(QStringLiteral(""));
 
         verticalLayout->addWidget(myLabel);
