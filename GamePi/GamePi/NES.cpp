@@ -1087,11 +1087,22 @@ void NES::pushStack(u8 val){
 //---Debug---
 
 const string NES::estado(){
-    return "Instruccion: "+hex(this->opcode)+" A: 0x"+hex(this->A)+ " X: 0x"+hex(this->X)+ " Y: 0x"+hex(this->Y)+ " Stack: 0x1"+hex(this->SP)+" PC: 0x"+hex(this->PC.adrHigh)+hex(this->PC.adrLow)+" Ciclos: "+hex(this->ciclos)+" Status:"+ eflags(flags);
+    return "Instruccion: "+hex(this->opcode).substr(0,2)+" A: 0x"
+            +hex(this->A).substr(0,2)+ " X: 0x"+hex(this->X).substr(0,2)
+            + " Y: 0x"+hex(this->Y).substr(0,2)+ " Stack: 0x1"+hex(this->SP).substr(0,2)
+            +" PC: 0x"+hex(this->PC.adrHigh).substr(0,2)
+            +hex(this->PC.adrLow).substr(0,2)+" Ciclos: "+hex(this->ciclos).substr(0,2)
+            +" Status:"+ eflags(flags);
 }
 
 string NES::eflags(u8 flag){
-    return "\n Negative flag: "+hex(flag>>7&0x01)+" \n Overflow Flag: "+ hex(flag>>6&0x01) +" \n Break Flag: "+ hex(flag>>4&0x01) +" \n Decimal Flag: "+ hex(flag>>3&0x01) +" \n Interrupt Flag: "+ hex(flag>>2&0x01) +" \n Zero Flag: "+ hex(flag>>1&0x01) +"\n Carry Flag: "+ hex(flag&0x01) +"\n";
+    return "\n Negative flag: "+hex(flag>>7&0x01).substr(0,2)
+            +" \n Overflow Flag: "+ hex(flag>>6&0x01).substr(0,2)
+            +" \n Break Flag: "+ hex(flag>>4&0x01).substr(0,2)
+            +" \n Decimal Flag: "+ hex(flag>>3&0x01).substr(0,2)
+            +" \n Interrupt Flag: "+ hex(flag>>2&0x01).substr(0,2)
+            +" \n Zero Flag: "+ hex(flag>>1&0x01).substr(0,2)
+            +"\n Carry Flag: "+ hex(flag&0x01).substr(0,2) +"\n";
 }
 
 void NES::setFlags(u8 flags, u8 flagsToSet){

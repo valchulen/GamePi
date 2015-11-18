@@ -12,6 +12,7 @@ class Thread : public QThread
 {
 public:
     Thread(QLabel*, QString);
+    bool play = true;
 protected:
     void run ();
 private:

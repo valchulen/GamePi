@@ -51,6 +51,7 @@ void MenuBiblioteca::exec() {
 }
 
 void MenuBiblioteca::closeEvent(QCloseEvent * event) {
+    thread->play = false;
     MenuInformacion::terminarReloj();
     MenuPrincipal* mp = new  MenuPrincipal;
     mp->show();

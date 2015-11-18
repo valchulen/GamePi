@@ -13,7 +13,6 @@ Thread::Thread(QLabel* mw, QString s)
 }
 
 void Thread::run() {
-    bool play = true;
     while (play) {
         exec ();
         render ();
