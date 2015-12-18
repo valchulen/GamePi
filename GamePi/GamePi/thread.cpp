@@ -1,6 +1,7 @@
 #include "thread.h"
 #include "Input.h"
 
+
 const QSize s(32* 8 , 30 * 8 );
 QImage myImage(s, QImage::Format_RGB32);
 
@@ -13,10 +14,10 @@ Thread::Thread(QLabel* mw, QString s)
 }
 
 void Thread::run() {
-    bool play = true;
     while (play) {
         exec ();
         render ();
+        //ram.write(intToMem(0x4016), pines.update());
         delay(3000);
     }
 }

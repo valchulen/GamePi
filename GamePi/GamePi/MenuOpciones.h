@@ -18,6 +18,8 @@ public:
 
 private:
     Ui::MenuOpciones *ui;
+private slots:
+    void especificaciones();
 };
 
 #endif // MENUOPCIONES_H
