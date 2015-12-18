@@ -56,16 +56,11 @@ u8 Input::read () {
 }
 
 Input::Input (QString filename, RAM* ram, VRAM* vram) {
-    //this->file = new ifstream(filename.c_str());
-    //if (this->file->is_open()) {
     QFile file(filename);
     if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
         qDebug() << " Could not open the file for reading";
-        return;
-    }
-
-    in = new QTextStream(&file);
+    else {
+        in = new QTextStream(&file);
 
         skip(3);//corresponde con el "NES", lo leo porque paja convertir de u8 a string
         //el header deberia tene siempre 16 bytes
@@ -82,12 +77,9 @@ Input::Input (QString filename, RAM* ram, VRAM* vram) {
         this->trainer_size = 512;
         readToRam(16384 * this->prg_16_rom, ram);
         readToVram(vram);
-        //Destructor de archivo;
-        //this->file->close();
-    //}
 
         file.close();
-
+    }
 }
 
 /*Input::~Input() {

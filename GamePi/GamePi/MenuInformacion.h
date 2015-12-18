@@ -20,12 +20,12 @@ public:
         MenuInformacion::comienzo = time(0);
     }
     static void terminarReloj () {
-        long double previo = MenuInformacion::leer();
         if (MenuInformacion::comienzo != 0) {
+            long double previo = MenuInformacion::leer();
             long double final = time(0);
             previo += (final - MenuInformacion::comienzo);
+            escribir(previo);
         }
-        escribir(previo);
     }
 
 private:

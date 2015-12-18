@@ -7,6 +7,7 @@
 #include "PPU.h"
 #include "RAM.h"
 #include "VRAM.h"
+//#include "Pines.h"
 
 class Thread : public QThread
 {
@@ -25,6 +26,7 @@ private:
     PPU* ppu = NULL;
     RAM ram;
     VRAM vram;
+    //Pines pines;
 };
 
 #endif // THREAD_H
